@@ -2,6 +2,13 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from packages import parse_xml
 
+'''
+
+Script to parse sales data and match itemIDs to string name & descriptions.
+
+'''
+
+
 def search_xml_for_dir_by_name(root, dir_name):
     """
     Search XML root for a directory element by name.
@@ -33,7 +40,7 @@ def process_qualifying_dirs():
     root_original = tree_original.getroot()
     item_info = {}
 
-    # Parse the string XML files
+    # parse the string XML files
     tree_cash = ET.parse('./strings/cash.xml')
     tree_eqp = ET.parse('./strings/equips.xml')
     tree_pet = ET.parse('./strings/pet.xml')
@@ -44,7 +51,7 @@ def process_qualifying_dirs():
 
 
     for dir_element in root_original.findall('dir'):
-        # Get the value of the 'ItemId' attribute from commodity data
+        # get the value of the 'ItemId' attribute from commodity data
         item_id = dir_element.find("int32[@name='ItemId']").get('value')
         price = dir_element.find("int32[@name='Price']").get('value')
         term_start_element = dir_element.find("int32[@name='termStart']")
@@ -60,11 +67,13 @@ def process_qualifying_dirs():
         else:
             term_end = ""
         
-
+        ''' Useless for now
         for key, value in packages.items():
             if item_id == key:
                 package_contents[key] = value
-        # Search through all XML files for the corresponding Item ID
+        '''
+
+        # search through all XML files for the corresponding Item ID
         corresponding_dir = None
         for root in [root_cash, root_eqp, root_pet]:
             corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
@@ -86,6 +95,7 @@ def process_qualifying_dirs():
 
     ## loop for getting package contents
     ## for now this does nothing. i have no idea what the IDs returned for package contents are.
+    '''
     for key, value in package_contents.items():
         for elem in value:
             item_id = elem
@@ -106,11 +116,9 @@ def process_qualifying_dirs():
                 description = desc_element.get('value') if desc_element is not None else ""
 
                 item_info[item_id] = {'Package': key, 'name': name, 'description': description}        
-
+    '''
+    
     return item_info
-
-
-# Example usage:
 
 packages_dir = './strings/packages.xml'
 packages = parse_xml(packages_dir)
