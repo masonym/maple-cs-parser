@@ -1,7 +1,13 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from packages import parse_xml
 
+# globals
+tree_cash = ET.parse('./strings/cash.xml')
+tree_eqp = ET.parse('./strings/equips.xml')
+tree_pet = ET.parse('./strings/pet.xml')
+root_cash = tree_cash.getroot()
+root_eqp = tree_eqp.getroot()
+root_pet = tree_pet.getroot()
 '''
 
 Script to parse sales data and match itemIDs to string name & descriptions.
@@ -14,7 +20,7 @@ def upcoming_sales():
     # Use current month to find any Dirs with term_start values of that month
 
     # Load the XML file
-    tree = ET.parse('Etc.Commodity.img.xml')
+    tree = ET.parse('./strings/commodity.xml')
     root = tree.getroot()
 
     # Create a new XML tree for qualifying dirs
@@ -69,18 +75,72 @@ def search_nested_xml_for_dir_by_name(root, item_id):
     """
     return root.find(f".//dir[@name='{item_id}']")
 
-def process_qualifying_dirs(qualifying_dirs):
-    tree_original = ET.parse('qualifying_dirs.xml')
+def package_dict_creator(qualifying_dirs):
+    tree = ET.parse(qualifying_dirs)
+    root = tree.getroot()
+
+    tree_package_names = ET.parse('./strings/package_names.xml')
+    root_package_names = tree_package_names.getroot()
+
+    tree_package_contents = ET.parse('./strings/package_contents.xml')
+    root_package_contents = tree_package_contents.getroot()
+
+    # make package dir for storing data
+    # contents will be an array of SN IDs
+    package_dict = {
+        # "packageID": "",
+        # "name": "",
+        # "description": "",
+        # "contents": ""
+    }
+
+    # get package names
+    for dir_element in root.findall('dir'):
+        item_id = dir_element.find("int32[@name='ItemId']").get('value')
+        if item_id.startswith("910"):
+            # for dir_element_2 in root_package_names:
+            package = root_package_names.find(f"dir[@name='{item_id}']")
+            package_id = package.attrib['name']
+            package_dict[package_id] = {}
+            package_dict[package_id]["name"] = package.find("string[@name='name']").get('value')
+            package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","") if package.find("string[@name='desc']") is not None else ""
+
+            for dir_element in root_package_contents.findall('dir'):
+                contents = []
+                if package_id == dir_element.attrib['name']:
+                    for int32_element in dir_element.findall('.//int32'):
+                        value = int32_element.get('value')
+                        contents.append(value)
+                    package_dict[package_id]["contents"] = contents
+    
+    # return nested dictionaries
+    return package_dict
+
+def package_contents_parser(package_dict, item_id):
+    # something = an entry from our dictionary
+    # or maybe pass in dictionary and item_id?
+    tree = ET.parse('./strings/commodity.xml')
+    root = tree.getroot()
+    item_ids = []
+    array = package_dict[item_id].get("contents")
+    for sn in array:
+        for dir_element in root.findall('.//dir'):
+            sn_elem = dir_element.find('int32[@name="SN"]')
+            if sn_elem is not None and sn_elem.get('value') == sn:
+                item_id_element = dir_element.find('int32[@name="ItemId"]')
+                if item_id_element is not None:
+                    item_ids.append(item_id_element.get('value'))
+                break
+    return item_ids
+
+
+
+def process_qualifying_dirs(qualifying_dirs, package_dict):
+    tree_original = ET.parse(qualifying_dirs)
     root_original = tree_original.getroot()
     item_info = {}
-
+    package_contents = {}
     # parse the string XML files
-    tree_cash = ET.parse('./strings/cash.xml')
-    tree_eqp = ET.parse('./strings/equips.xml')
-    tree_pet = ET.parse('./strings/pet.xml')
-    root_cash = tree_cash.getroot()
-    root_eqp = tree_eqp.getroot()
-    root_pet = tree_pet.getroot()
 
 
 
@@ -114,6 +174,35 @@ def process_qualifying_dirs(qualifying_dirs):
 
         # search through all XML files for the corresponding Item ID
         corresponding_dir = None
+        if item_id.startswith("910"):
+            package_contents[item_id] = {}
+            # stuff
+            contents = package_contents_parser(package_dict, item_id)
+            for idx, item in enumerate(contents):
+                package_contents[item_id][idx] = {}
+                for root in [root_cash, root_eqp, root_pet]:
+                    corresponding_dir = search_nested_xml_for_dir_by_name(root, item)
+                    if corresponding_dir is not None:
+                        break
+                if corresponding_dir is not None:
+
+                    name_element = corresponding_dir.find("string[@name='name']")
+                    name = name_element.get('value') if name_element is not None else "Name not found"
+                    
+                    # Get the description string
+                    desc_element = corresponding_dir.find("string[@name='desc']")
+                    description = desc_element.get('value') if desc_element is not None else ""
+                    description = description.replace("#c","").replace("\\n","\n").replace("#","")
+
+                    package_contents[item_id][idx]['name'] = name
+                    package_contents[item_id][idx]['description'] = description
+
+                    
+            item_info[item_id] = {'name': package_dict[item_id].get('name'), 'description': package_dict[item_id].get('description'),
+                                  'count': count, 'price': price, 'discount': discount, 'originalPrice': original_price,
+                                  'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period,
+                                  'packageContents': package_contents
+                                  }
         for root in [root_cash, root_eqp, root_pet]:
             corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
             if corresponding_dir is not None:
@@ -134,46 +223,22 @@ def process_qualifying_dirs(qualifying_dirs):
             
             item_info[item_id] = {'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
 
-    ## loop for getting package contents
-    ## for now this does nothing. i have no idea what the IDs returned for package contents are.
-    '''
-    for key, value in package_contents.items():
-        for elem in value:
-            item_id = elem
-            corresponding_dir = None
-            for root in [root_cash, root_eqp, root_pet]:
-                corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
-                if corresponding_dir is not None:
-                    break
-            
-
-            if corresponding_dir is not None:
-                # Get the name string
-                name_element = corresponding_dir.find("string[@name='name']")
-                name = name_element.get('value') if name_element is not None else "Name not found"
-                
-                # Get the description string
-                desc_element = corresponding_dir.find("string[@name='desc']")
-                description = desc_element.get('value') if desc_element is not None else ""
-
-                item_info[item_id] = {'Package': key, 'name': name, 'description': description}        
-    '''
-    
     return item_info
 
 def main():
     qualifying_dirs = upcoming_sales()
     sort_xml(qualifying_dirs)
-    item_info = process_qualifying_dirs(qualifying_dirs)
-    with open("CashShopSales.xml", "w") as file:
+    package_dict = package_dict_creator(qualifying_dirs)
+    item_info = process_qualifying_dirs(qualifying_dirs, package_dict)
+
+
+    with open("CashShopSales.txt", "w") as file:
         for item_id, info in item_info.items():
             output = "---\n"
             if info['name'] != "":
                 output += f"Name: {info['name']}"
-                if int(info['count']) > 1:
-                    output += f" ({info['count']})\n"
-                else:
-                    output += "\n"
+                if int(info['count']) != "":
+                    output += f" ({info['count']})\n" if int(info['count']) > 1 else f"\n"
             if info['description'] != "":
                 output += f"Description: {info['description']}\n"
             if info['period'] != "":
@@ -185,10 +250,18 @@ def main():
                     output += f" (was {int(info['originalPrice']):,} NX)\n"
                 else:
                     output += "\n"
+            if 'packageContents' in info:
+                output+= f"\nPackage Contents: \n"
+                curr_package = info['packageContents'].get(f'{item_id}')
+                for idx, item in enumerate(curr_package):
+                    print(curr_package)
+                    output+= f"Item #{idx+1}:\n"
+                    output+= f"Name: {curr_package[idx].get('name')}\n"
+                    output+= f"Description: {curr_package.get('description')}\n\n" if curr_package.get('description') is not None else ""
             if info['termStart'] != "":
-                output += f"Start Date: {info['termStart']}\n"
+                output += f"\nStart Date: {info['termStart']}\n"
             if info['termEnd'] != "":
-                output += f"End Date: {info['termEnd']}\n"
+                output += f"End Date: {info['termEnd']}\n\n"
             if info['gameWorld'] != "":
                 if info['gameWorld'] == "45/46/70":
                     output += f"Heroic Servers Only\n"
