@@ -682,6 +682,10 @@
     <string name="name" value="NEW AGE Effect" />
     <string name="desc" value="An effect commemorating 2023 NEW AGE showcase.\r\n\r\nDouble-click to toggle the effect, or set up a hotkey for it in your Key Config." />
   </dir>
+  <dir name="5010267">
+    <string name="name" value="Warm Wave Effect" />
+    <string name="desc" value="A Warm Wave Effect that wafts calmly in the air.\r\n\r\nDouble-click to toggle the effect, or set up a hotkey for it in your Key Config." />
+  </dir>
   <dir name="5010999">
     <string name="name" value="Changing to a Monster" />
     <string name="desc" value="Not sold in Cash Shop. An effect shown while changing into a monster." />
@@ -749,6 +753,18 @@
   <dir name="5021021">
     <string name="name" value="Exploding Sheep" />
     <string name="desc" value="Counting sheep will incapacitate your enemies like never before. This weapon skin can be equipped over #cThrowing Stars#." />
+  </dir>
+  <dir name="5021028">
+    <string name="name" value="Black Bat Throwing Stars" />
+    <string name="desc" value="A throwing star in the form of a bat charged with the power of darkness. This weapon skin can be equipped over #cThrowing Stars#." />
+  </dir>
+  <dir name="5021029">
+    <string name="name" value="Nodestone Throwing Stars" />
+    <string name="desc" value="A throwing star in the form of a nodestone. This weapon skin can be equipped over #cThrowing Stars#." />
+  </dir>
+  <dir name="5021030">
+    <string name="name" value="Darkness Throwing Stars" />
+    <string name="desc" value="A throwing star sure to instill fear in the enemies it hits. This weapon skin can be equipped over #cThrowing Stars#." />
   </dir>
   <dir name="5030000">
     <string name="name" value="Mushroom House Elf" />
@@ -1288,6 +1304,12 @@
     <string name="name" value="Speed-Boomer Fireworks" />
     <string name="desc" value="These fireworks launch really fast. Seriously, it's ridiculous. Grants #cone of 5 effects# when used. Effects last #c30 minutes#. \r\nATT &amp; Magic ATT + 20\nATT &amp; Magic ATT + 40\nATT &amp; Magic ATT +80\nATT &amp; Magic ATT +90\nATT &amp; Magic ATT +100" />
   </dir>
+  <dir name="5066300">
+    <string name="name" value="Sol Erda" />
+    <string name="desc" value="Sol Erda came into being when the Erdas of Maple World and Grandis combined. It has spread all over the world.\nIt's used in activating or boosting #cHEXA skills#, and activating #cHEXA stats#." />
+    <string name="desc_leftalign" value="#c- Can be used only by Lv. 260+ characters who have completed the 6th job advancement\r\n- Cannot be used when the total amount of Sol Erda that can be owned (x20) is reached" />
+    <int32 name="fixWidth" value="340" />
+  </dir>
   <dir name="5068000">
     <string name="name" value="Pet Lucky Day Scroll" />
     <string name="desc" value="Increases the success rate of your next scroll by 10%.\nOnly usable on #cpet equipment#." />
@@ -1307,7 +1329,7 @@
   </dir>
   <dir name="5068300">
     <string name="name" value="Wisp's Wondrous Wonderberry" />
-    <string name="desc" value="A Wonderberry filled with mysterious energy. #cDouble-click# to give life to a #cWonder Pet or special item# using Wisp’s magic. (You can get either a durational or permanent pet with normal performance in Heroic Worlds.)" />
+    <string name="desc" value="A Wonderberry filled with mysterious energy. #cDouble-click# to give life to a #cWonder Pet or special item# using Wisp's magic. #cItems obtained from Wisp's Wondrous Wonderberry purchased with NX can be traded once before use.# (However, trading is restricted in Heroic Worlds.)\n#cThe Wonderberry list is replaced once every set period.\r\nThe list of obtainable items and rates can be viewed from the website &gt; The Game &gt; Random Box Rates." />
   </dir>
   <dir name="5069000">
     <string name="name" value="Masterpiece Machine" />
@@ -1319,7 +1341,7 @@
   </dir>
   <dir name="5069100">
     <string name="name" value="Luna Crystal" />
-    <string name="desc" value="A mysterious gem filled with moonlight energy.\r\nAmplifies #cWonder Black or Sweet rank Wonderberry pets born from Wisp's Wondrous Wonderberry# and turns them into #cpets with even stronger set effects or a Luna Crystal key#. \r\bTradability of the #cLuna Crystal# follows the #ctradability of the base pet.# \r\n#cLuna Crystal# item rewards change once every season. (Check the NX item announcement on the website for more details.)" />
+    <string name="desc" value="A mysterious jewel with the power of moonight.\r\nGrant the power of moonlight to #c2 Royal Wonder pets born from Wisp's Wondrous Wonderberry# to give birth to #ceither 1 pet with a more powerful set effect or 1 Luna Crystal Key#. \r\nThe tradability of the pet born from the #cLuna Crystal# #cfollows the tradability of the base pet.# \r\nThe #cLuna Crystal# rewards are replaced once every set period. (The list of obtainable items and rates can be viewed from the Cash Shop Updates or the Random Box Rates page on the website.)" />
   </dir>
   <dir name="5070000">
     <string name="name" value="Cheap Megaphone" />
@@ -2306,6 +2328,14 @@
     <string name="name" value="프리미엄 헤어 쿠폰" />
     <string name="desc" value="#c더블 클릭#하여 사용하면, 1회에 한하여 #c프리미엄 헤어 쿠폰의 헤어 중 원하는 헤어#를 골라 머리를 바꿀 수 있다.\n#c프리미엄 헤어 쿠폰의 목록은 정해진 기간마다 한 번씩 교체된다.#\n안드로이드는 헤네시스 헤어샵의 NPC 써니와 대화하여 사용할 수 있다." />
   </dir>
+  <dir name="5150219">
+    <string name="name" value="Blair Salon Quartz Hair Coupon (M)" />
+    <string name="desc" value="#cDouble-click# to change the hairstyle to #cQuartz Hair (M)# once.\nTalk to Lauren at the Henesys Hair Salon to change your Android's hair." />
+  </dir>
+  <dir name="5150220">
+    <string name="name" value="Blair Salon Pearly Hair Coupon (F)" />
+    <string name="desc" value="#cDouble-click# to change the hairstyle to #cPearly Hair (F)# once.\nTalk to Lauren at the Henesys Hair Salon to change your Android's hair." />
+  </dir>
   <dir name="5151000">
     <string name="name" value="Henesys Hair Color Coupon (REG)" />
     <string name="desc" value="#cDouble-click# to change your hair color#c at random#, or talk to Lauren at Henesys Hair Salon to change your Android's hair. Usable once." />
@@ -2612,7 +2642,7 @@
   </dir>
   <dir name="5152248">
     <string name="name" value="Fairy Bros' Face Selector Coupon" />
-    <string name="desc" value="#cDouble-click# to apply the face of your choice from a carefully curated list,\nor talk to Lauren at the Henesys Hair Salon to change your Android's hair." />
+    <string name="desc" value="#cDouble-click# to apply the face of your choice from a carefully curated list,\nor talk to Lauren at the Henesys Hair Salon to change your Android's face." />
   </dir>
   <dir name="5152254">
     <string name="name" value="2019 Beauty Awards Face Coupon" />
@@ -2697,6 +2727,18 @@
   <dir name="5153015">
     <string name="name" value="Skin Coupon" />
     <string name="desc" value="#cDouble-click# to apply a skin of your choice,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin." />
+  </dir>
+  <dir name="5153022">
+    <string name="name" value="Alabaster Skin Coupon" />
+    <string name="desc" value="#cDouble-click# to change your skin to #cAlabaster#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  </dir>
+  <dir name="5153023">
+    <string name="name" value="Athletic Skin Coupon" />
+    <string name="desc" value="#cDouble-click# to change your skin to #cAthletic#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  </dir>
+  <dir name="5153024">
+    <string name="name" value="Pale Gray Skin Coupon" />
+    <string name="desc" value="#cDouble-click# to change your skin to #cPale Gray#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
   </dir>
   <dir name="5154000">
     <string name="name" value="Orbis Dirty Hair Coupon" />
@@ -6050,6 +6092,41 @@
     <string name="name" value="Mayple Ticket x1 Coupon" />
     <string name="desc" value="Double-click and use to obtain #cMayple Ticket x1#, which can be exchanged for various rewards." />
   </dir>
+  <dir name="5530909">
+    <string name="name" value="New Age Ticket x1 Coupon" />
+    <string name="desc" value="Double-click and use to obtain #cNew Age Ticket x1#, which can be exchanged for various rewards." />
+  </dir>
+  <dir name="5530910">
+    <string name="name" value="Selective 8-Slot Coupon x5 Voucher" />
+    <string name="desc" value="Double-click to receive Selective 8-Slot Coupon x5. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#\n\nUse the #cSelective 8-Slot Coupon# to expand one of your item tabs #c(Equip, Use, Set-up, Etc)# by #c8 slots#.\n#cEach tab can have up to 128 slots.#" />
+  </dir>
+  <dir name="5530911">
+    <string name="name" value="Mega Character Burninator Coupon" />
+    <string name="desc" value="Double-click to receive the Mega Character Burninator. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#" />
+    <string name="desc_leftalign" value="The #ccharacter# who uses the #cMega Character Burninator# will gain the Mega Burning effect of #c1+2 level up#, which will last for #c14 days# from the day it is used, while the character is #cLv. 10 - 149#.\r\n#c- Can be used by a character above Lv. 10 but below Lv. 150 who is not already a Burning character.\r\n- Can't be used by Zero characters." />
+  </dir>
+  <dir name="5530912">
+    <string name="name" value="2x EXP Coupon (30 min) x10 Ticket" />
+    <string name="desc" value="Double-click to receive 2x EXP Coupon (30 min) x10. #c(Can be used within 30 days of obtaining, can only be transferred between your characters within the same world.)#\r\n\r\n#cThis item does not stack with any events that give a similar buff.#" />
+  </dir>
+  <dir name="5530913">
+    <string name="name" value="Special Medal of Honor x10 Coupon" />
+    <string name="desc" value="Double-click to receive Special Medal of Honor x10. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#\n\nUse the #cSpecial Medal of Honor# to receive 10,000 Honor EXP." />
+  </dir>
+  <dir name="5530914">
+    <string name="name" value="2x EXP Coupon (30 min) x10 Ticket" />
+    <string name="desc" value="Double-click to receive 2x EXP Coupon (30 min) x10. #c(Can be used within 14 days of obtaining, cannot be traded.)#\r\n\r\n#cThis item does not stack with any events that give a similar buff.#" />
+  </dir>
+  <dir name="5530915">
+    <string name="name" value="Prepared Pendant of the Spirit Coupon" />
+    <string name="desc" value="Double-click to receive the Prepared Pendant of the Spirit. #c(Can be used within 30 days of obtaining, cannot be traded, cannot be extended.)#\n\nYou get #c30% additional EXP# when equipped with the #cPrepared Pendant of the Spirit#." />
+  </dir>
+  <dir name="5530916">
+    <string name="name" value="Tera Character Burninator Coupon" />
+    <string name="desc" value="Double-click to receive the Tera Character Burninator. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#" />
+    <string name="desc_leftalign" value="The #ccharacter# who uses the #cTera Character Burninator# will gain the Tera Burning effect of #c1+2 level up#, which will last for #c6 weeks# from the day it is used, while the character is #cLv. 10 - 200#.\r\nYou can get the Level-Up Support Gift by completing the #c[Tera Character Burninator] Level-Up Support Giveaway!# quest from the event notifier. #c(Mysterious Cryptic Chest, Lv. 30 Equipment Box, Legendary Cryptic Chest, Root Abyss Set Box (Time-Restricted), and Eternal Flame Title Coupon given.)#\r\n\r\n#c- Can be used by a character above Lv. 10 but below Lv. 200, who is not already a Burning character.\r\n- Can't be used by Zero characters.\r\n- Effect cannot be canceled after using the item.\r\n- Tera Burning Effect: 1+2 level up\r\n- The additional items given other than the Tera Burning effect may change based on the game info." />
+    <int32 name="fixWidth" value="310" />
+  </dir>
   <dir name="5533000">
     <string name="name" value="7th Anniversary Celebration Hat Box" />
     <string name="desc" value="Box containing eighth note hairpins that celebrate 8th MapleStory anniversary. Contains one of eight colored accessories!" />
@@ -8374,6 +8451,7 @@
   </dir>
   <dir name="5680940">
     <string name="name" value="Gift Box" />
+    <string name="desc" value="#c더블클릭#하여 준비된 선물을 받을 수 있다.\n\n#c- 재즈 온 메이플 (훈장)\n- 가을밤의 재즈 의자#" />
   </dir>
   <dir name="5680941">
     <string name="name" value="Gift Box" />
@@ -8489,6 +8567,42 @@
     <string name="name" value="Permanent Adventure Together Mount Coupon" />
     <string name="desc" value="#cDouble-click# to permanently gain the #cAdventure Together Mount skill#." />
   </dir>
+  <dir name="5681017">
+    <string name="name" value="11000-Maple-Point Coupon" />
+    <string name="desc" value="#cDouble-click# to get #c11,000 Maple Points#." />
+  </dir>
+  <dir name="5681018">
+    <string name="name" value="33000-Maple-Point Coupon" />
+    <string name="desc" value="#cDouble-click# to get #c33,000 Maple Points#." />
+  </dir>
+  <dir name="5681019">
+    <string name="name" value="55000-Maple-Point Coupon" />
+    <string name="desc" value="#cDouble-click# to get #c55,000 Maple Points#." />
+  </dir>
+  <dir name="5681020">
+    <string name="name" value="110000-Maple-Point Coupon" />
+    <string name="desc" value="#cDouble-click# to get #c110,000 Maple Points#." />
+  </dir>
+  <dir name="5681021">
+    <string name="name" value="In the Forest Chat Ring Coupon (30 Day)" />
+    <string name="desc" value="Double-click to receive an In the Forest Chat Ring (30 Day).\n\n\n\n" />
+  </dir>
+  <dir name="5681022">
+    <string name="name" value="In the Forest Label Ring Coupon (30 Day)" />
+    <string name="desc" value="Double-click to receive an In the Forest Label Ring (30 Day).\n\n\n\n" />
+  </dir>
+  <dir name="5681023">
+    <string name="name" value="Character Slot Coupon" />
+    <string name="desc" value="Used to expand your Character Slots in the #ccurrent world# by #c1 slot#.\n\n#c- Will not expand if the max number of Character Slots has been reached.\n- Cannot be used in Burning World.#" />
+  </dir>
+  <dir name="5681024">
+    <string name="name" value="French Bulldog Label Ring Coupon (30 Day)" />
+    <string name="desc" value="Double-click to receive a French Bulldog Label Ring (30 Day).\n\n\n\n" />
+  </dir>
+  <dir name="5681025">
+    <string name="name" value="French Bulldog Chat Ring Coupon (30 Day)" />
+    <string name="desc" value="Double-click to receive a French Bulldog Chat Ring (30 Day).\n\n\n\n" />
+  </dir>
   <dir name="5700000">
     <string name="name" value="Android Naming Coupon" />
     <string name="desc" value="A coupon that allows you to name your android. Can only be used when an android is equipped. However, you must have both an #cAndroid# and a #cMechanical Heart# to use it.\r\nOnly #cletters and numbers# can be used in names, and #conly 1 blank space is allowed in the text of the name.#" />
@@ -8581,118 +8695,338 @@
     <string name="name" value="Maple Auction Red Ticket" />
     <string name="desc" value="The Maple Auction Red Ticket offers the following benefits for #c30 days.#\nService fee discount: 5% to 3%\nUnlimited searches\nAdditional auction slots: 10 purchase and 10 sell slots\nAdvanced searches\nAuction bidding time extension: 24 and 48 hours" />
   </dir>
-  <dir name="5010267">
-    <string name="name" value="Warm Wave Effect" />
-    <string name="desc" value="A Warm Wave Effect that wafts calmly in the air.\r\n\r\nDouble-click to toggle the effect, or set up a hotkey for it in your Key Config." />
+  <dir name="5010268">
+    <string name="name" value="DJMAX 크라운 이펙트" />
+    <string name="desc" value="DJMAX 왕관 이펙트가 빛난다. 아이콘을 더블클릭하거나 키 설정 메뉴에서 특정 단축키로 지정한 후 단축키를 눌러 ON/OFF 할 수 있다." />
   </dir>
-  <dir name="5021028">
-    <string name="name" value="Black Bat Throwing Stars" />
-    <string name="desc" value="A throwing star in the form of a bat charged with the power of darkness. This weapon skin can be equipped over #cThrowing Stars#." />
+  <dir name="5010269">
+    <string name="name" value="World's Best Night Lord" />
+    <string name="desc" value="Season 2 World's Best #cNight Lord." />
   </dir>
-  <dir name="5021029">
-    <string name="name" value="Nodestone Throwing Stars" />
-    <string name="desc" value="A throwing star in the form of a nodestone. This weapon skin can be equipped over #cThrowing Stars#." />
+  <dir name="5010270">
+    <string name="name" value="World's Best Night Walker" />
+    <string name="desc" value="Season 2 World's Best #cNight Walker." />
   </dir>
-  <dir name="5021030">
-    <string name="name" value="Darkness Throwing Stars" />
-    <string name="desc" value="A throwing star sure to instill fear in the enemies it hits. This weapon skin can be equipped over #cThrowing Stars#." />
+  <dir name="5010271">
+    <string name="name" value="World's Best Dark Knight" />
+    <string name="desc" value="Season 2 World's Best #cDark Knight." />
   </dir>
-  <dir name="5066300">
-    <string name="name" value="Sol Erda" />
-    <string name="desc" value="Sol Erda came into being when the Erdas of Maple World and Grandis combined. It has spread all over the world.\nIt's used in activating or boosting #cHEXA skills#, and activating #cHEXA stats#." />
-    <string name="desc_leftalign" value="#c- Can be used only by Lv. 260+ characters who have completed the 6th job advancement\r\n- Cannot be used when the total amount of Sol Erda that can be owned (x20) is reached" />
-    <int32 name="fixWidth" value="340" />
+  <dir name="5010272">
+    <string name="name" value="World's Best Demon Slayer" />
+    <string name="desc" value="Season 2 World's Best\r\n#cDemon Slayer." />
   </dir>
-  <dir name="5150219">
-    <string name="name" value="Blair Salon Quartz Hair Coupon (M)" />
-    <string name="desc" value="#cDouble-click# to change the hairstyle to #cQuartz Hair (M)# once.\nTalk to Lauren at the Henesys Hair Salon to change your Android's hair." />
+  <dir name="5010273">
+    <string name="name" value="World's Best Demon Avenger" />
+    <string name="desc" value="Season 2 World's Best #cDemon Avenger." />
   </dir>
-  <dir name="5150220">
-    <string name="name" value="Blair Salon Pearly Hair Coupon (F)" />
-    <string name="desc" value="#cDouble-click# to change the hairstyle to #cPearly Hair (F)# once.\nTalk to Lauren at the Henesys Hair Salon to change your Android's hair." />
+  <dir name="5010274">
+    <string name="name" value="World's Best Dual Blade" />
+    <string name="desc" value="Season 2 World's Best\r\n#cDual Blade." />
   </dir>
-  <dir name="5153022">
-    <string name="name" value="Alabaster Skin Coupon" />
-    <string name="desc" value="#cDouble-click# to change your skin to #cAlabaster#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  <dir name="5010275">
+    <string name="name" value="World's Best Lara" />
+    <string name="desc" value="Season 2 World's Best #cLara." />
   </dir>
-  <dir name="5153023">
-    <string name="name" value="Athletic Skin Coupon" />
-    <string name="desc" value="#cDouble-click# to change your skin to #cAthletic#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  <dir name="5010276">
+    <string name="name" value="World's Best Luminous" />
+    <string name="desc" value="Season 2 World's Best #cLuminous." />
   </dir>
-  <dir name="5153024">
-    <string name="name" value="Pale Gray Skin Coupon" />
-    <string name="desc" value="#cDouble-click# to change your skin to #cPale Gray#,\nor talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  <dir name="5010277">
+    <string name="name" value="World's Best Mercedes" />
+    <string name="desc" value="Season 2 World's Best #cMercedes." />
   </dir>
-  <dir name="5530909">
-    <string name="name" value="New Age Ticket x1 Coupon" />
-    <string name="desc" value="Double-click and use to obtain #cNew Age Ticket x1#, which can be exchanged for various rewards." />
+  <dir name="5010278">
+    <string name="name" value="World's Best Mechanic" />
+    <string name="desc" value="Season 2 World's Best #cMechanic." />
   </dir>
-  <dir name="5530910">
-    <string name="name" value="Selective 8-Slot Coupon x5 Voucher" />
-    <string name="desc" value="Double-click to receive Selective 8-Slot Coupon x5. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#\n\nUse the #cSelective 8-Slot Coupon# to expand one of your item tabs #c(Equip, Use, Set-up, Etc)# by #c8 slots#.\n#cEach tab can have up to 128 slots.#" />
+  <dir name="5010279">
+    <string name="name" value="World's Best Mihile" />
+    <string name="desc" value="Season 2 World's Best #cMihile." />
   </dir>
-  <dir name="5530911">
-    <string name="name" value="Mega Character Burninator Coupon" />
-    <string name="desc" value="Double-click to receive the Mega Character Burninator. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#" />
-    <string name="desc_leftalign" value="The #ccharacter# who uses the #cMega Character Burninator# will gain the Mega Burning effect of #c1+2 level up#, which will last for #c14 days# from the day it is used, while the character is #cLv. 10 - 149#.\r\n#c- Can be used by a character above Lv. 10 but below Lv. 150 who is not already a Burning character.\r\n- Can't be used by Zero characters." />
+  <dir name="5010280">
+    <string name="name" value="World's Best Buccaneer" />
+    <string name="desc" value="Season 2 World's Best #cBuccaneer." />
   </dir>
-  <dir name="5530912">
-    <string name="name" value="2x EXP Coupon (30 min) x10 Ticket" />
-    <string name="desc" value="Double-click to receive 2x EXP Coupon (30 min) x10. #c(Can be used within 30 days of obtaining, can only be transferred between your characters within the same world.)#\r\n\r\n#cThis item does not stack with any events that give a similar buff.#" />
+  <dir name="5010281">
+    <string name="name" value="World's Best Battle Mage" />
+    <string name="desc" value="Season 2 World's Best #cBattle Mage." />
   </dir>
-  <dir name="5530913">
-    <string name="name" value="Special Medal of Honor x10 Coupon" />
-    <string name="desc" value="Double-click to receive Special Medal of Honor x10. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#\n\nUse the #cSpecial Medal of Honor# to receive 10,000 Honor EXP." />
+  <dir name="5010282">
+    <string name="name" value="World's Best Bow Master" />
+    <string name="desc" value="Season 2 World's Best #cBow Master." />
   </dir>
-  <dir name="5530914">
-    <string name="name" value="2x EXP Coupon (30 min) x10 Ticket" />
-    <string name="desc" value="Double-click to receive 2x EXP Coupon (30 min) x10. #c(Can be used within 14 days of obtaining, cannot be traded.)#\r\n\r\n#cThis item does not stack with any events that give a similar buff.#" />
+  <dir name="5010283">
+    <string name="name" value="World's Best Blaster" />
+    <string name="desc" value="Season 2 World's Best #cBlaster." />
   </dir>
-  <dir name="5530915">
-    <string name="name" value="Prepared Pendant of the Spirit Coupon" />
-    <string name="desc" value="Double-click to receive the Prepared Pendant of the Spirit. #c(Can be used within 30 days of obtaining, cannot be traded, cannot be extended.)#\n\nYou get #c30% additional EXP# when equipped with the #cPrepared Pendant of the Spirit#." />
+  <dir name="5010284">
+    <string name="name" value="World's Best Bishop" />
+    <string name="desc" value="Season 2 World's Best #cBishop." />
   </dir>
-  <dir name="5530916">
-    <string name="name" value="Tera Character Burninator Coupon" />
-    <string name="desc" value="Double-click to receive the Tera Character Burninator. #c(Can be used within 7 days of obtaining, can only be transferred between your characters within the same world.)#" />
-    <string name="desc_leftalign" value="The #ccharacter# who uses the #cTera Character Burninator# will gain the Tera Burning effect of #c1+2 level up#, which will last for #c6 weeks# from the day it is used, while the character is #cLv. 10 - 200#.\r\nYou can get the Level-Up Support Gift by completing the #c[Tera Character Burninator] Level-Up Support Giveaway!# quest from the event notifier. #c(Mysterious Cryptic Chest, Lv. 30 Equipment Box, Legendary Cryptic Chest, Root Abyss Set Box (Time-Restricted), and Eternal Flame Title Coupon given.)#\r\n\r\n#c- Can be used by a character above Lv. 10 but below Lv. 200, who is not already a Burning character.\r\n- Can't be used by Zero characters.\r\n- Effect cannot be canceled after using the item.\r\n- Tera Burning Effect: 1+2 level up\r\n- The additional items given other than the Tera Burning effect may change based on the game info." />
-    <int32 name="fixWidth" value="310" />
+  <dir name="5010285">
+    <string name="name" value="World's Best Shadower" />
+    <string name="desc" value="Season 2 World's Best #cShadower." />
   </dir>
-  <dir name="5681017">
-    <string name="name" value="11000-Maple-Point Coupon" />
-    <string name="desc" value="#cDouble-click# to get #c11,000 Maple Points#." />
+  <dir name="5010286">
+    <string name="name" value="World's Best Dawn Warrior" />
+    <string name="desc" value="Season 2 World's Best #cDawn Warrior." />
   </dir>
-  <dir name="5681018">
-    <string name="name" value="33000-Maple-Point Coupon" />
-    <string name="desc" value="#cDouble-click# to get #c33,000 Maple Points#." />
+  <dir name="5010287">
+    <string name="name" value="World's Best Thunder Breaker" />
+    <string name="desc" value="Season 2 World's Best #cThunder Breaker." />
   </dir>
-  <dir name="5681019">
-    <string name="name" value="55000-Maple-Point Coupon" />
-    <string name="desc" value="#cDouble-click# to get #c55,000 Maple Points#." />
+  <dir name="5010288">
+    <string name="name" value="World's Best Marksman" />
+    <string name="desc" value="Season 2 World's Best #cMarksman." />
   </dir>
-  <dir name="5681020">
-    <string name="name" value="110000-Maple-Point Coupon" />
-    <string name="desc" value="#cDouble-click# to get #c110,000 Maple Points#." />
+  <dir name="5010289">
+    <string name="name" value="World's Best Adele" />
+    <string name="desc" value="Season 2 World's Best #cAdele." />
   </dir>
-  <dir name="5681021">
-    <string name="name" value="In the Forest Chat Ring Coupon (30 Day)" />
-    <string name="desc" value="Double-click to receive an In the Forest Chat Ring (30 Day).\n\n\n\n" />
+  <dir name="5010290">
+    <string name="name" value="World's Best Aran" />
+    <string name="desc" value="Season 2 World's Best #cAran." />
   </dir>
-  <dir name="5681022">
-    <string name="name" value="In the Forest Label Ring Coupon (30 Day)" />
-    <string name="desc" value="Double-click to receive an In the Forest Label Ring (30 Day).\n\n\n\n" />
+  <dir name="5010291">
+    <string name="name" value="World's Best Ark" />
+    <string name="desc" value="Season 2 World's Best #cArk." />
   </dir>
-  <dir name="5681023">
-    <string name="name" value="Character Slot Coupon" />
-    <string name="desc" value="Used to expand your Character Slots in the #ccurrent world# by #c1 slot#.\n\n#c- Will not expand if the max number of Character Slots has been reached.\n- Cannot be used in Burning World.#" />
+  <dir name="5010292">
+    <string name="name" value="World's Best Arch Mage (Fire, Poison)" />
+    <string name="desc" value="Season 2 World's Best\r\n#cArch Mage (Fire, Poison)." />
   </dir>
-  <dir name="5681024">
-    <string name="name" value="French Bulldog Label Ring Coupon (30 Day)" />
-    <string name="desc" value="Double-click to receive a French Bulldog Label Ring (30 Day).\n\n\n\n" />
+  <dir name="5010293">
+    <string name="name" value="World's Best Arch Mage (Ice, Lightning)" />
+    <string name="desc" value="Season 2 World's Best\r\n#cArch Mage (Ice, Lightning)." />
   </dir>
-  <dir name="5681025">
-    <string name="name" value="French Bulldog Chat Ring Coupon (30 Day)" />
-    <string name="desc" value="Double-click to receive a French Bulldog Chat Ring (30 Day).\n\n\n\n" />
+  <dir name="5010294">
+    <string name="name" value="World's Best Evan" />
+    <string name="desc" value="Season 2 World's Best #cEvan." />
+  </dir>
+  <dir name="5010295">
+    <string name="name" value="World's Best Angelic Buster" />
+    <string name="desc" value="Season 2 World's Best\r\n#cAngelic Buster." />
+  </dir>
+  <dir name="5010296">
+    <string name="name" value="World's Best Wild Hunter" />
+    <string name="desc" value="Season 2 World's Best #cWild Hunter." />
+  </dir>
+  <dir name="5010297">
+    <string name="name" value="World's Best Wind Archer" />
+    <string name="desc" value="Season 2 World's Best\r\n#cWind Archer." />
+  </dir>
+  <dir name="5010298">
+    <string name="name" value="World's Best Shade" />
+    <string name="desc" value="Season 2 World's Best #cShade." />
+  </dir>
+  <dir name="5010299">
+    <string name="name" value="World's Best Illium" />
+    <string name="desc" value="Season 2 World's Best #cIllium." />
+  </dir>
+  <dir name="5010300">
+    <string name="name" value="World's Best Xenon" />
+    <string name="desc" value="Season 2 World's Best #cXenon." />
+  </dir>
+  <dir name="5010301">
+    <string name="name" value="World's Best Zero" />
+    <string name="desc" value="Season 2 World's Best #cZero." />
+  </dir>
+  <dir name="5010302">
+    <string name="name" value="World's Best Cadena" />
+    <string name="desc" value="Season 2 World's Best #cCadena." />
+  </dir>
+  <dir name="5010303">
+    <string name="name" value="World's Best Kaiser" />
+    <string name="desc" value="Season 2 World's Best #cKaiser." />
+  </dir>
+  <dir name="5010304">
+    <string name="name" value="World's Best Kain" />
+    <string name="desc" value="Season 2 World's Best #cKain." />
+  </dir>
+  <dir name="5010305">
+    <string name="name" value="World's Best Khali" />
+    <string name="desc" value="Season 2 World's Best #cKhali." />
+  </dir>
+  <dir name="5010306">
+    <string name="name" value="World's Best Cannoneer" />
+    <string name="desc" value="Season 2 World's Best #cCannoneer." />
+  </dir>
+  <dir name="5010307">
+    <string name="name" value="World's Best Corsair" />
+    <string name="desc" value="Season 2 World's Best #cCorsair." />
+  </dir>
+  <dir name="5010308">
+    <string name="name" value="World's Best Kinesis" />
+    <string name="desc" value="Season 2 World's Best #cKinesis." />
+  </dir>
+  <dir name="5010309">
+    <string name="name" value="World's Best Paladin" />
+    <string name="desc" value="Season 2 World's Best #cPaladin." />
+  </dir>
+  <dir name="5010310">
+    <string name="name" value="World's Best Pathfinder" />
+    <string name="desc" value="Season 2 World's Best #cPathfinder." />
+  </dir>
+  <dir name="5010311">
+    <string name="name" value="World's Best Phantom" />
+    <string name="desc" value="Season 2 World's Best #cPhantom." />
+  </dir>
+  <dir name="5010312">
+    <string name="name" value="World's Best Blaze Wizard" />
+    <string name="desc" value="Season 2 World's Best\r\n#cBlaze Wizard." />
+  </dir>
+  <dir name="5010313">
+    <string name="name" value="World's Best Hoyoung" />
+    <string name="desc" value="Season 2 World's Best #cHoyoung." />
+  </dir>
+  <dir name="5010314">
+    <string name="name" value="World's Best Hero" />
+    <string name="desc" value="Season 2 World's Best #cHero." />
+  </dir>
+  <dir name="5010315">
+    <string name="name" value="Teddy Family" />
+    <string name="desc" value="A Teddy Family effect on your head.\r\n\r\nDouble-click to toggle the effect, or set up a hotkey for it in your Key Config." />
+  </dir>
+  <dir name="5150221">
+    <string name="name" value="엘 클리어 헤어 쿠폰" />
+    <string name="desc" value="#c더블클릭#하여 사용하면, 1회에 한하여 헤어스타일을 #c엘 클리어 헤어#로 바꿀 수 있다. 안드로이드는 헤네시스 헤어샵의 NPC 써니와 대화하여 사용할 수 있다." />
+  </dir>
+  <dir name="5150222">
+    <string name="name" value="엘 페일 헤어 쿠폰" />
+    <string name="desc" value="#c더블클릭#하여 사용하면, 1회에 한하여 헤어스타일을 #c엘 페일 헤어#로 바꿀 수 있다. 안드로이드는 헤네시스 헤어샵의 NPC 써니와 대화하여 사용할 수 있다." />
+  </dir>
+  <dir name="5152290">
+    <string name="name" value="엘 클리어 성형 쿠폰" />
+    <string name="desc" value="#c더블클릭#하여 사용하면, 1회에 한하여 #c엘 클리어 얼굴#로 바꿀 수 있다.\n안드로이드는 헤네시스 헤어샵의 NPC 써니와 대화하여 사용할 수 있다." />
+  </dir>
+  <dir name="5152291">
+    <string name="name" value="엘 페일 성형 쿠폰" />
+    <string name="desc" value="#c더블클릭#하여 사용하면, 1회에 한하여 #c엘 페일 얼굴#로 바꿀 수 있다.\n안드로이드는 헤네시스 헤어샵의 NPC 써니와 대화하여 사용할 수 있다." />
+  </dir>
+  <dir name="5157044">
+    <string name="name" value="Little Star Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to change your hair to the selected hairstyle. Can only be used on male characters." />
+  </dir>
+  <dir name="5157045">
+    <string name="name" value="Foggy Little Star Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to change your hair to the selected hairstyle. Can only be used on male characters." />
+  </dir>
+  <dir name="5157046">
+    <string name="name" value="Blanche Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to change your hair to the selected hairstyle. Can only be used on female characters." />
+  </dir>
+  <dir name="5157047">
+    <string name="name" value="Foggy Blanche Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to change your hair to the selected hairstyle. Can only be used on female characters." />
+  </dir>
+  <dir name="5204047">
+    <string name="name" value="DJMAX RESPECT V" />
+    <string name="desc" value="#cMAPLESTORY x DJMAX RESPECT V\n#메이플스토리와 DJMAX RESPECT V의 콜라보레이션 음악 중 #c1개를 선택하여 재생#할 수 있다. #c왕관#을 클릭하면 음악을 변경할 수 있다. \r#c10초마다 HP가 100, MP가 100씩 회복된다.#" />
+  </dir>
+  <dir name="5204048">
+    <string name="name" value="Autumn Romance Hamster Chair" />
+    <string name="desc" value="Bond with your romantic partner over a cute hamster! \r#cRestores 100 HP and 100 MP every 10 seconds.#" />
+  </dir>
+  <dir name="5530917">
+    <string name="name" value="Five-color Jewelry Box x1 Coupon" />
+    <string name="desc" value="Double-click and use to obtain #cFive-color Jewelry Box x1#, which can be exchanged for various rewards." />
+  </dir>
+  <dir name="5530918">
+    <string name="name" value="Bonus Epic Potential Scroll 50% Coupon (14 Days)" />
+    <string name="desc" value="Double-click to receive a #cBonus Epic Potential Scroll 50% (14 Days). #cCannot be used on items protected by a Guardian Scroll.#" />
+  </dir>
+  <dir name="5681026">
+    <string name="name" value="DJMAX 크라운 이펙트 교환권" />
+    <string name="desc" value="#c더블 클릭#하여 사용하면 #DJMAX 크라운 이펙트#를 획득할 수 있다." />
+  </dir>
+  <dir name="5681027">
+    <string name="name" value="DJMAX 데미지 스킨(유닛)" />
+    <string name="desc" value="DJMAX 데미지 스킨 (유닛)으로 변경한다.\r\n#c데미지 스킨은 사용 후 다른 스킨으로 변경 전까지 영구 적용 된다.#" />
+  </dir>
+  <dir name="5681028">
+    <string name="name" value="엘 클리어 훈장 교환권" />
+    <string name="desc" value="#c더블 클릭#하여 사용하면 #c엘 클리어# 훈장(영구)을 획득할 수 있다. 획득한 훈장은 교환할 수 없다." />
+    <string name="desc_leftalign" value="#c [엘 클리어 훈장의 옵션]\n STR : +10\n DEX : +10\n INT : +10\n LUK : +10\n 최대 HP : +1000\n 최대 MP : +1000\n 공격력 : +3\n 마력 : +3\n 방어력 : +1000" />
+  </dir>
+  <dir name="5681029">
+    <string name="name" value="엘 페일 훈장 교환권" />
+    <string name="desc" value="#c더블 클릭#하여 사용하면 #c엘 페일# 훈장(영구)을 획득할 수 있다. 획득한 훈장은 교환할 수 없다." />
+    <string name="desc_leftalign" value="#c [엘 페일 훈장의 옵션]\n STR : +10\n DEX : +10\n INT : +10\n LUK : +10\n 최대 HP : +1000\n 최대 MP : +1000\n 공격력 : +3\n 마력 : +3\n 방어력 : +1000" />
+  </dir>
+  <dir name="5681030">
+    <string name="name" value="엘 클리어 칭호 교환권" />
+    <string name="desc" value="더블클릭하여 사용 시 #c엘 클리어 칭호(옵션 적용 기간: 30일)#를 획득할 수 있다. 획득한 칭호는 교환할 수 없다." />
+    <string name="desc_leftalign" value="#c [엘 클리어 칭호의 옵션]\n 일반 몬스터 공격 시 데미지+30%\n 추가 경험치+30%\n 공격력/마력+30\n 옵션 적용 기간: 30일" />
+  </dir>
+  <dir name="5681031">
+    <string name="name" value="엘 페일 칭호 교환권" />
+    <string name="desc" value="더블클릭하여 사용 시 #c엘 페일 칭호(옵션 적용 기간: 30일)#를 획득할 수 있다. 획득한 칭호는 교환할 수 없다." />
+    <string name="desc_leftalign" value="#c [엘 페일 칭호의 옵션]\n 보스 몬스터 공격 시 데미지+30%\n 방어율 무시+30%\n 공격력/마력+30\n 옵션 적용 기간: 30일" />
+  </dir>
+  <dir name="5681033">
+    <string name="name" value="Gift Box" />
+  </dir>
+  <dir name="5681034">
+    <string name="name" value="Dream Concert Label Ring Coupon (30 Days)" />
+    <string name="desc" value="Double-click to receive a Dream Concert Label Ring (30 Days).\n\n\n\n" />
+  </dir>
+  <dir name="5681035">
+    <string name="name" value="Dream Concert Chat Ring Coupon (30 Days)" />
+    <string name="desc" value="Double-click to receive a Dream Concert Chat Ring (30 Days).\n\n\n\n" />
+  </dir>
+  <dir name="5681036">
+    <string name="name" value="Gift Box" />
+  </dir>
+  <dir name="5681037">
+    <string name="name" value="Gift Box" />
+  </dir>
+  <dir name="5681038">
+    <string name="name" value="Little Star Hair (M) Selection Coupon" />
+    <string name="desc" value="Double-click to select either the Little Star Hair Coupon or Foggy Little Star Hair Coupon." />
+  </dir>
+  <dir name="5681039">
+    <string name="name" value="Blanche Hair (F) Selection Coupon" />
+    <string name="desc" value="Double-click to select either the Blanche Hair Coupon or Foggy Blanche Hair Coupon." />
+  </dir>
+  <dir name="5681041">
+    <string name="name" value="Mummy Label Ring Coupon (30 Days)" />
+    <string name="desc" value="Double-click this coupon to receive a Mummy Label Ring (30 Days)." />
+  </dir>
+  <dir name="5681042">
+    <string name="name" value="Bubble Time Damage Skin" />
+    <string name="desc" value="Applies the Bubble Time Damage Skin. \r\n#cOnce used, it will remain applied until you replace it with another skin. Disappears after one use.#" />
+  </dir>
+  <dir name="5681043">
+    <string name="name" value="Comfy Bear Damage Skin" />
+    <string name="desc" value="Applies the Comfy Bear Damage Skin. \r\n#cOnce used, it will remain applied until you replace it with another skin. Disappears after one use.#" />
+  </dir>
+  <dir name="5681044">
+    <string name="name" value="Night Magician Damage Skin" />
+    <string name="desc" value="Applies the Night Magician Damage Skin. \r\n#cOnce used, it will remain applied until you replace it with another skin. Disappears after one use.#" />
+    <int32 name="fixWidth" value="300" />
+  </dir>
+  <dir name="5681045">
+    <string name="name" value="Permanent Cloud Bubble Mount Coupon" />
+    <string name="desc" value="#cDouble-click# to permanently gain the #cCloud Bubble mount skill#." />
+  </dir>
+  <dir name="5681046">
+    <string name="name" value="Permanent Comfy Bear Scooter Mount Coupon" />
+    <string name="desc" value="#cDouble-click# to permanently gain the #cComfy Bear Scooter mount skill#." />
+  </dir>
+  <dir name="5681047">
+    <string name="name" value="Gift Box" />
+  </dir>
+  <dir name="5681048">
+    <string name="name" value="Mummy Chat Ring Coupon (30 Days)" />
+    <string name="desc" value="Double-click this coupon to receive a Mummy Chat Ring (30 Days)." />
+  </dir>
+  <dir name="5782000">
+    <string name="name" value="Premium Coloring Prism" />
+    <string name="desc" value="A #cPremium Coloring Prism#, imbued with a mysterious color-changing magic.&#xD;&#xA;\nDouble-click to #cchange the color of the decoration item by selecting one color from the provided color series and then adjusting the hue, chrome, and brightness# once. Even if you use it several times, you can change it based on the original color of the target item.\n\nThe Coloring Prism can only be used on certain items that #ccan be dyed#, and #cuntradable items that are not time-restricted#. Some special effects will retain their original color even if the Coloring Prism is used." />
+  </dir>
+  <dir name="5782001">
+    <string name="name" value="Prism Color Restore" />
+    <string name="desc" value="Absorbs the color of the item changed with a Coloring Prism.\n\nDouble-click to #crevert the color of the item changed with a Coloring Prism to the original color# once." />
   </dir>
   <dir name="5010008">
     <string name="name" value="Mr. Jackpot" />
@@ -13048,7 +13382,7 @@
     <string name="desc" value="#cDouble-click# to obtain#c 1 random item#. If you're lucky, you'll receive an item related to ISEKAI QUARTET." />
   </dir>
   <dir name="5060069">
-    <string name="name" value="Quartet Collaboration Box (Reboot)" />
+    <string name="name" value="Quartet Collaboration Box (Heroic)" />
     <string name="desc" value="#cDouble-click# to obtain#c 1 random item#. If you're lucky, you'll receive an item related to ISEKAI QUARTET." />
   </dir>
   <dir name="5222201">
@@ -14376,5 +14710,81 @@
   <dir name="5681040">
     <string name="name" value="Sol Erda Booster" />
     <string name="desc" value="The #cSol Erda Booster# will activate for 30 days when you purchase the item and #cuse it in the game#. \n - You can get the #cSol Erda Energy and Fragment# rewards every day through the Sol Erda Booster. \n#c- Can only be used by Lv. 260+ characters who have completed the 6th Job Advancement questline.\r\n*Caution:#\n#c- This item can be purchased again after 30 days from when it was last purchased.\n- Cannot be purchased if the Sol Erda Booster is currently activated in the game.#" />
+  </dir>
+  <dir name="5782002">
+    <string name="name" value="Regular Coloring Prism" />
+    <string name="desc" value="A #cRegular Coloring Prism# imbued with a mysterious color-changing magic.&#xD;&#xA;\nDouble-click to #crandomly change the color of the decoration item# once.\n\nThe Coloring Prism can only be used on certain items that #ccan be dyed#, and #cuntradable items that are not time-restricted#. Some special effects will retain their original color even if the Coloring Prism is used." />
+  </dir>
+  <dir name="5240251">
+    <string name="name" value="Hippo's Coconut Juice" />
+    <string name="desc" value="Hippo's Coconut Juice loved by the #cI'm a Hippo# pets. Recovers Fullness completely and #cincreases Closeness by 100#." />
+  </dir>
+  <dir name="5240252">
+    <string name="name" value="Ground Meal" />
+    <string name="desc" value="Ground Meal loved by the #cGarden Friends# pets. Recovers Fullness completely and #cincreases Closeness by 100#." />
+  </dir>
+  <dir name="5538696">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (Where Is It?) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon (Where Is It?)#." />
+  </dir>
+  <dir name="5538697">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (Waaah) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon (Waaah)#." />
+  </dir>
+  <dir name="5538698">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (So Very Sleepy) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon So Very Sleepy)#." />
+  </dir>
+  <dir name="5538699">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (Flutter) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon (Flutter)#." />
+  </dir>
+  <dir name="5538700">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (Run Away) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon (Run Away)#." />
+  </dir>
+  <dir name="5538701">
+    <string name="name" value="Baby Lotus's Aspirations Chat Emoticon (Gauge Filling Up) Coupon" />
+    <string name="desc" value="#cDouble-click# to obtain #cBaby Lotus's Aspirations Chat Emoticon (Gauge Filling Up)#." />
+  </dir>
+  <dir name="5150227">
+    <string name="name" value="Change Royal Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to exchange this coupon for a#c random# change to your Royal Hair,\nor talk to Lauren at the Henesys Hair Salon to change your Android's hair. Double-click it in the Cash Shop for a#c preview#!" />
+  </dir>
+  <dir name="5152295">
+    <string name="name" value="Change Royal Face Coupon" />
+    <string name="desc" value="#cDouble-click# to exchange this coupon for a#c random# change to your Royal Face,\nor talk to Lauren at the Henesys Hair Salon to change your Android's face. Double-click it in the Cash Shop for a#c preview#!" />
+  </dir>
+  <dir name="5153025">
+    <string name="name" value="Lynn Skin Coupon" />
+    <string name="desc" value="#cDouble-click# to change your skin to #cLynn Skin#, or talk to Lauren at Henesys Hair Salon to change your Android's skin. Usable once." />
+  </dir>
+  <dir name="5152293">
+    <string name="name" value="Lynn Face Coupon" />
+    <string name="desc" value="#cDouble-click# to change your face to the#c Lynn Face#, or talk to Lauren at the Henesys Hair Salon to change your Android's face. Usable once." />
+  </dir>
+  <dir name="5150225">
+    <string name="name" value="Lynn Hair Coupon" />
+    <string name="desc" value="#cDouble-click# to change your hair to the#c Lynn Hair (M)# (if you're male) or the#c Lynn Hair (F)# (if you're female), or talk to Lauren at Henesys Hair Salon to change your Android's hair. Usable once." />
+  </dir>
+  <dir name="5681081">
+    <string name="name" value="Transparent Hat Coupon" />
+    <string name="desc" value="Double-click to obtain a #cPermanent Transparent Hat#." />
+  </dir>
+  <dir name="5681082">
+    <string name="name" value="Transparent Cape Coupon" />
+    <string name="desc" value="Double-click to obtain a #cPermanent Transparent Cape#." />
+  </dir>
+  <dir name="5240253">
+    <string name="name" value="Eucalyptus Leaf" />
+    <string name="desc" value="A eucalyptus leaf that only the #cPillow Sloth Pet, Prone Sloth Pet, and Hanging Sloth Pet# can eat. Recovers Fullness completely and #cincreases Closeness by 100#." />
+  </dir>
+  <dir name="5681084">
+    <string name="name" value="Transparent Hat Coupon" />
+    <string name="desc" value="Double-click to obtain a #cPermanent Transparent Hat#." />
+  </dir>
+  <dir name="5681085">
+    <string name="name" value="Transparent Cape Coupon" />
+    <string name="desc" value="Double-click to obtain a #cPermanent Transparent Cape#." />
   </dir>
 </dir>

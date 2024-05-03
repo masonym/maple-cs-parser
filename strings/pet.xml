@@ -2500,6 +2500,36 @@
     <string name="desc" value="#cOkya &amp; Tobi#, the children of Identisk." />
     <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
   </dir>
+  <dir name="5002637">
+    <string name="name" value="Baby Hippo" />
+    <string name="desc" value="This #cBaby Hippo# is clumsy and super curious.\nEquip a Baby Animal Friend pet to get access to the #cLet's Play Animal Buddy# skill. The skill gets more powerful when equipping multiple different type of Baby Animal Friend pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002638">
+    <string name="name" value="Wolf Pup" />
+    <string name="desc" value="This #Wolf Pup# is introverted, but quite expressive when alone.\nEquip a Baby Animal Friend pet to get access to the #cLet's Play Animal Buddy# skill. The skill gets more powerful when equipping multiple different type of Baby Animal Friend pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002639">
+    <string name="name" value="Lion Cub" />
+    <string name="desc" value="This #cLion Cub# is mature and talkative for their age.\nEquip a Baby Animal Friend pet to get access to the #cLet's Play Animal Buddy# skill. The skill gets more powerful when equipping multiple different type of Baby Animal Friend pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002640">
+    <string name="name" value="Y. Moon Bfly" />
+    <string name="desc" value="A mystical #cYellow Moon Butterfly#.\nEquip the Moon Butterfly pet to get access to the #cMoon Settlement# skill. The skill gets more powerful when equipping multiple different type of Moon Butterfly pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002641">
+    <string name="name" value="B. Moon Bfly" />
+    <string name="desc" value="A glimmering #cBlue Moon Butterfly#.\nEquip the Moon Butterfly pet to get access to the #cMoon Settlement# skill. The skill gets more powerful when equipping multiple different type of Moon Butterfly pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002642">
+    <string name="name" value="P. Moon Bfly" />
+    <string name="desc" value="A quiet #cPink Moon Butterfly#.\nEquip the Moon Butterfly pet to get access to the #cMoon Settlement# skill. The skill gets more powerful when equipping multiple different type of Moon Butterfly pets. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
   <dir name="5000025">
     <string name="name" value="Golden Pig" />
     <string name="desc" value="This designed Golden Pig will definately bring you a Good Luck!" />
@@ -6288,7 +6318,7 @@
     <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
   </dir>
   <dir name="5002590">
-    <string name="name" value="흑색 낙타 펫" />
+    <string name="name" value="Black Camel" />
     <string name="desc" value="A Black Camel pet." />
     <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
   </dir>
@@ -6520,6 +6550,71 @@
   <dir name="5002683">
     <string name="name" value="Rain Frog" />
     <string name="desc" value="It's Rain Frog. " />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002684">
+    <string name="name" value="Gray Hippo" />
+    <string name="desc" value="A Gray Hippo pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002685">
+    <string name="name" value="Yellow Hippo" />
+    <string name="desc" value="A Yellow Hippo pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002686">
+    <string name="name" value="Pink Hippo" />
+    <string name="desc" value="A Pink Hippo pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002687">
+    <string name="name" value="Sprinkly Pet" />
+    <string name="desc" value="A Sprinkly pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002688">
+    <string name="name" value="Spadey Pet" />
+    <string name="desc" value="A Spadey pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002689">
+    <string name="name" value="Sheary Pet" />
+    <string name="desc" value="A Sheary pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002447">
+    <string name="name" value="Lil Gaia" />
+    <string name="desc" value="A tiny, adorable version of\r\n#cGaia#." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002696">
+    <string name="name" value="Pillow Sloth" />
+    <string name="desc" value="A Pillow Sloth pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002697">
+    <string name="name" value="Prone Sloth" />
+    <string name="desc" value="A Prone Sloth pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002698">
+    <string name="name" value="Dangle Sloth" />
+    <string name="desc" value="A Hanging Sloth pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002703">
+    <string name="name" value="Sheepostman" />
+    <string name="desc" value="A #cSheepostman# pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002704">
+    <string name="name" value="Elepostman" />
+    <string name="desc" value="An #cElepostman# pet." />
+    <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
+  </dir>
+  <dir name="5002705">
+    <string name="name" value="Slostman" />
+    <string name="desc" value="A #cSlostman# pet." />
     <string name="descD" value="Your pet has turned into a doll. You can revive it with the Water of Life." />
   </dir>
 </dir>
