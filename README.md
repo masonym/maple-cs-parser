@@ -10,3 +10,5 @@ From String.wz, we must extract the `Cash`, `Pet`, `Equip`, and in the future, `
 
 Item IDs are acquired from extracting `Commodity.img` from `Etc.wz` and filtering down to only certain term starts. This is very scuffed, I will hopefully come up with a better solution in the future.
 
+Packages name and Description seem to be in Item.wz.Special.910.img
+Package content item IDs are in Etc.wz.CashPackage.img
