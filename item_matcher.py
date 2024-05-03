@@ -121,15 +121,20 @@ def package_contents_parser(package_dict, item_id):
     # or maybe pass in dictionary and item_id?
     tree = ET.parse('./strings/commodity.xml')
     root = tree.getroot()
-    item_ids = []
+    item_ids = {}
+    item_ids[item_id] = {}
     array = package_dict[item_id].get("contents")
-    for sn in array:
+    for idx, sn in enumerate(array):
         for dir_element in root.findall('.//dir'):
             sn_elem = dir_element.find('int32[@name="SN"]')
             if sn_elem is not None and sn_elem.get('value') == sn:
                 item_id_element = dir_element.find('int32[@name="ItemId"]')
+                item_count_element = dir_element.find('int32[@name="Count"]')
                 if item_id_element is not None:
-                    item_ids.append(item_id_element.get('value'))
+                    item_ids[item_id][idx] = {
+                        'itemID': item_id_element.get('value'),
+                        'count': item_count_element.get('value')
+                    }
                 break
     return item_ids
 
@@ -141,7 +146,6 @@ def process_qualifying_dirs(qualifying_dirs, package_dict):
     item_info = {}
     package_contents = {}
     # parse the string XML files
-
 
 
     for dir_element in root_original.findall('dir'):
@@ -165,38 +169,35 @@ def process_qualifying_dirs(qualifying_dirs, package_dict):
             term_end_f = datetime.strptime(term_end, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
         else:
             term_end = ""
-        
-        ''' Useless for now
-        for key, value in packages.items():
-            if item_id == key:
-                package_contents[key] = value
-        '''
 
         # search through all XML files for the corresponding Item ID
         corresponding_dir = None
         if item_id.startswith("910"):
-            package_contents[item_id] = {}
             # stuff
             contents = package_contents_parser(package_dict, item_id)
-            for idx, item in enumerate(contents):
-                package_contents[item_id][idx] = {}
-                for root in [root_cash, root_eqp, root_pet]:
-                    corresponding_dir = search_nested_xml_for_dir_by_name(root, item)
+            for odx, items in contents.items():
+                package_contents[odx] = {}
+                for idx, item_data in items.items():
+                    sub_item_id = item_data['itemID']
+                    count = item_data['count']
+
+                    for root in [root_cash, root_eqp, root_pet]:
+                        corresponding_dir = search_nested_xml_for_dir_by_name(root, sub_item_id)
+                        if corresponding_dir is not None:
+                            break
                     if corresponding_dir is not None:
-                        break
-                if corresponding_dir is not None:
 
-                    name_element = corresponding_dir.find("string[@name='name']")
-                    name = name_element.get('value') if name_element is not None else "Name not found"
+                        name_element = corresponding_dir.find("string[@name='name']")
+                        name = name_element.get('value') if name_element is not None else "Name not found"
+                        
+                        # Get the description string
+                        desc_element = corresponding_dir.find("string[@name='desc']")
+                        description = desc_element.get('value') if desc_element is not None else ""
+                        description = description.replace("#c","").replace("\\n","\n").replace("#","")
+
+                        package_contents[odx][idx] = {'name': name, 'description': description, 'count': count}
+
                     
-                    # Get the description string
-                    desc_element = corresponding_dir.find("string[@name='desc']")
-                    description = desc_element.get('value') if desc_element is not None else ""
-                    description = description.replace("#c","").replace("\\n","\n").replace("#","")
-
-                    package_contents[item_id][idx]['name'] = name
-                    package_contents[item_id][idx]['description'] = description
-
                     
             item_info[item_id] = {'name': package_dict[item_id].get('name'), 'description': package_dict[item_id].get('description'),
                                   'count': count, 'price': price, 'discount': discount, 'originalPrice': original_price,
@@ -238,36 +239,39 @@ def main():
             if info['name'] != "":
                 output += f"Name: {info['name']}"
                 if int(info['count']) != "":
-                    output += f" ({info['count']})\n" if int(info['count']) > 1 else f"\n"
+                    output += f" ({info['count']})\n" if int(info['count']) > 1 else "\n"
             if info['description'] != "":
                 output += f"Description: {info['description']}\n"
             if info['period'] != "":
-                output += f"Duration: "
-                output += f"{info['period']} days\n\n" if info['period'] != "0" else f"Permanent\n\n"
+                output += "Duration: "
+                output += f"{info['period']} days\n\n" if info['period'] != "0" else "Permanent\n\n"
             if info['price'] != "":
-                output += f"Price: {int(info['price']):,} NX"
+                currency = "Mesos" if int(info['price']) > 1000001 else "NX"
+                output+= f"Price: {int(info['price']):,} {currency}"
                 if info['discount'] == "1":
-                    output += f" (was {int(info['originalPrice']):,} NX)\n"
+                    output += f" (was {int(info['originalPrice']):,} {currency})\n"
                 else:
                     output += "\n"
             if 'packageContents' in info:
-                output+= f"\nPackage Contents: \n"
+                output+= "\nPackage Contents: \n"
                 curr_package = info['packageContents'].get(f'{item_id}')
                 for idx, item in enumerate(curr_package):
-                    print(curr_package)
                     output+= f"Item #{idx+1}:\n"
-                    output+= f"Name: {curr_package[idx].get('name')}\n"
-                    output+= f"Description: {curr_package.get('description')}\n\n" if curr_package.get('description') is not None else ""
+                    output+= f"Name: {curr_package[idx].get('name')}"
+                    if int(curr_package[idx].get('count')) > 1:
+                        output+= f" ({curr_package[idx].get('count')})\n"
+                    output+= f"Description: {curr_package[idx].get('description')}\n\n" if curr_package.get('description') is not None else ""
             if info['termStart'] != "":
                 output += f"\nStart Date: {info['termStart']}\n"
             if info['termEnd'] != "":
                 output += f"End Date: {info['termEnd']}\n\n"
             if info['gameWorld'] != "":
                 if info['gameWorld'] == "45/46/70":
-                    output += f"Heroic Servers Only\n"
+                    output += "Heroic Servers Only\n"
                 elif info['gameWorld'] == "0/1/17/18/30/48/49":
-                    output += f"Interactive Servers Only\n"
-                else: output += f"Heroic & Interactive Servers\n"
+                    output += "Interactive Servers Only\n"
+                else:
+                    output += "Heroic & Interactive Servers\n"
             if output != "":
                 file.write(output + "\n")
 
