@@ -27,7 +27,7 @@ def upcoming_sales():
     qualifying_root = ET.Element("root")
 
     now = datetime.now()
-    curr_day = now.strftime("%Y%m%d")
+    curr_day = now.strftime("%Y%m")
 
     # Iterate over all dir elements
     for dir_elem in root.findall('.//dir'):
@@ -41,6 +41,10 @@ def upcoming_sales():
                 qualifying_root.append(dir_elem)
 
     # Write the new XML tree to a file
+    # TODO:
+    # we don't need to save this as a file, we can just pass it.
+    # fix later.
+    
     qualifying_tree = ET.ElementTree(qualifying_root)
     output = "qualifying_dirs.xml"
     qualifying_tree.write(output, encoding="utf-8", xml_declaration=True)
@@ -220,6 +224,8 @@ def process_qualifying_dirs(qualifying_dirs, package_dict):
             description = desc_element.get('value') if desc_element is not None else ""
             description = description.replace("#c","").replace("\\n","\n").replace("#","")
             
+            if item_id.startswith("500") and price == "4900":
+                period = "90"
 
             
             item_info[item_id] = {'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
@@ -256,11 +262,12 @@ def main():
                 output+= "\nPackage Contents: \n"
                 curr_package = info['packageContents'].get(f'{item_id}')
                 for idx, item in enumerate(curr_package):
-                    output+= f"Item #{idx+1}:\n"
-                    output+= f"Name: {curr_package[idx].get('name')}"
+                    output+= f"* Name: {curr_package[idx].get('name')}"
                     if int(curr_package[idx].get('count')) > 1:
                         output+= f" ({curr_package[idx].get('count')})\n"
-                    output+= f"Description: {curr_package[idx].get('description')}\n\n" if curr_package.get('description') is not None else ""
+                    else:
+                        output+= "\n"
+                    output+= f"* Description: {curr_package[idx].get('description')}\n\n" if curr_package[idx].get('description') != "" else ""
             if info['termStart'] != "":
                 output += f"\nStart Date: {info['termStart']}\n"
             if info['termEnd'] != "":
