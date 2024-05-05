@@ -54,19 +54,21 @@ def upcoming_sales(root_commodity):
     qualifying_root = ET.Element("root")
 
     now = datetime.now()
-    curr_month = now.strftime("%Y%m")
+    curr_day = now.strftime("%Y%m%d")
 
     # Iterate over all dir elements
     for dir_elem in root_commodity.findall('.//dir'):
         # Check if the dir element has a child element with name "termStart"
-        term_start_elem = dir_elem.find("./int32[@name='termStart']")
-        # Check if termStart value is in the future or not
-        if term_start_elem is not None and term_start_elem.get('value') >= curr_month:
+        term_end_elem = dir_elem.find("./int32[@name='termEnd']")
+        # Check if termEnd value is in the past or not
+        if term_end_elem is not None and term_end_elem.get('value') >= curr_day:
             # Append the qualifying dir element to the new XML tree
             qualifying_root.append(dir_elem)
 
     
     qualifying_tree = ET.ElementTree(qualifying_root)
+
+
     return qualifying_tree
 
 def sort_xml(tree, sort_by):
@@ -82,8 +84,7 @@ def sort_xml(tree, sort_by):
     # Append the sorted elements back to the root
     for element in sorted_elements:
         root.append(element)
-
-    # Write the sorted XML to the file
+        
     return tree
 
 def search_nested_xml_for_dir_by_name(root, item_id):
@@ -118,12 +119,9 @@ def package_dict_creator(qualified_tree, root_package_names, root_package_conten
             package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","") if package.find("string[@name='desc']") is not None else ""
 
             for dir_element in root_package_contents.findall('dir'):
-                contents = []
                 if package_id == dir_element.attrib['name']:
-                    for int32_element in dir_element.findall('.//int32'):
-                        value = int32_element.get('value')
-                        contents.append(value)
-                    package_dict[package_id]["contents"] = contents
+                    package_dict[package_id]["contents"] = [int32_element.get('value') for int32_element in dir_element.findall('.//int32')]
+
     
     # return nested dictionaries
     return package_dict
@@ -156,11 +154,15 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
     item_info = {}
     package_contents = {}
 
-    # parse the string XML files
-
-
     for dir_element in root_qualified.findall('dir'):
         # get the value of the 'ItemId' attribute from commodity data
+        # sn_id is needed to differentiate items with the same ID being sold at different values such as amount, price, period
+        # sn_id is only used to differentiate non-package items for now, may need to change in the future but unsure
+        # will very likely need to modify the dictionary to put the item ID somewhere in there;
+        # because it used to be the key value of each dict entry, but now it is nowhere in the dict
+        # i will do this later because it won't be needed until I figure out how to pull images from Wz files
+
+        sn_id = dir_element.find("int32[@name='SN']").get('value')
         item_id = dir_element.find("int32[@name='ItemId']").get('value')
         price = dir_element.find("int32[@name='Price']").get('value')
         count = dir_element.find("int32[@name='Count']").get('value')
@@ -168,18 +170,14 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
         original_price = dir_element.find("int32[@name='originalPrice']").get('value') if dir_element.find("int32[@name='originalPrice']") is not None else "0"
         game_world = dir_element.find("string[@name='gameWorld']").get('value')
         period = dir_element.find("int32[@name='Period']").get('value')
+
         term_start_element = dir_element.find("int32[@name='termStart']")
-        if term_start_element is not None:
-            term_start = term_start_element.get('value')
-            term_start_f = datetime.strptime(term_start, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
-        else: 
-            term_start = ""
+        term_start = term_start_element.get('value')
+        term_start_f = datetime.strptime(term_start, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
+
         term_end_element = dir_element.find("int32[@name='termEnd']")
-        if term_end_element is not None:
-            term_end = term_end_element.get('value')
-            term_end_f = datetime.strptime(term_end, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
-        else:
-            term_end = ""
+        term_end = term_end_element.get('value')
+        term_end_f = datetime.strptime(term_end, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
 
         # search through all XML files for the corresponding Item ID
         corresponding_dir = None
@@ -203,8 +201,8 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                         
                         # Get the description string
                         desc_element = corresponding_dir.find("string[@name='desc']")
-                        description = desc_element.get('value') if desc_element is not None else ""
-                        description = description.replace("#c","").replace("\\n","\n").replace("#","")
+                        description = desc_element.get('value') if desc_element is not None else None
+                        description = description.replace("#c","").replace("\\n","\n").replace("#","") if description is not None else None
 
                         package_contents[odx][idx] = {'name': name, 'description': description, 'count': count}
 
@@ -228,8 +226,8 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
             
             # Get the description string
             desc_element = corresponding_dir.find("string[@name='desc']")
-            description = desc_element.get('value') if desc_element is not None else ""
-            description = description.replace("#c","").replace("\\n","\n").replace("#","")
+            description = desc_element.get('value') if desc_element is not None else None
+            description = description.replace("#c","").replace("\\n","\n").replace("#","") if description is not None else None
             
             # pets are listed as permanent because the item itself is permanent
             # but the magic duration is not permanent
@@ -238,7 +236,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                 period = "90"
 
             
-            item_info[item_id] = {'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
+            item_info[sn_id] = {'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
 
     return item_info
 
@@ -254,48 +252,62 @@ def main():
 
     with open("CashShopSales.txt", "w") as file:
         for item_id, info in item_info.items():
-            output = "---\n"
-            if info['name'] != "":
-                output += f"Name: {info['name']}"
-                if int(info['count']) != "":
-                    output += f" ({info['count']})\n" if int(info['count']) > 1 else "\n"
-            if info['description'] != "":
-                output += f"Description: {info['description']}\n"
-            if info['period'] != "":
-                output += "Duration: "
-                output += f"{info['period']} days\n\n" if info['period'] != "0" else "Permanent\n\n"
-            if info['price'] != "":
+            output_lines = []
+            output_lines.append("---")
+            if info.get('name') != "":
+                name_line = f"Name: {info['name']}"
+                if int(info.get('count', 0)) > 1:
+                    name_line += f" ({info['count']})"
+                output_lines.append(name_line)
+
+            if info.get('description'):
+                output_lines.append(f"Description: {info['description']}")
+
+            if info.get('period') != "":
+                duration_line = "Duration: "
+                duration_line += f"{info['period']} days" if info['period'] != "0" else "Permanent"
+                output_lines.append(duration_line)
+                output_lines.append("")
+
+            if info.get('price') != "":
                 currency = "Mesos" if int(info['price']) > 1000001 else "NX"
-                output+= f"Price: {int(info['price']):,} {currency}"
-                if info['discount'] == "1":
-                    output += f" (was {int(info['originalPrice']):,} {currency})\n"
-                else:
-                    output += "\n"
+                price_line = f"Price: {int(info['price']):,} {currency}"
+                if info.get('discount') == "1":
+                    price_line += f" (was {int(info['originalPrice']):,} {currency})"
+                output_lines.append(price_line)
+
             if 'packageContents' in info:
-                output+= "\nPackage Contents: \n"
+                output_lines.append("\nPackage Contents:")
                 curr_package = info['packageContents'].get(f'{item_id}')
                 for idx, item in enumerate(curr_package):
-                    output+= f"* Name: {curr_package[idx].get('name')}"
-                    if int(curr_package[idx].get('count')) > 1:
-                        output+= f" ({curr_package[idx].get('count')})\n"
-                    else:
-                        output+= "\n"
-                    output+= f"* Description: {curr_package[idx].get('description')}\n\n" if curr_package[idx].get('description') != "" else ""
-            if info['termStart'] != "":
-                output += f"\nStart Date: {info['termStart']}\n"
-            if info['termEnd'] != "":
-                output += f"End Date: {info['termEnd']}\n\n"
-            if info['gameWorld'] != "":
+                    content_lines = []
+                    if curr_package[idx].get('name') != "":
+                        content_lines.append(f"* Name: {curr_package[idx]['name']}")
+                        if int(curr_package[idx].get('count', 0)) > 1:
+                            content_lines[-1] += f" ({curr_package[idx]['count']})"
+                    if curr_package[idx].get('description'):
+                        content_lines.append(f"  * Description: {curr_package[idx]['description']}")
+                    output_lines.extend(content_lines)
+
+            if info.get('termStart') != "":
+                output_lines.append(f"\nStart Date: {info['termStart']}")
+
+            if info.get('termEnd') != "":
+                output_lines.append(f"End Date: {info['termEnd']}")
+                output_lines.append("")
+
+            if info.get('gameWorld') != "":
                 if info['gameWorld'] == "45/46/70":
-                    output += "Heroic Servers Only\n"
+                    output_lines.append("Heroic Servers Only")
                 elif info['gameWorld'] == "0/1/17/18/30/48/49":
-                    output += "Interactive Servers Only\n"
+                    output_lines.append("Interactive Servers Only")
                 else:
-                    output += "Heroic & Interactive Servers\n"
-            if output != "":
-                file.write(output + "\n")
+                    output_lines.append("Heroic & Interactive Servers")
+
+            if output_lines:
+                output = "\n".join(output_lines)
+                file.write(output + "\n\n")
 
     print("Saved as CashShopSales.txt")
-
 if __name__ == "__main__":
     main()
