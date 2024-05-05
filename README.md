@@ -14,11 +14,8 @@ Item IDs are acquired from extracting `Commodity.img` from `Etc.wz` and filterin
 
 # Todo:
 
-* Automate WZ IMG extracting/XML dumping
-* Clean up and refactor code.
-	* Global variables for XML dirs
-	* Dedicated function for parsing XML files 
-	* Pass qualifying_dirs instead of writing to file
-* Potentially add Markdown formatting to output
+* Automate WZ IMG extracting/XML dumping  
+  * need to figure out how first
+* Potentially add Markdown formatting to output -- probably not though
 * Automatically post to a website somewhere
 * Eventually add images
