@@ -42,14 +42,13 @@ def parse_xml_files():
         tree_package_contents.getroot()
     )
 
-def upcoming_sales():
+def upcoming_sales(root_commodity):
     # This script parses a dumped Commodity.img to XML 
     # For every dir in the XML, find ones that are upcoming
     # Use current month to find any Dirs with term_start values of that month
 
     # Load the XML file
     # unused XML files get assigned to dummy variables
-    root_commodity, _, _, _, _, _, = parse_xml_files()
 
     # Create a new XML tree for qualifying dirs
     qualifying_root = ET.Element("root")
@@ -66,20 +65,17 @@ def upcoming_sales():
             # Append the qualifying dir element to the new XML tree
             qualifying_root.append(dir_elem)
 
-    # Write the new XML tree to a file
-    # TODO:
-    # we don't need to save this as a file, we can just pass it.
-    # fix later.
     
     qualifying_tree = ET.ElementTree(qualifying_root)
-    qualifying_tree.write(QUALIFYING_DIRS_OUTPUT, encoding="utf-8", xml_declaration=True)
-    print(f"Wrote contents to {QUALIFYING_DIRS_OUTPUT}")
     return qualifying_tree
 
-def sort_xml(tree):
+def sort_xml(tree, sort_by):
+    '''
+    Sort an XML tree by passed element
+    '''
     root = tree.getroot()
 
-    sorted_elements = sorted(root, key=lambda x: int(x.find("int32[@name='termStart']").get("value")))
+    sorted_elements = sorted(root, key=lambda x: int(x.find(f"int32[@name='{sort_by}']").get("value")))
 
     root.clear()
 
@@ -103,10 +99,8 @@ def search_nested_xml_for_dir_by_name(root, item_id):
     """
     return root.find(f".//dir[@name='{item_id}']")
 
-def package_dict_creator(qualified_tree):
+def package_dict_creator(qualified_tree, root_package_names, root_package_contents):
     root = qualified_tree.getroot()
-
-    _, _, _, _, root_package_names, root_package_contents = parse_xml_files()
 
     # make package dir for storing data
     # contents will be an array of SN IDs
@@ -134,10 +128,9 @@ def package_dict_creator(qualified_tree):
     # return nested dictionaries
     return package_dict
 
-def package_contents_parser(package_dict, item_id):
+def package_contents_parser(package_dict, item_id, root_commodity):
     # something = an entry from our dictionary
     # or maybe pass in dictionary and item_id?
-    root_commodity, _, _, _, _, _ = parse_xml_files()
 
     item_ids = {}
     item_ids[item_id] = {}
@@ -158,12 +151,11 @@ def package_contents_parser(package_dict, item_id):
 
 
 
-def process_qualifying_dirs(qualified_tree, package_dict):
+def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_cash, root_eqp, root_pet):
     root_qualified = qualified_tree.getroot()
     item_info = {}
     package_contents = {}
 
-    _, root_cash, root_eqp, root_pet, _, _ = parse_xml_files()
     # parse the string XML files
 
 
@@ -193,7 +185,7 @@ def process_qualifying_dirs(qualified_tree, package_dict):
         corresponding_dir = None
         if item_id.startswith("910"):
             # stuff
-            contents = package_contents_parser(package_dict, item_id)
+            contents = package_contents_parser(package_dict, item_id, root_commodity)
             for odx, items in contents.items():
                 package_contents[odx] = {}
                 for idx, item_data in items.items():
@@ -239,6 +231,9 @@ def process_qualifying_dirs(qualified_tree, package_dict):
             description = desc_element.get('value') if desc_element is not None else ""
             description = description.replace("#c","").replace("\\n","\n").replace("#","")
             
+            # pets are listed as permanent because the item itself is permanent
+            # but the magic duration is not permanent
+            # this is a hack job to list them as 90-day until i figure out where magic duration is stored
             if item_id.startswith("500") and price == "4900":
                 period = "90"
 
@@ -248,10 +243,13 @@ def process_qualifying_dirs(qualified_tree, package_dict):
     return item_info
 
 def main():
-    qualifying_dirs = upcoming_sales()
-    sort_xml(qualifying_dirs)
-    package_dict = package_dict_creator(qualifying_dirs)
-    item_info = process_qualifying_dirs(qualifying_dirs, package_dict)
+    root_commodity, root_cash, root_eqp, root_pet, root_package_names, root_package_contents = parse_xml_files()
+
+    qualifying_dirs = upcoming_sales(root_commodity)
+    sort_by = 'termStart' # change this if you want to change the sort
+    sort_xml(qualifying_dirs, sort_by)
+    package_dict = package_dict_creator(qualifying_dirs, root_package_names, root_package_contents)
+    item_info = process_qualifying_dirs(qualifying_dirs, package_dict, root_commodity, root_cash, root_eqp, root_pet)
 
 
     with open("CashShopSales.txt", "w") as file:
