@@ -1,18 +1,46 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-# globals
-tree_cash = ET.parse('./strings/cash.xml')
-tree_eqp = ET.parse('./strings/equips.xml')
-tree_pet = ET.parse('./strings/pet.xml')
-root_cash = tree_cash.getroot()
-root_eqp = tree_eqp.getroot()
-root_pet = tree_pet.getroot()
 '''
 
 Script to parse sales data and match itemIDs to string name & descriptions.
 
 '''
+# Global variables
+CASH_XML = './strings/cash.xml'
+EQUIPS_XML = './strings/equips.xml'
+PET_XML = './strings/pet.xml'
+COMMODITY_XML = './strings/commodity.xml'
+PACKAGE_NAMES_XML = './strings/package_names.xml'
+PACKAGE_CONTENTS_XML = './strings/package_contents.xml'
+QUALIFYING_DIRS_OUTPUT = 'qualifying_dirs.xml'
+
+def parse_xml_files():
+    """
+    Parse the XML files and return the root elements.
+    Returns:
+    #1 - commodity.xml
+    #2 - cash.xml
+    #3 - eqp.xml
+    #4 - pet.xml
+    #5 - package_names.xml
+    #6 - package_contents.xml
+    """
+    tree_commodity = ET.parse(COMMODITY_XML)
+    tree_cash = ET.parse(CASH_XML)
+    tree_eqp = ET.parse(EQUIPS_XML)
+    tree_pet = ET.parse(PET_XML)
+    tree_package_names = ET.parse(PACKAGE_NAMES_XML)
+    tree_package_contents = ET.parse(PACKAGE_CONTENTS_XML)
+
+    return (
+        tree_commodity.getroot(),
+        tree_cash.getroot(),
+        tree_eqp.getroot(),
+        tree_pet.getroot(),
+        tree_package_names.getroot(),
+        tree_package_contents.getroot()
+    )
 
 def upcoming_sales():
     # This script parses a dumped Commodity.img to XML 
@@ -20,25 +48,23 @@ def upcoming_sales():
     # Use current month to find any Dirs with term_start values of that month
 
     # Load the XML file
-    tree = ET.parse('./strings/commodity.xml')
-    root = tree.getroot()
+    # unused XML files get assigned to dummy variables
+    root_commodity, _, _, _, _, _, = parse_xml_files()
 
     # Create a new XML tree for qualifying dirs
     qualifying_root = ET.Element("root")
 
     now = datetime.now()
-    curr_day = now.strftime("%Y%m")
+    curr_month = now.strftime("%Y%m")
 
     # Iterate over all dir elements
-    for dir_elem in root.findall('.//dir'):
+    for dir_elem in root_commodity.findall('.//dir'):
         # Check if the dir element has a child element with name "termStart"
         term_start_elem = dir_elem.find("./int32[@name='termStart']")
-        if term_start_elem is not None:
-            term_start_value = term_start_elem.get('value')
-            # Check if termStart value is in the future or not
-            if (term_start_value >= curr_day):
-                # Append the qualifying dir element to the new XML tree
-                qualifying_root.append(dir_elem)
+        # Check if termStart value is in the future or not
+        if term_start_elem is not None and term_start_elem.get('value') >= curr_month:
+            # Append the qualifying dir element to the new XML tree
+            qualifying_root.append(dir_elem)
 
     # Write the new XML tree to a file
     # TODO:
@@ -46,13 +72,11 @@ def upcoming_sales():
     # fix later.
     
     qualifying_tree = ET.ElementTree(qualifying_root)
-    output = "qualifying_dirs.xml"
-    qualifying_tree.write(output, encoding="utf-8", xml_declaration=True)
-    print(f"Wrote contents to {output}")
-    return output
+    qualifying_tree.write(QUALIFYING_DIRS_OUTPUT, encoding="utf-8", xml_declaration=True)
+    print(f"Wrote contents to {QUALIFYING_DIRS_OUTPUT}")
+    return qualifying_tree
 
-def sort_xml(file):
-    tree = ET.parse(file)
+def sort_xml(tree):
     root = tree.getroot()
 
     sorted_elements = sorted(root, key=lambda x: int(x.find("int32[@name='termStart']").get("value")))
@@ -64,7 +88,7 @@ def sort_xml(file):
         root.append(element)
 
     # Write the sorted XML to the file
-    tree.write(file)
+    return tree
 
 def search_nested_xml_for_dir_by_name(root, item_id):
     """
@@ -79,24 +103,14 @@ def search_nested_xml_for_dir_by_name(root, item_id):
     """
     return root.find(f".//dir[@name='{item_id}']")
 
-def package_dict_creator(qualifying_dirs):
-    tree = ET.parse(qualifying_dirs)
-    root = tree.getroot()
+def package_dict_creator(qualified_tree):
+    root = qualified_tree.getroot()
 
-    tree_package_names = ET.parse('./strings/package_names.xml')
-    root_package_names = tree_package_names.getroot()
-
-    tree_package_contents = ET.parse('./strings/package_contents.xml')
-    root_package_contents = tree_package_contents.getroot()
+    _, _, _, _, root_package_names, root_package_contents = parse_xml_files()
 
     # make package dir for storing data
     # contents will be an array of SN IDs
-    package_dict = {
-        # "packageID": "",
-        # "name": "",
-        # "description": "",
-        # "contents": ""
-    }
+    package_dict = {}
 
     # get package names
     for dir_element in root.findall('dir'):
@@ -123,13 +137,13 @@ def package_dict_creator(qualifying_dirs):
 def package_contents_parser(package_dict, item_id):
     # something = an entry from our dictionary
     # or maybe pass in dictionary and item_id?
-    tree = ET.parse('./strings/commodity.xml')
-    root = tree.getroot()
+    root_commodity, _, _, _, _, _ = parse_xml_files()
+
     item_ids = {}
     item_ids[item_id] = {}
     array = package_dict[item_id].get("contents")
     for idx, sn in enumerate(array):
-        for dir_element in root.findall('.//dir'):
+        for dir_element in root_commodity.findall('.//dir'):
             sn_elem = dir_element.find('int32[@name="SN"]')
             if sn_elem is not None and sn_elem.get('value') == sn:
                 item_id_element = dir_element.find('int32[@name="ItemId"]')
@@ -144,15 +158,16 @@ def package_contents_parser(package_dict, item_id):
 
 
 
-def process_qualifying_dirs(qualifying_dirs, package_dict):
-    tree_original = ET.parse(qualifying_dirs)
-    root_original = tree_original.getroot()
+def process_qualifying_dirs(qualified_tree, package_dict):
+    root_qualified = qualified_tree.getroot()
     item_info = {}
     package_contents = {}
+
+    _, root_cash, root_eqp, root_pet, _, _ = parse_xml_files()
     # parse the string XML files
 
 
-    for dir_element in root_original.findall('dir'):
+    for dir_element in root_qualified.findall('dir'):
         # get the value of the 'ItemId' attribute from commodity data
         item_id = dir_element.find("int32[@name='ItemId']").get('value')
         price = dir_element.find("int32[@name='Price']").get('value')
