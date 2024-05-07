@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
+import shutil
+import os.path
 
 '''
 
@@ -13,7 +15,6 @@ PET_XML = './strings/pet.xml'
 COMMODITY_XML = './strings/commodity.xml'
 PACKAGE_NAMES_XML = './strings/package_names.xml'
 PACKAGE_CONTENTS_XML = './strings/package_contents.xml'
-QUALIFYING_DIRS_OUTPUT = 'qualifying_dirs.xml'
 
 def parse_xml_files():
     """
@@ -84,7 +85,7 @@ def sort_xml(tree, sort_by):
     # Append the sorted elements back to the root
     for element in sorted_elements:
         root.append(element)
-        
+
     return tree
 
 def search_nested_xml_for_dir_by_name(root, item_id):
@@ -147,14 +148,12 @@ def package_contents_parser(package_dict, item_id, root_commodity):
                 break
     return item_ids
 
-
-
 def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_cash, root_eqp, root_pet):
     root_qualified = qualified_tree.getroot()
     item_info = {}
-    package_contents = {}
 
     for dir_element in root_qualified.findall('dir'):
+        package_contents = {}
         # get the value of the 'ItemId' attribute from commodity data
         # sn_id is needed to differentiate items with the same ID being sold at different values such as amount, price, period
         # sn_id is only used to differentiate non-package items for now, may need to change in the future but unsure
@@ -204,15 +203,15 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                         description = desc_element.get('value') if desc_element is not None else None
                         description = description.replace("#c","").replace("\\n","\n").replace("#","") if description is not None else None
 
-                        package_contents[odx][idx] = {'name': name, 'description': description, 'count': count}
+                        package_contents[odx][idx] = {'itemID': sub_item_id, 'name': name, 'description': description, 'count': count}
 
                     
                     
-            item_info[item_id] = {'name': package_dict[item_id].get('name'), 'description': package_dict[item_id].get('description'),
-                                  'count': count, 'price': price, 'discount': discount, 'originalPrice': original_price,
-                                  'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period,
-                                  'packageContents': package_contents
-                                  }
+            item_info[item_id] = {'itemID': item_id, 'name': package_dict[item_id].get('name'), 'description': package_dict[item_id].get('description'),
+                                    'count': count, 'price': price, 'discount': discount, 'originalPrice': original_price,
+                                    'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period,
+                                    'packageContents': package_contents
+                                    }
         for root in [root_cash, root_eqp, root_pet]:
             corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
             if corresponding_dir is not None:
@@ -236,9 +235,109 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                 period = "90"
 
             
-            item_info[sn_id] = {'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
+            item_info[sn_id] = {'itemID': item_id, 'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
 
     return item_info
+
+def get_images(item_dict):
+
+    """"
+    maybe theres a better way to do this idk
+    could probably do this in an object-oriented way? 
+    object's range = prefix, idk
+
+    cash:
+    501-599
+
+    pet:
+    500xx
+
+
+
+    face: 002-005
+    hat: 100
+    accessory: 101, 102, 103, 112 to 119
+    coat: 104
+    longcoat: 105
+    pants: 106
+    shoes: 107
+    glove: 108
+    shield: 109
+    cape: 110
+    ring: 111
+    weapon: 121 to 171
+    android: 166-167
+    """
+
+
+
+
+    # sn_id = SN (key)
+    # info = dict entry 
+    for sn_id, info in item_dict.items():
+        item_id = info.get('itemID')
+        prefix = int(str(info.get('itemID'))[:3])
+
+        if prefix in range(2, 6):
+            img_path = f"./dumped_wz/Character/Face/_Canvas/{item_id}.img/info/icon.png"
+        elif prefix == 100:
+            img_path = f"./dumped_wz/Character/Cap/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix in [101, 102, 103] or prefix in range(112, 120):
+            img_path = f"./dumped_wz/Character/Accessory/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 104:
+            img_path = f"./dumped_wz/Character/Coat/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 105:
+            img_path = f"./dumped_wz/Character/Longcoat/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 106:
+            img_path = f"./dumped_wz/Character/Pants/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 107:
+            img_path = f"./dumped_wz/Character/Shoes/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 108:
+            img_path = f"./dumped_wz/Character/Glove/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 109:
+            img_path = f"./dumped_wz/Character/Shield/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 110:
+            img_path = f"./dumped_wz/Character/Cape/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 111:
+            img_path = f"./dumped_wz/Character/Ring/_Canvas/0{item_id}.img/info/icon.png"
+        elif prefix == 180:
+            img_path = f"./dumped_wz/Character/PetEquip/_Canvas/0{item_id}.img/info/icon.png"
+        # weapon
+        elif prefix in range(121, 172):
+            xml_path = f"./dumped_wz/Character/Weapon/0{item_id}.img.xml"
+            wep_tree = ET.parse(xml_path)
+            root = wep_tree.getroot()
+            icon_canvas = root.find(".//canvas[@name='icon']")
+            outlink_value = icon_canvas.find("string[@name='_outlink']").attrib['value']
+            img_path = f"./dumped_wz/{outlink_value}.png"
+        # android
+        elif prefix in [166, 167]:
+            img_path = f"./dumped_wz/Character/Android/_Canvas/0{item_id}.img/info/icon.png"
+        # pets
+        elif prefix == 500:
+            img_path = f"./dumped_wz/Item.wz/Pet/{item_id}.img/info/icon.png"
+        # cash items
+        elif prefix in range(500, 600):
+            img_path = f"./dumped_wz/Item.wz/Cash/0{prefix}.img/0{item_id}/info/icon.png"
+        # packages
+        elif prefix >= 900:
+            img_path = f"./dumped_wz/Item.wz/Special/0{prefix}.img/{item_id}/icon.png"
+            for package_id, items in info['packageContents'].items():
+                # recursively call image getter on package contents dict
+                get_images(items)
+
+        else:
+            img_path = f"Unknown file path for item ID: {item_id}"
+    
+
+        dest_file = f'./images/{item_id}.png'
+
+        # put item icon into images folder if img doesnt already exist
+        if not os.path.isfile(dest_file):
+            shutil.copy(img_path, dest_file)
+        
+        
+
 
 def main():
     root_commodity, root_cash, root_eqp, root_pet, root_package_names, root_package_contents = parse_xml_files()
@@ -249,6 +348,7 @@ def main():
     package_dict = package_dict_creator(qualifying_dirs, root_package_names, root_package_contents)
     item_info = process_qualifying_dirs(qualifying_dirs, package_dict, root_commodity, root_cash, root_eqp, root_pet)
 
+    get_images(item_info)
 
     with open("CashShopSales.txt", "w") as file:
         for item_id, info in item_info.items():
@@ -269,6 +369,10 @@ def main():
                 output_lines.append(duration_line)
                 output_lines.append("")
 
+            ## CURRENTLY this does a funky workaround to display the currency
+            ## but i've learned that items sold in Mesos actually have an SN id starting with `87`
+            ## so we can use that to our advantage later. probably will be nice for the website to categorize things
+            ## but for now this remains.
             if info.get('price') != "":
                 currency = "Mesos" if int(info['price']) > 1000001 else "NX"
                 price_line = f"Price: {int(info['price']):,} {currency}"
