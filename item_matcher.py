@@ -20,12 +20,12 @@ def parse_xml_files():
     """
     Parse the XML files and return the root elements.
     Returns:
-    #1 - commodity.xml
-    #2 - cash.xml
-    #3 - eqp.xml
-    #4 - pet.xml
-    #5 - package_names.xml
-    #6 - package_contents.xml
+    #1 - commodity strings
+    #2 - cash strings
+    #3 - eqp strings
+    #4 - pet strings
+    #5 - package names
+    #6 - package contents
     """
     tree_commodity = ET.parse(COMMODITY_XML)
     tree_cash = ET.parse(CASH_XML)
@@ -47,9 +47,6 @@ def upcoming_sales(root_commodity):
     # This script parses a dumped Commodity.img to XML 
     # For every dir in the XML, find ones that are upcoming
     # Use current month to find any Dirs with term_start values of that month
-
-    # Load the XML file
-    # unused XML files get assigned to dummy variables
 
     # Create a new XML tree for qualifying dirs
     qualifying_root = ET.Element("root")
@@ -127,9 +124,6 @@ def package_dict_creator(qualified_tree, root_package_names, root_package_conten
     return package_dict
 
 def package_contents_parser(package_dict, item_id, root_commodity):
-    # something = an entry from our dictionary
-    # or maybe pass in dictionary and item_id?
-
     item_ids = {}
     item_ids[item_id] = {}
     array = package_dict[item_id].get("contents")
@@ -154,11 +148,6 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
     for dir_element in root_qualified.findall('imgdir'):
         package_contents = {}
         # get the value of the 'ItemId' attribute from commodity data
-        # sn_id is needed to differentiate items with the same ID being sold at different values such as amount, price, period
-        # sn_id is only used to differentiate non-package items for now, may need to change in the future but unsure
-        # will very likely need to modify the dictionary to put the item ID somewhere in there;
-        # because it used to be the key value of each dict entry, but now it is nowhere in the dict
-        # i will do this later because it won't be needed until I figure out how to pull images from Wz files
 
         sn_id = dir_element.find("int[@name='SN']").get('value')
         item_id = dir_element.find("int[@name='ItemId']").get('value')
@@ -229,9 +218,13 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
             
             # pets are listed as permanent because the item itself is permanent
             # but the magic duration is not permanent
-            # this is a hack job to list them as 90-day until i figure out where magic duration is stored
+            # life info comnes from {item_id}.img.xml form the <int name="life" value=x"> dir
             if item_id.startswith("500") and price == "4900":
-                period = "90"
+                pet_path = f"./dumped_wz/Item.wz/Pet/{item_id}.img.xml"
+                pet_info_tree = ET.parse(pet_path)
+                pet_info_root = pet_info_tree.getroot()
+                life_val = pet_info_root.find(".//int[@name='life']").attrib['value']
+                period = life_val
 
             
             item_info[sn_id] = {'itemID': item_id, 'name': name, 'count': count, 'description': description, 'price': price, 'discount': discount, 'originalPrice': original_price, 'termStart': term_start_f, 'termEnd': term_end_f, 'gameWorld': game_world, 'period': period}
