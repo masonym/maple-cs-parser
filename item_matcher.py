@@ -9,12 +9,12 @@ Script to parse sales data and match itemIDs to string name & descriptions.
 
 '''
 # Global variables
-CASH_XML = './strings/cash.xml'
-EQUIPS_XML = './strings/equips.xml'
-PET_XML = './strings/pet.xml'
-COMMODITY_XML = './strings/commodity.xml'
-PACKAGE_NAMES_XML = './strings/package_names.xml'
-PACKAGE_CONTENTS_XML = './strings/package_contents.xml'
+CASH_XML = './dumped_wz/String.wz/Cash.img.xml'
+EQUIPS_XML = './dumped_wz/String.wz/Eqp.img.xml'
+PET_XML = './dumped_wz/String.wz/Pet.img.xml'
+COMMODITY_XML = './dumped_wz/Etc.wz/Commodity.img.xml'
+PACKAGE_NAMES_XML = './dumped_wz/Item.wz/Special/0910.img.xml'
+PACKAGE_CONTENTS_XML = './dumped_wz/Etc.wz/CashPackage.img.xml'
 
 def parse_xml_files():
     """
@@ -58,9 +58,9 @@ def upcoming_sales(root_commodity):
     curr_day = now.strftime("%Y%m%d")
 
     # Iterate over all dir elements
-    for dir_elem in root_commodity.findall('.//dir'):
+    for dir_elem in root_commodity.findall('.//imgdir'):
         # Check if the dir element has a child element with name "termStart"
-        term_end_elem = dir_elem.find("./int32[@name='termEnd']")
+        term_end_elem = dir_elem.find("./int[@name='termEnd']")
         # Check if termEnd value is in the past or not
         if term_end_elem is not None and term_end_elem.get('value') >= curr_day:
             # Append the qualifying dir element to the new XML tree
@@ -68,7 +68,6 @@ def upcoming_sales(root_commodity):
 
     
     qualifying_tree = ET.ElementTree(qualifying_root)
-
 
     return qualifying_tree
 
@@ -78,7 +77,7 @@ def sort_xml(tree, sort_by):
     '''
     root = tree.getroot()
 
-    sorted_elements = sorted(root, key=lambda x: int(x.find(f"int32[@name='{sort_by}']").get("value")))
+    sorted_elements = sorted(root, key=lambda x: int(x.find(f"int[@name='{sort_by}']").get("value")))
 
     root.clear()
 
@@ -99,7 +98,7 @@ def search_nested_xml_for_dir_by_name(root, item_id):
     Returns:
         Element or None: XML element with the matching name, or None if not found.
     """
-    return root.find(f".//dir[@name='{item_id}']")
+    return root.find(f".//imgdir[@name='{item_id}']")
 
 def package_dict_creator(qualified_tree, root_package_names, root_package_contents):
     root = qualified_tree.getroot()
@@ -109,19 +108,19 @@ def package_dict_creator(qualified_tree, root_package_names, root_package_conten
     package_dict = {}
 
     # get package names
-    for dir_element in root.findall('dir'):
-        item_id = dir_element.find("int32[@name='ItemId']").get('value')
+    for dir_element in root.findall('imgdir'):
+        item_id = dir_element.find("int[@name='ItemId']").get('value')
         if item_id.startswith("910"):
             # for dir_element_2 in root_package_names:
-            package = root_package_names.find(f"dir[@name='{item_id}']")
+            package = root_package_names.find(f"imgdir[@name='{item_id}']")
             package_id = package.attrib['name']
             package_dict[package_id] = {}
             package_dict[package_id]["name"] = package.find("string[@name='name']").get('value')
             package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","") if package.find("string[@name='desc']") is not None else ""
 
-            for dir_element in root_package_contents.findall('dir'):
+            for dir_element in root_package_contents.findall('imgdir'):
                 if package_id == dir_element.attrib['name']:
-                    package_dict[package_id]["contents"] = [int32_element.get('value') for int32_element in dir_element.findall('.//int32')]
+                    package_dict[package_id]["contents"] = [int_element.get('value') for int_element in dir_element.findall('.//int')]
 
     
     # return nested dictionaries
@@ -135,11 +134,11 @@ def package_contents_parser(package_dict, item_id, root_commodity):
     item_ids[item_id] = {}
     array = package_dict[item_id].get("contents")
     for idx, sn in enumerate(array):
-        for dir_element in root_commodity.findall('.//dir'):
-            sn_elem = dir_element.find('int32[@name="SN"]')
+        for dir_element in root_commodity.findall('.//imgdir'):
+            sn_elem = dir_element.find('int[@name="SN"]')
             if sn_elem is not None and sn_elem.get('value') == sn:
-                item_id_element = dir_element.find('int32[@name="ItemId"]')
-                item_count_element = dir_element.find('int32[@name="Count"]')
+                item_id_element = dir_element.find('int[@name="ItemId"]')
+                item_count_element = dir_element.find('int[@name="Count"]')
                 if item_id_element is not None:
                     item_ids[item_id][idx] = {
                         'itemID': item_id_element.get('value'),
@@ -152,7 +151,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
     root_qualified = qualified_tree.getroot()
     item_info = {}
 
-    for dir_element in root_qualified.findall('dir'):
+    for dir_element in root_qualified.findall('imgdir'):
         package_contents = {}
         # get the value of the 'ItemId' attribute from commodity data
         # sn_id is needed to differentiate items with the same ID being sold at different values such as amount, price, period
@@ -161,20 +160,20 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
         # because it used to be the key value of each dict entry, but now it is nowhere in the dict
         # i will do this later because it won't be needed until I figure out how to pull images from Wz files
 
-        sn_id = dir_element.find("int32[@name='SN']").get('value')
-        item_id = dir_element.find("int32[@name='ItemId']").get('value')
-        price = dir_element.find("int32[@name='Price']").get('value')
-        count = dir_element.find("int32[@name='Count']").get('value')
-        discount = dir_element.find("int32[@name='discount']").get('value') if dir_element.find("int32[@name='discount']") is not None else "0"
-        original_price = dir_element.find("int32[@name='originalPrice']").get('value') if dir_element.find("int32[@name='originalPrice']") is not None else "0"
+        sn_id = dir_element.find("int[@name='SN']").get('value')
+        item_id = dir_element.find("int[@name='ItemId']").get('value')
+        price = dir_element.find("int[@name='Price']").get('value')
+        count = dir_element.find("int[@name='Count']").get('value')
+        discount = dir_element.find("int[@name='discount']").get('value') if dir_element.find("int[@name='discount']") is not None else "0"
+        original_price = dir_element.find("int[@name='originalPrice']").get('value') if dir_element.find("int[@name='originalPrice']") is not None else "0"
         game_world = dir_element.find("string[@name='gameWorld']").get('value')
-        period = dir_element.find("int32[@name='Period']").get('value')
+        period = dir_element.find("int[@name='Period']").get('value')
 
-        term_start_element = dir_element.find("int32[@name='termStart']")
+        term_start_element = dir_element.find("int[@name='termStart']")
         term_start = term_start_element.get('value')
         term_start_f = datetime.strptime(term_start, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
 
-        term_end_element = dir_element.find("int32[@name='termEnd']")
+        term_end_element = dir_element.find("int[@name='termEnd']")
         term_end = term_end_element.get('value')
         term_end_f = datetime.strptime(term_end, '%Y%m%d%H').strftime('%m-%d-%Y %H:00 UTC')
 
@@ -341,13 +340,11 @@ def get_images(item_dict):
 
 def main():
     root_commodity, root_cash, root_eqp, root_pet, root_package_names, root_package_contents = parse_xml_files()
-
     qualifying_dirs = upcoming_sales(root_commodity)
     sort_by = 'termStart' # change this if you want to change the sort
     sort_xml(qualifying_dirs, sort_by)
     package_dict = package_dict_creator(qualifying_dirs, root_package_names, root_package_contents)
     item_info = process_qualifying_dirs(qualifying_dirs, package_dict, root_commodity, root_cash, root_eqp, root_pet)
-
     get_images(item_info)
 
     with open("CashShopSales.txt", "w") as file:
