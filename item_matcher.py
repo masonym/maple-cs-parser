@@ -322,7 +322,7 @@ def get_images(item_dict):
             img_path = f"Unknown file path for item ID: {item_id}"
     
 
-        dest_file = f'./images/{item_id}.png'
+        dest_file = f'./upcoming-sales-website/public/images/{item_id}.png'
 
         # put item icon into images folder if img doesnt already exist
         if not os.path.isfile(dest_file):
@@ -340,68 +340,71 @@ def main():
     item_info = process_qualifying_dirs(qualifying_dirs, package_dict, root_commodity, root_cash, root_eqp, root_pet)
     get_images(item_info)
 
-    with open("CashShopSales.txt", "w") as file:
-        for item_id, info in item_info.items():
-            output_lines = []
-            output_lines.append("---")
-            if info.get('name') != "":
-                name_line = f"Name: {info['name']}"
-                if int(info.get('count', 0)) > 1:
-                    name_line += f" ({info['count']})"
-                output_lines.append(name_line)
+    # with open("CashShopSales.txt", "w") as file:
+    #     for item_id, info in item_info.items():
+    #         output_lines = []
+    #         output_lines.append("---")
+    #         if info.get('name') != "":
+    #             name_line = f"Name: {info['name']}"
+    #             if int(info.get('count', 0)) > 1:
+    #                 name_line += f" ({info['count']})"
+    #             output_lines.append(name_line)
 
-            if info.get('description'):
-                output_lines.append(f"Description: {info['description']}")
+    #         if info.get('description'):
+    #             output_lines.append(f"Description: {info['description']}")
 
-            if info.get('period') != "":
-                duration_line = "Duration: "
-                duration_line += f"{info['period']} days" if info['period'] != "0" else "Permanent"
-                output_lines.append(duration_line)
-                output_lines.append("")
+    #         if info.get('period') != "":
+    #             duration_line = "Duration: "
+    #             duration_line += f"{info['period']} days" if info['period'] != "0" else "Permanent"
+    #             output_lines.append(duration_line)
+    #             output_lines.append("")
 
-            ## CURRENTLY this does a funky workaround to display the currency
-            ## but i've learned that items sold in Mesos actually have an SN id starting with `87`
-            ## so we can use that to our advantage later. probably will be nice for the website to categorize things
-            ## but for now this remains.
-            if info.get('price') != "":
-                currency = "Mesos" if int(info['price']) > 1000001 else "NX"
-                price_line = f"Price: {int(info['price']):,} {currency}"
-                if info.get('discount') == "1":
-                    price_line += f" (was {int(info['originalPrice']):,} {currency})"
-                output_lines.append(price_line)
+    #         ## CURRENTLY this does a funky workaround to display the currency
+    #         ## but i've learned that items sold in Mesos actually have an SN id starting with `87`
+    #         ## so we can use that to our advantage later. probably will be nice for the website to categorize things
+    #         ## but for now this remains.
+    #         if info.get('price') != "":
+    #             currency = "Mesos" if int(info['price']) > 1000001 else "NX"
+    #             price_line = f"Price: {int(info['price']):,} {currency}"
+    #             if info.get('discount') == "1":
+    #                 price_line += f" (was {int(info['originalPrice']):,} {currency})"
+    #             output_lines.append(price_line)
 
-            if 'packageContents' in info:
-                output_lines.append("\nPackage Contents:")
-                curr_package = info['packageContents'].get(f'{item_id}')
-                for idx, item in enumerate(curr_package):
-                    content_lines = []
-                    if curr_package[idx].get('name') != "":
-                        content_lines.append(f"* Name: {curr_package[idx]['name']}")
-                        if int(curr_package[idx].get('count', 0)) > 1:
-                            content_lines[-1] += f" ({curr_package[idx]['count']})"
-                    if curr_package[idx].get('description'):
-                        content_lines.append(f"  * Description: {curr_package[idx]['description']}")
-                    output_lines.extend(content_lines)
+    #         if 'packageContents' in info:
+    #             output_lines.append("\nPackage Contents:")
+    #             curr_package = info['packageContents'].get(f'{item_id}')
+    #             for idx, item in enumerate(curr_package):
+    #                 content_lines = []
+    #                 if curr_package[idx].get('name') != "":
+    #                     content_lines.append(f"* Name: {curr_package[idx]['name']}")
+    #                     if int(curr_package[idx].get('count', 0)) > 1:
+    #                         content_lines[-1] += f" ({curr_package[idx]['count']})"
+    #                 if curr_package[idx].get('description'):
+    #                     content_lines.append(f"  * Description: {curr_package[idx]['description']}")
+    #                 output_lines.extend(content_lines)
 
-            if info.get('termStart') != "":
-                output_lines.append(f"\nStart Date: {info['termStart']}")
+    #         if info.get('termStart') != "":
+    #             output_lines.append(f"\nStart Date: {info['termStart']}")
 
-            if info.get('termEnd') != "":
-                output_lines.append(f"End Date: {info['termEnd']}")
-                output_lines.append("")
+    #         if info.get('termEnd') != "":
+    #             output_lines.append(f"End Date: {info['termEnd']}")
+    #             output_lines.append("")
 
-            if info.get('gameWorld') != "":
-                if info['gameWorld'] == "45/46/70":
-                    output_lines.append("Heroic Servers Only")
-                elif info['gameWorld'] == "0/1/17/18/30/48/49":
-                    output_lines.append("Interactive Servers Only")
-                else:
-                    output_lines.append("Heroic & Interactive Servers")
+    #         if info.get('gameWorld') != "":
+    #             if info['gameWorld'] == "45/46/70":
+    #                 output_lines.append("Heroic Servers Only")
+    #             elif info['gameWorld'] == "0/1/17/18/30/48/49":
+    #                 output_lines.append("Interactive Servers Only")
+    #             else:
+    #                 output_lines.append("Heroic & Interactive Servers")
 
-            if output_lines:
-                output = "\n".join(output_lines)
-                file.write(output + "\n\n")
+    #         if output_lines:
+    #             output = "\n".join(output_lines)
+    #             file.write(output + "\n\n")
 
-    print("Saved as CashShopSales.txt")
+    # print("Saved as CashShopSales.txt")
+
+    
+    return item_info
 if __name__ == "__main__":
     main()
