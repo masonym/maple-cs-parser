@@ -18,6 +18,43 @@ const convertNewlinesToBreaks = (text) => {
     ));
 };
 
+// Function to display package contents
+
+const renderPackageContents = (contents) => {
+    if (!contents) return null;
+
+    return (
+        <ul className={styles.packageContents}>
+            {Object.entries(contents).map(([packageKey, packageItems]) => (
+                <li key={packageKey}>
+                    <strong>Includes:</strong>
+                    <ul className={styles.packageItems}>
+                        {Object.entries(packageItems).map(([itemIndex, itemDetails]) => {
+                            const countText = itemDetails.count > 1 ? ` (x${itemDetails.count})` : '';
+                            return (
+                                <li key={itemIndex} className={styles.packageItem}>
+                                    <div className={styles.packageItemFlexContainer}>
+                                        <img 
+                                            src={`./images/${itemDetails.itemID}.png`} 
+                                            alt={itemDetails.name} 
+                                            className={styles.packageItemImage} 
+                                            onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
+                                        />
+                                        <div>
+                                            <p>{itemDetails.name}{countText}</p>
+                                            {itemDetails.description && <p><i>{itemDetails.description}</i></p>}
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </li>
+            ))}
+        </ul>
+    );
+};
+
 function ItemList() {
     const [items, setItems] = useState({});
     const [sortedKeys, setSortedKeys] = useState([]);
@@ -32,7 +69,7 @@ function ItemList() {
             })
             .catch(error => console.error(error));
     }, []);
-
+    console.log(items)
     // Function to sort the keys array based on item attributes
     const sortItems = () => {
         const newSortedKeys = [...sortedKeys].sort((a, b) => {
@@ -83,20 +120,20 @@ function ItemList() {
 
     return (
         <div>
-            <h1>Upcoming Sales</h1>
+            <h1>MapleStory Upcoming Cash Shop Sales</h1>
             <div className={styles.sortControls}>
-            <label htmlFor="sortKey">Sort by: </label>
-            <select id="sortKey" value={sortKey} onChange={handleSortKeyChange} className={styles.dropdown}>
-                <option value="name">Name</option>
-                <option value="price">Price</option>
-                <option value="termStart">Start Date</option>
-                <option value="termEnd">End Date</option>
-            </select>
-            <label htmlFor="sortOrder">Order: </label>
-            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={styles.dropdown}>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
+                <label htmlFor="sortKey">Sort by: </label>
+                <select id="sortKey" value={sortKey} onChange={handleSortKeyChange} className={styles.dropdown}>
+                    <option value="name">Name</option>
+                    <option value="price">Price</option>
+                    <option value="termStart">Start Date</option>
+                    <option value="termEnd">End Date</option>
+                </select>
+                <label htmlFor="sortOrder">Order: </label>
+                <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={styles.dropdown}>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
             </div>
             <ul className={styles.itemList}>
                 {sortedKeys.map((key) => (
@@ -115,13 +152,14 @@ function ItemList() {
                         <p>Price: {formatNumber(items[key].price)}{key.substring(0, 3) === '870' ? ' Mesos' : ' NX'}</p>
                         <p>Start Date: {items[key].termStart}</p>
                         <p>End Date: {items[key].termEnd}</p>
+                        {renderPackageContents(items[key].packageContents)}
                         {items[key].gameWorld.split('/').map((gameWorldId) => (
-                        <img className={styles.gameWorld}
-                            key={gameWorldId} 
-                            src={`./gameWorlds/${gameWorldId}.png`} 
-                            alt={`Game World ${gameWorldId}`} 
-                            onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
-                        />
+                            <img className={styles.gameWorld}
+                                key={gameWorldId} 
+                                src={`./gameWorlds/${gameWorldId}.png`} 
+                                alt={`Game World ${gameWorldId}`} 
+                                onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
+                            />
                         ))}
                     </li>
                 ))}

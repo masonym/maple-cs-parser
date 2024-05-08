@@ -4,6 +4,10 @@
     src: url("../maplestory_light.otf")
 }
 
+body {
+    /* background-color: #FDFFB6; */
+    background-color: #FFF5E6;
+}
 
 .itemFlexContainer {
   display: flex;
@@ -13,6 +17,17 @@
   width: 50px;
   height: 50px;
   margin-right: 10px;
+  margin-left: 10px;
+}
+
+.item {
+    margin: 5%;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: #CAFFBF;
+    padding: 10px;
+    /* height: 32px;
+    width: 32px; */
 }
 
 .gameWorld {
@@ -24,7 +39,7 @@
 
 h1 {
     text-align: center;
-    margin-bottom: 10px; /* add some space between the header and sort controls */
+    margin-bottom: 30px; /* add some space between the header and sort controls */
   }
   
   .sortControls {
@@ -34,21 +49,83 @@ h1 {
   }
   
   .sortControls label, .sortControls select {
-    margin: 0 10px; /* add some space between the labels and selects */
+    margin: 0 5px;
   }
 
 ul {
     list-style-type: none;
 }
 
-li {
-    margin-bottom: 5%;
-    border-radius: 20px;
-    border: 2px solid black;
-    padding: 10px;
-    /* border-style: ; */
-}
 
 div {
     font-family: maplestory;
+}
+
+select {
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: auto;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    text-align: center;
+    text-align-last: center;
+    color: #002B5C; 
+    display: grid;
+  }
+
+select option {
+    text-align: center;
+    background-color: transparent
+}
+
+select option:checked {
+    background-color: transparent
+}
+
+.select::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  }
+
+
+
+hr {
+    height: 2px;
+    border: none;
+    background-color: #A0C4FF
+}
+
+.packageContents li {
+    padding: 4px 0;
+}
+
+.packageItems {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.packageItems li {
+    padding-bottom: 4px;
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 5px
+    
+}
+
+.packageItemFlexContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.packageItemImage {
+    object-fit: cover;
+    margin-right: 8px;
 }
