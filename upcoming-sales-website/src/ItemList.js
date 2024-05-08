@@ -8,7 +8,7 @@ const formatNumber = (number) => {
 
 // Function to convert text with '\n' into an array of <br> elements
 const convertNewlinesToBreaks = (text) => {
-    if (!text) return null; // Handle null or undefined descriptions gracefully
+    if (!text) return null;
 
     return text.split('\n').map((line, index) => (
         <React.Fragment key={index}>
@@ -19,7 +19,6 @@ const convertNewlinesToBreaks = (text) => {
 };
 
 // Function to display package contents
-
 const renderPackageContents = (contents) => {
     if (!contents) return null;
 
@@ -60,19 +59,51 @@ function ItemList() {
     const [sortedKeys, setSortedKeys] = useState([]);
     const [sortKey, setSortKey] = useState('termStart');
     const [sortOrder, setSortOrder] = useState('asc');
+    const [hidePastItems, setHidePastItems] = useState(false);
 
     useEffect(() => {
         axios.get('/api/items')
             .then(response => {
-                setItems(response.data);
-                setSortedKeys(Object.keys(response.data));
+                const allItems = response.data;
+                setItems(allItems);
+
+                // Sort and filter the keys initially based on the default behavior
+                const sortedAndFilteredKeys = Object.keys(allItems)
+                    .sort((a, b) => {
+                        let valA = allItems[a][sortKey];
+                        let valB = allItems[b][sortKey];
+
+                        // Convert date strings to Date objects for comparison if key is termStart or termEnd
+                        if (sortKey === 'termStart' || sortKey === 'termEnd') {
+                            valA = new Date(valA);
+                            valB = new Date(valB);
+                        }
+
+                        // Convert to numbers for comparison if key is 'price'
+                        if (sortKey === 'price') {
+                            valA = Number(valA);
+                            valB = Number(valB);
+                        }
+
+                        if (valA < valB) {
+                            return sortOrder === 'asc' ? -1 : 1;
+                        }
+                        if (valA > valB) {
+                            return sortOrder === 'asc' ? 1 : -1;
+                        }
+                        return 0;
+                    })
+                    // Initially hide past items
+                    .filter(key => new Date(allItems[key].termStart) > new Date());
+
+                setSortedKeys(sortedAndFilteredKeys);
             })
             .catch(error => console.error(error));
     }, []);
-    console.log(items)
+
     // Function to sort the keys array based on item attributes
     const sortItems = () => {
-        const newSortedKeys = [...sortedKeys].sort((a, b) => {
+        const newSortedKeys = [...Object.keys(items)].sort((a, b) => {
             let valA = items[a][sortKey];
             let valB = items[b][sortKey];
 
@@ -97,8 +128,13 @@ function ItemList() {
             return 0;
         });
 
+        // Filter out items with past termStart dates if hidePastItems is unchecked
+        const filteredKeys = hidePastItems
+            ? newSortedKeys
+            : newSortedKeys.filter(key => new Date(items[key].termStart) > new Date());
+
         // Update state with the new sorted keys
-        setSortedKeys(newSortedKeys);
+        setSortedKeys(filteredKeys);
     };
 
     // Handle changes in the sorting attribute dropdown
@@ -113,10 +149,15 @@ function ItemList() {
         sortItems();
     };
 
-    // Trigger sorting when sortKey or sortOrder changes
+    // Trigger sorting when sortKey, sortOrder, or hidePastItems changes
     useEffect(() => {
         sortItems();
-    }, [sortKey, sortOrder]);
+    }, [sortKey, sortOrder, hidePastItems]);
+
+    // Toggle hiding past items
+    const toggleHidePastItems = (event) => {
+        setHidePastItems(event.target.checked);
+    };
 
     return (
         <div>
@@ -134,6 +175,15 @@ function ItemList() {
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
                 </select>
+                <label className={styles.checkboxLabel}>
+                    <input 
+                        type="checkbox" 
+                        checked={hidePastItems} 
+                        onChange={toggleHidePastItems} 
+                        className={styles.checkboxInput}
+                    />
+                    Show Past Items
+                </label>
             </div>
             <ul className={styles.itemList}>
                 {sortedKeys.map((key) => (
