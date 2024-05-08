@@ -19,6 +19,10 @@ def serve_react_app(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+    
+with open('item_data.json', 'w') as f:
+    import json
+    json.dump(item_data, f)
 
 if __name__ == '__main__':
     app.run()
