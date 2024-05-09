@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import shutil
 import os.path
+import json
 
 '''
 
@@ -407,6 +408,9 @@ def main():
     #             file.write(output + "\n\n")
 
     # print("Saved as CashShopSales.txt")
+    with open('item_data.json', 'w') as f:
+        json.dump(item_info, f)
+
 
     return item_info
 if __name__ == "__main__":

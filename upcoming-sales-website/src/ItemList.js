@@ -6,7 +6,6 @@ const formatNumber = (number) => {
     return new Intl.NumberFormat('en-US').format(number);
 };
 
-// Function to convert text with '\n' into an array of <br> elements
 const convertNewlinesToBreaks = (text) => {
     if (!text) return null;
 
@@ -18,7 +17,6 @@ const convertNewlinesToBreaks = (text) => {
     ));
 };
 
-// Function to display package contents
 const renderPackageContents = (contents) => {
     if (!contents) return null;
 
@@ -41,7 +39,7 @@ const renderPackageContents = (contents) => {
                                         />
                                         <div>
                                             <p>{itemDetails.name}{countText}</p>
-                                            {itemDetails.description && <p><i>{itemDetails.description}</i></p>}
+                                            {itemDetails.description && <p><i>{convertNewlinesToBreaks(itemDetails.description)}</i></p>}
                                         </div>
                                     </div>
                                 </li>
@@ -67,94 +65,69 @@ function ItemList() {
                 const allItems = response.data;
                 setItems(allItems);
 
-                // Sort and filter the keys initially based on the default behavior
                 const sortedAndFilteredKeys = Object.keys(allItems)
                     .sort((a, b) => {
                         let valA = allItems[a][sortKey];
                         let valB = allItems[b][sortKey];
 
-                        // Convert date strings to Date objects for comparison if key is termStart or termEnd
                         if (sortKey === 'termStart' || sortKey === 'termEnd') {
                             valA = new Date(valA);
                             valB = new Date(valB);
                         }
 
-                        // Convert to numbers for comparison if key is 'price'
                         if (sortKey === 'price') {
                             valA = Number(valA);
                             valB = Number(valB);
                         }
 
-                        if (valA < valB) {
-                            return sortOrder === 'asc' ? -1 : 1;
-                        }
-                        if (valA > valB) {
-                            return sortOrder === 'asc' ? 1 : -1;
-                        }
+                        if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                        if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
                         return 0;
                     })
-                    // Initially hide past items
                     .filter(key => new Date(allItems[key].termStart) > new Date());
 
                 setSortedKeys(sortedAndFilteredKeys);
             })
             .catch(error => console.error(error));
-    }, []);
+    }, [sortKey, sortOrder]); // Include sortKey and sortOrder in the dependency array
 
-    // Function to sort the keys array based on item attributes
-    const sortItems = () => {
-        const newSortedKeys = [...Object.keys(items)].sort((a, b) => {
-            let valA = items[a][sortKey];
-            let valB = items[b][sortKey];
+    useEffect(() => {
+        const sortItems = () => {
+            const newSortedKeys = [...Object.keys(items)].sort((a, b) => {
+                let valA = items[a][sortKey];
+                let valB = items[b][sortKey];
 
-            // Convert date strings to Date objects for comparison if key is termStart or termEnd
-            if (sortKey === 'termStart' || sortKey === 'termEnd') {
-                valA = new Date(valA);
-                valB = new Date(valB);
-            }
+                if (sortKey === 'termStart' || sortKey === 'termEnd') {
+                    valA = new Date(valA);
+                    valB = new Date(valB);
+                }
 
-            // Convert to numbers for comparison if key is 'price'
-            if (sortKey === 'price') {
-                valA = Number(valA);
-                valB = Number(valB);
-            }
+                if (sortKey === 'price') {
+                    valA = Number(valA);
+                    valB = Number(valB);
+                }
 
-            if (valA < valB) {
-                return sortOrder === 'asc' ? -1 : 1;
-            }
-            if (valA > valB) {
-                return sortOrder === 'asc' ? 1 : -1;
-            }
-            return 0;
-        });
+                if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                return 0;
+            });
 
-        // Filter out items with past termStart dates if hidePastItems is unchecked
-        const filteredKeys = hidePastItems
-            ? newSortedKeys
-            : newSortedKeys.filter(key => new Date(items[key].termStart) > new Date());
+            const filteredKeys = hidePastItems ? newSortedKeys : newSortedKeys.filter(key => new Date(items[key].termStart) > new Date());
 
-        // Update state with the new sorted keys
-        setSortedKeys(filteredKeys);
-    };
+            setSortedKeys(filteredKeys);
+        };
 
-    // Handle changes in the sorting attribute dropdown
+        sortItems();
+    }, [sortKey, sortOrder, items, hidePastItems]); // Include all dependencies in the dependency array
+
     const handleSortKeyChange = (event) => {
         setSortKey(event.target.value);
-        sortItems();
     };
 
-    // Handle changes in the sorting order dropdown
     const handleSortOrderChange = (event) => {
         setSortOrder(event.target.value);
-        sortItems();
     };
 
-    // Trigger sorting when sortKey, sortOrder, or hidePastItems changes
-    useEffect(() => {
-        sortItems();
-    }, [sortKey, sortOrder, hidePastItems]);
-
-    // Toggle hiding past items
     const toggleHidePastItems = (event) => {
         setHidePastItems(event.target.checked);
     };
@@ -193,12 +166,13 @@ function ItemList() {
                                 src={`./images/${items[key].itemID}.png`}
                                 className={styles.itemImage}
                                 alt={items[key].name}
+                                onError={(e) => { e.target.style.display = 'none'; }}
                             />
                             <p>{items[key].name}</p>
                         </div>
                         <p>{convertNewlinesToBreaks(items[key].description)}</p>
                         <hr />
-                        <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key].period} days`}</p>
+                        <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key]. period} days`}</p>
                         <p>Price: {formatNumber(items[key].price)}{key.substring(0, 3) === '870' ? ' Mesos' : ' NX'}</p>
                         <p>Start Date: {items[key].termStart}</p>
                         <p>End Date: {items[key].termEnd}</p>
