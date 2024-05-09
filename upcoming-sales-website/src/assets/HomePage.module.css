@@ -86,3 +86,10 @@
 .projects {
     margin-top: 5vh
 }
+
+.projects img {
+    max-width: 25vw;
+    max-height: 25vh;
+    border: 2px solid black;
+    border-radius: 10px;
+}

@@ -25,7 +25,7 @@ function App() {
           <h2>Tools</h2>
           <h4>Upcoming Cash Shop Sales</h4>
           <a href="/ms-upcoming-sales">
-          <img src="../assets/upcoming-sales.png" alt="Picture of upcoming sales site">
+          <img src={require("../assets/upcoming-sales.png")} alt="Upcoming sales site">
           </img>
           </a>
           <p><i>A handy tool for checking the upcoming Cash Shop sales for MapleStory</i></p>
