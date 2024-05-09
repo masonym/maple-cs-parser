@@ -1,21 +1,40 @@
 # maple-cs-parser
 Simple tool to scrape upcoming cash shop sales in MapleStory
 
+This project involves datamining files for the MMORPG MapleStory developed by Nexon. The purpose of the project is to extract upcoming sales data for the in-game store, and display it on a reactive website for members of the community to be able to view before they are officially available. 
 
 # Usage
 
-This tool is very primitive for now. I don't know how to parse WZ files yet, so this relies on other tools such as HaRepacker or WzComparerR2 to extract XML data from WZ images.
+This tool relies on some method of dumping WZ files, such as [HaRepacker](https://github.com/lastbattle/Harepacker-resurrected), [WzComparerR2](https://github.com/Kagamia/WzComparerR2), or [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper). Depending on the method used, you will likely need to modify the global variables in `item_matcher.py` to fit your file structure. 
 
-From String.wz, we must extract the `Cash`, `Pet`, and `Equip` images. These are placed into the `strings` folder so we can match Item IDs to strings.
-From Etc.wz, we must extract the `Commodity` and `CashPackage` images. `Commodity.img` contains upcoming sale data, and `CashPackage` contains package sub-item IDs.
-From Item.wz, we must extract `Special.910.img` - this is where the names and descriptions of cash packages are stored.
+### To Update Cloudflare KV:
 
-Item IDs are acquired from extracting `Commodity.img` from `Etc.wz` and filtering down to sales starting in the current month onwards.
+1. Dump updated WZ via method of choice, as seen above.
+2. Run `python item_matcher.py` in `/item-info-generator` (this generates `item_data.json`)
+3. Run `node src/update_kv.js` in `/item-info-worker`
+4. Deploy worker with `wrangler deploy` in `/item-info-worker`
 
-# Todo:
+### To view site locally:
 
-* Automate WZ IMG extracting/XML dumping  
-  * need to figure out how first
-* Potentially add Markdown formatting to output -- probably not though
-* Automatically post to a website somewhere
-* Eventually add images
+1. Run `npm start` in `/upcoming-sales-website`
+
+
+---
+
+# Technology used
+
+* [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper) for extracting wz files
+* Python for XML parsing
+* Wrangler for generating an API via Cloudflare worker
+* React for displaying data from api to static site
+    * Axios for HTTP requests
+
+# Some useful information regarding .wz file structure:
+
+* Strings for Pets, Cash Items, and Equips are contained in String.wz. These include names and descriptions for given item IDs. The relevant files are `Pet.img`, `Cash.img`, and `Eqp.img`
+* Sales data and cash shop package contents are contained in `Etc.wz`. Sales data is stored in `Commodity.img`, and cash packages are stored in `CashPackage.img`
+* Names and descriptions of cash packages are stored in `Item.wz`, specifically in `Special/0910.img`
+
+# Eventual Features:
+
+* I would like to figure out how to read WZ files in order to make this more efficient - dumping the entire game into XML files is quite time consuming, though for now I'm not worried about it because updates come seldomly anyways.
