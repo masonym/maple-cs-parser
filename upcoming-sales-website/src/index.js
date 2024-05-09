@@ -1,9 +1,11 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-function App() {
-  return (
-    <Router basename="/ms-upcoming-sales">
-      {/* Your routes here */}
-    </Router>
-  );
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);

@@ -1,12 +1,9 @@
-import React from 'react';
-import ItemList from './ItemList.js';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
-    return (
-        <div className="App">
-            <ItemList />
-        </div>
-    );
+  return (
+    <Router basename="/ms-upcoming-sales">
+      {/* Your routes here */}
+    </Router>
+  );
 }
-
-export default App;
