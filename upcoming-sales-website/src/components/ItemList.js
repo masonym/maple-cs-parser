@@ -91,7 +91,7 @@ function ItemList() {
                 setSortedKeys(sortedAndFilteredKeys);
             })
             .catch(error => console.error(error));
-    }, [sortKey, sortOrder]); // Include sortKey and sortOrder in the dependency array
+    }, [sortKey, sortOrder]);
 
     useEffect(() => {
         const sortItems = () => {

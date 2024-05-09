@@ -15,7 +15,7 @@ function App() {
         <>
           <Helmet>
             <title>Home Page</title>
-            <meta name="description" content="hi its my website =)" />
+            <meta name="og:description" content="hi its my website =)" />
           </Helmet>
           <HomePage />
         </>
