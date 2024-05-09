@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './ItemList.module.css';
+import styles from '../assets/ItemList.module.css';
 
 const formatNumber = (number) => {
     return new Intl.NumberFormat('en-US').format(number);
