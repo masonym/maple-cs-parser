@@ -169,7 +169,7 @@ function ItemList() {
                                 alt={items[key].name}
                                 onError={(e) => { e.target.style.display = 'none'; }}
                             />
-                            <p>{items[key].name}{items[key].count > 1 ? ` (x${itemDetails.count})` : ''}</p>
+                            <p>{items[key].name}{items[key].count > 1 ? ` (x${items[key].count})` : ''}</p>
                         </div>
                         <p>{convertNewlinesToBreaks(items[key].description)}</p>
                         <hr />
