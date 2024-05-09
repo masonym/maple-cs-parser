@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from utils import format_description  # Import the utility function
-
+from utils import format_description
+from image_handling import PATH_PREF_ITEM
 
 def upcoming_sales(root_commodity):
     qualifying_root = ET.Element("root")
@@ -13,6 +13,7 @@ def upcoming_sales(root_commodity):
         if term_end_elem is not None and term_end_elem.get('value') >= curr_day:
             qualifying_root.append(dir_elem)
 
+
     return ET.ElementTree(qualifying_root)
 
 def sort_xml(tree, sort_by):
@@ -21,6 +22,7 @@ def sort_xml(tree, sort_by):
     root.clear()
     for element in sorted_elements:
         root.append(element)
+
     return tree
 
 def package_dict_creator(qualified_tree, root_package_names, root_package_contents):
@@ -66,6 +68,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
     item_info = {}
 
     for dir_element in root_qualified.findall('imgdir'):
+        package_contents = {}
         sn_id = dir_element.find("int[@name='SN']").get('value')
         item_id = dir_element.find("int[@name='ItemId']").get('value')
         price = dir_element.find("int[@name='Price']").get('value')
@@ -82,7 +85,6 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
 
         if item_id.startswith("910"):
             contents = package_contents_parser(package_dict, item_id, root_commodity)
-            package_contents = {}
             for odx, items in contents.items():
                 package_contents[odx] = {}
                 for idx, item_data in items.items():
@@ -117,30 +119,37 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                 'period': period,
                 'packageContents': package_contents
             }
-        else:
-            for root in [root_cash, root_eqp, root_pet]:
-                corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
-                if corresponding_dir is not None:
-                    break
-            
+        for root in [root_cash, root_eqp, root_pet]:
+            corresponding_dir = search_nested_xml_for_dir_by_name(root, item_id)
             if corresponding_dir is not None:
-                name_element = corresponding_dir.find("string[@name='name']")
-                name = name_element.get('value') if name_element is not None else "Name not found"
-                desc_element = corresponding_dir.find("string[@name='desc']")
-                description = format_description(desc_element.get('value')) if desc_element is not None else None
-                
-                item_info[sn_id] = {
-                    'itemID': item_id,
-                    'name': name,
-                    'count': count,
-                    'description': description,
-                    'price': price,
-                    'discount': discount,
-                    'originalPrice': original_price,
-                    'termStart': term_start_f,
-                    'termEnd': term_end_f,
-                    'gameWorld': game_world,
-                    'period': period
-                }
+                break
+            
+        if corresponding_dir is not None:
+            name_element = corresponding_dir.find("string[@name='name']")
+            name = name_element.get('value') if name_element is not None else "Name not found"
+            desc_element = corresponding_dir.find("string[@name='desc']")
+            description = format_description(desc_element.get('value')) if desc_element is not None else None
 
+        if item_id.startswith("500") and price == "4900":
+            pet_path = f"{PATH_PREF_ITEM}/Pet/{item_id}.img.xml"
+            pet_info_tree = ET.parse(pet_path)
+            pet_info_root = pet_info_tree.getroot()
+            life_val = pet_info_root.find(".//int[@name='life']").attrib['value']
+            period = life_val
+
+            
+        item_info[sn_id] = {
+            'itemID': item_id,
+            'name': name,
+            'count': count,
+            'description': description,
+            'price': price,
+            'discount': discount,
+            'originalPrice': original_price,
+            'termStart': term_start_f,
+            'termEnd': term_end_f,
+            'gameWorld': game_world,
+            'period': period
+        }
+    print(item_info)
     return item_info
