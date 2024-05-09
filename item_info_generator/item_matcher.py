@@ -117,7 +117,7 @@ def package_dict_creator(qualified_tree, root_package_names, root_package_conten
             package_id = package.attrib['name']
             package_dict[package_id] = {}
             package_dict[package_id]["name"] = package.find("string[@name='name']").get('value')
-            package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","") if package.find("string[@name='desc']") is not None else ""
+            package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","").replace("\\r","") if package.find("string[@name='desc']") is not None else ""
 
             for dir_element in root_package_contents.findall('imgdir'):
                 if package_id == dir_element.attrib['name']:
@@ -193,7 +193,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                         # Get the description string
                         desc_element = corresponding_dir.find("string[@name='desc']")
                         description = desc_element.get('value') if desc_element is not None else None
-                        description = description.replace("#c","").replace("\\n","\n").replace("#","") if description is not None else None
+                        description = description.replace("#c","").replace("\\n","\n").replace("#","").replace("\\r","") if description is not None else None
 
                         package_contents[odx][idx] = {'itemID': sub_item_id, 'name': name, 'description': description, 'count': count}
 
@@ -218,7 +218,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
             # Get the description string
             desc_element = corresponding_dir.find("string[@name='desc']")
             description = desc_element.get('value') if desc_element is not None else None
-            description = description.replace("#c","").replace("\\n","\n").replace("#","") if description is not None else None
+            description = description.replace("#c","").replace("\\n","\n").replace("#","").replace("\\r","") if description is not None else None
             
             # pets are listed as permanent because the item itself is permanent
             # but the magic duration is not permanent
