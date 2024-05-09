@@ -19,6 +19,8 @@ const convertNewlinesToBreaks = (text) => {
     ));
 };
 
+// <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key].period} days`}</p>
+
 const renderPackageContents = (contents) => {
     if (!contents) return null;
 
@@ -42,6 +44,7 @@ const renderPackageContents = (contents) => {
                                         <div>
                                             <p>{itemDetails.name}{countText}</p>
                                             {itemDetails.description && <p><i>{convertNewlinesToBreaks(itemDetails.description)}</i></p>}
+                                            <p>Duration: {itemDetails.period === '0' ? 'Permanent' : `${itemDetails.period} days`}</p>
                                         </div>
                                     </div>
                                 </li>

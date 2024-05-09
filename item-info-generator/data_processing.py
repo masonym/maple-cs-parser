@@ -27,46 +27,42 @@ def sort_xml(tree, sort_by):
 
 def package_dict_creator(qualified_tree, root_package_names, root_package_contents):
     root = qualified_tree.getroot()
-
-    # make package dir for storing data
-    # contents will be an array of SN IDs
     package_dict = {}
 
-    # get package names
     for dir_element in root.findall('imgdir'):
         item_id = dir_element.find("int[@name='ItemId']").get('value')
         if item_id.startswith("910"):
-            # for dir_element_2 in root_package_names:
             package = root_package_names.find(f"imgdir[@name='{item_id}']")
-            package_id = package.attrib['name']
-            package_dict[package_id] = {}
-            package_dict[package_id]["name"] = package.find("string[@name='name']").get('value')
-            package_dict[package_id]["description"] = package.find("string[@name='desc']").get('value').replace("#c","").replace("\\n","\n").replace("#","").replace("\\r","") if package.find("string[@name='desc']") is not None else ""
+            if package:
+                package_id = package.attrib['name']
+                package_dict[package_id] = {
+                    "name": package.find("string[@name='name']").get('value'),
+                    "description": format_description(package.find("string[@name='desc']").get('value')) if package.find("string[@name='desc']") is not None else ""
+                }
 
-            for dir_element in root_package_contents.findall('imgdir'):
-                if package_id == dir_element.attrib['name']:
-                    package_dict[package_id]["contents"] = [int_element.get('value') for int_element in dir_element.findall('.//int')]
-
-
-    # return nested dictionaries
+                for dir_element in root_package_contents.findall('imgdir'):
+                    if package_id == dir_element.attrib['name']:
+                        package_dict[package_id]["contents"] = [int(int_element.get('value')) for int_element in dir_element.findall('.//int')]
     return package_dict
 
 def package_contents_parser(package_dict, item_id, root_commodity):
-    item_ids = {}
-    item_ids[item_id] = {}
-    array = package_dict[item_id].get("contents")
+    item_ids = {item_id: {}}
+    array = package_dict[item_id].get("contents", [])
+    
+    dir_elements = {(dir_element.find('int[@name="SN"]').get('value')): dir_element for dir_element in root_commodity.findall('.//imgdir')}
+    
     for idx, sn in enumerate(array):
-        for dir_element in root_commodity.findall('.//imgdir'):
-            sn_elem = dir_element.find('int[@name="SN"]')
-            if sn_elem is not None and sn_elem.get('value') == sn:
-                item_id_element = dir_element.find('int[@name="ItemId"]')
-                item_count_element = dir_element.find('int[@name="Count"]')
-                if item_id_element is not None:
-                    item_ids[item_id][idx] = {
-                        'itemID': item_id_element.get('value'),
-                        'count': item_count_element.get('value')
-                    }
-                break
+        dir_element = dir_elements.get(str(sn))
+        if dir_element is not None:
+            item_id_element = dir_element.find('int[@name="ItemId"]')
+            item_count_element = dir_element.find('int[@name="Count"]')
+            item_period_element = dir_element.find('int[@name="Period"]')
+            if item_id_element is not None:
+                item_ids[item_id][idx] = {
+                    'itemID': item_id_element.get('value'),
+                    'count': item_count_element.get('value') if item_count_element is not None else '1',
+                    'period': item_period_element.get('value')
+                }
     return item_ids
 
 def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_cash, root_eqp, root_pet, search_nested_xml_for_dir_by_name):
@@ -96,6 +92,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                 for idx, item_data in items.items():
                     sub_item_id = item_data['itemID']
                     item_count = item_data['count']
+                    period = item_data['period']
 
                     corresponding_dir = None
                     for root in [root_cash, root_eqp, root_pet]:
@@ -109,7 +106,7 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                         desc_element = corresponding_dir.find("string[@name='desc']")
                         description = format_description(desc_element.get('value')) if desc_element is not None else None
                         
-                        package_contents[odx][idx] = {'itemID': sub_item_id, 'name': name, 'description': description, 'count': item_count}
+                        package_contents[odx][idx] = {'itemID': sub_item_id, 'name': name, 'description': description, 'count': item_count, 'period': period}
                     
             item_info[item_id] = {
                 'itemID': item_id,
