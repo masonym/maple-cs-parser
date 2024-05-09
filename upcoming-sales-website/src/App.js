@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ItemList from './components/ItemList';
+import ItemList from './components/ItemList.js';
 
 function App() {
   return (
