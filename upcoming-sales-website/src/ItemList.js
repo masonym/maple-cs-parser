@@ -172,7 +172,7 @@ function ItemList() {
                         </div>
                         <p>{convertNewlinesToBreaks(items[key].description)}</p>
                         <hr />
-                        <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key]. period} days`}</p>
+                        <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key].period} days`}</p>
                         <p>Price: {formatNumber(items[key].price)}{key.substring(0, 3) === '870' ? ' Mesos' : ' NX'}</p>
                         <p>Start Date: {items[key].termStart}</p>
                         <p>End Date: {items[key].termEnd}</p>
