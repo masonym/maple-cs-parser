@@ -1,16 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/Home';
+import { Routes, Route } from 'react-router-dom';
 import ItemList from './components/ItemList';
 
 function App() {
   return (
-    <Router basename="/xyz">  // Adjust the basename according to your deployment subpath
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/ms-upcoming-sales" component={ItemList} />
-      </Switch>
-    </Router>
+    <Routes>
+      {/* other routes here */}
+      <Route path="/" element={<div>Home Page</div>} />
+      {/* Route for ItemList */}
+      <Route path="/ms-upcoming-sales" element={<ItemList />} />
+    </Routes>
   );
 }
 
