@@ -18,7 +18,7 @@ async function readJsonData(filePath) {
 
 async function updateKV() {
   // Path to the JSON file
-  const jsonFilePath = path.join(__dirname, '..', '..', 'item_info_generator', 'item_data.json');
+  const jsonFilePath = path.join(__dirname, '..', '..', 'item-info-generator', 'item_data.json');
 
   try {
     // Read the JSON data from the file
