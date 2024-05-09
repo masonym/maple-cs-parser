@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../assets/ItemList.module.css';
+import { Helmet } from 'react-helmet';
 
 const formatNumber = (number) => {
     return new Intl.NumberFormat('en-US').format(number);
@@ -134,6 +135,15 @@ function ItemList() {
 
     return (
         <div>
+            <Helmet>
+                <title>Upcoming MapleStory Cash Shop Sales</title>
+                <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />
+                <meta property="og:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+                <meta property="og:image" content="./logo.png" />
+                <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
+                <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+                <meta property="twitter:image" content="./logo.png" />                
+            </Helmet>
             <h1>MapleStory Upcoming Cash Shop Sales</h1>
             <div className={styles.sortControls}>
                 <label htmlFor="sortKey">Sort by: </label>
