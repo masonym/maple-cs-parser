@@ -19,7 +19,6 @@ const convertNewlinesToBreaks = (text) => {
     ));
 };
 
-// <p>Duration: {items[key].period === '0' ? 'Permanent' : `${items[key].period} days`}</p>
 
 const renderPackageContents = (contents) => {
     if (!contents) return null;
