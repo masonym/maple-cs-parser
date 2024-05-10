@@ -17,7 +17,6 @@ function App() {
         <section className={styles.links}>
           <h2>Links</h2>
           <ul>
-            <li><a href="https://github.com/masonym">GitHub</a></li>
             <li><a href="https://www.youtube.com/channel/UCdSDc5DnBUS6bWJgPfwfYSA">YouTube</a></li>
           </ul>
         </section>
