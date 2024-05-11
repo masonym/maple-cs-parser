@@ -137,6 +137,13 @@ function ItemList() {
 
     return (
         <div>
+            <Helmet>
+            <title>Upcoming MapleStory Cash Shop Sales</title>
+            <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />
+            <meta property="og:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+            <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
+            <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+          </Helmet>
             <h1>MapleStory Upcoming Cash Shop Sales</h1>
             <div className={styles.sortControls}>
                 <label htmlFor="sortKey">Sort by: </label>

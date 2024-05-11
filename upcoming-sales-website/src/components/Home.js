@@ -4,6 +4,10 @@ import styles from '../assets/HomePage.module.css';
 function App() {
   return (
     <div className={styles.App}>
+      <Helmet>
+        <title>Home Page</title>
+        <meta name="og:description" content="hi its my website =)" />
+      </Helmet>
       <header className={styles.header}>
         <h1>nothing to see here, really</h1>
       </header>
