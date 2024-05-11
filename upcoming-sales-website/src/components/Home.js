@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../assets/HomePage.module.css';
+import { Helmet } from 'react-helmet';
 
 function App() {
   return (
