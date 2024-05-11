@@ -158,16 +158,16 @@ function ItemList() {
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
                 </select>
-                <label className={styles.checkboxLabel}>
-                    <input 
-                        type="checkbox" 
-                        checked={hidePastItems} 
-                        onChange={toggleHidePastItems} 
-                        className={styles.checkboxInput}
-                    />
-                    Show Past Items
-                </label>
             </div>
+            <label className={styles.checkboxLabel}>
+                <input 
+                    type="checkbox" 
+                    checked={hidePastItems} 
+                    onChange={toggleHidePastItems} 
+                    className={styles.checkboxInput}
+                />
+                Show Past Items
+            </label>
             <ul className={styles.itemList}>
                 {sortedKeys.map((key) => (
                     <li key={key} className={styles.item}>

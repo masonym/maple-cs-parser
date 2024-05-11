@@ -50,9 +50,12 @@ h1 {
 .sortControls label,
 .sortControls select,
 .sortControls input[type="checkbox"] {
-    margin: 0 5px;
     font-size: 16px; /* Adjust font size if necessary */
     vertical-align: middle; /* Ensure vertical alignment */
+}
+
+.dropdown {
+    margin-right: 12px;
 }
 
 ul {
@@ -138,6 +141,7 @@ hr {
 .checkboxLabel {
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
     margin: 0 5px;
@@ -177,6 +181,6 @@ hr {
     left: 2px;
     top: -12px;
     color: #333;
-    font-size: 22px;
+    font-size: 1.5em;
     font-weight: bold;
 }
