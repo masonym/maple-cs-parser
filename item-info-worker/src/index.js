@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
   async function handleRequest(request) {
     const url = new URL(request.url);
   
-    if (url.pathname === "/api/items") {
+    if (url.pathname === "/salesAPI/v1") {
       // Get the data from KV
       const data = await ITEMS_DATA.get("item_data");
       if (data === null) {

@@ -64,7 +64,7 @@ function ItemList() {
     const [hidePastItems, setHidePastItems] = useState(false);
 
     useEffect(() => {
-        axios.get('https://my-worker.nosamleitch.workers.dev/api/items')
+        axios.get('https://masonym.dev/salesAPI/v1')
             .then(response => {
                 const allItems = response.data;
                 setItems(allItems);
