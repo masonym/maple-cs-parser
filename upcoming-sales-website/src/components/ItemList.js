@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../assets/ItemList.module.css';
 import { Helmet } from 'react-helmet';
-// import logo from './images/logo.png';
 
 const formatNumber = (number) => {
     return new Intl.NumberFormat('en-US').format(number);
@@ -18,7 +17,6 @@ const convertNewlinesToBreaks = (text) => {
         </React.Fragment>
     ));
 };
-
 
 const renderPackageContents = (contents) => {
     if (!contents) return null;
@@ -62,41 +60,35 @@ function ItemList() {
     const [sortKey, setSortKey] = useState('termStart');
     const [sortOrder, setSortOrder] = useState('asc');
     const [hidePastItems, setHidePastItems] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSortKeyChange = (event) => {
+        setSortKey(event.target.value);
+    };
+
+    const handleSortOrderChange = (event) => {
+        setSortOrder(event.target.value);
+    };
+
+    const toggleHidePastItems = (event) => {
+        setHidePastItems(event.target.checked);
+    };
+
+    const handleSearchTermChange = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+    };
 
     useEffect(() => {
         axios.get('https://masonym.dev/salesAPI/v1')
             .then(response => {
                 const allItems = response.data;
                 setItems(allItems);
-
-                const sortedAndFilteredKeys = Object.keys(allItems)
-                    .sort((a, b) => {
-                        let valA = allItems[a][sortKey];
-                        let valB = allItems[b][sortKey];
-
-                        if (sortKey === 'termStart' || sortKey === 'termEnd') {
-                            valA = new Date(valA);
-                            valB = new Date(valB);
-                        }
-
-                        if (sortKey === 'price') {
-                            valA = Number(valA);
-                            valB = Number(valB);
-                        }
-
-                        if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
-                        if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
-                        return 0;
-                    })
-                    .filter(key => new Date(allItems[key].termStart) > new Date());
-
-                setSortedKeys(sortedAndFilteredKeys);
             })
             .catch(error => console.error(error));
-    }, [sortKey, sortOrder]);
+    }, []);
 
     useEffect(() => {
-        const sortItems = () => {
+        const sortAndFilterItems = () => {
             const newSortedKeys = [...Object.keys(items)].sort((a, b) => {
                 let valA = items[a][sortKey];
                 let valB = items[b][sortKey];
@@ -116,34 +108,25 @@ function ItemList() {
                 return 0;
             });
 
-            const filteredKeys = hidePastItems ? newSortedKeys : newSortedKeys.filter(key => new Date(items[key].termStart) > new Date());
+            const filteredKeys = newSortedKeys
+                .filter(key => hidePastItems || new Date(items[key].termStart) > new Date())
+                .filter(key => items[key].name.toLowerCase().includes(searchTerm));
 
             setSortedKeys(filteredKeys);
         };
 
-        sortItems();
-    }, [sortKey, sortOrder, items, hidePastItems]);
-    const handleSortKeyChange = (event) => {
-        setSortKey(event.target.value);
-    };
-
-    const handleSortOrderChange = (event) => {
-        setSortOrder(event.target.value);
-    };
-
-    const toggleHidePastItems = (event) => {
-        setHidePastItems(event.target.checked);
-    };
+        sortAndFilterItems();
+    }, [sortKey, sortOrder, items, hidePastItems, searchTerm]);
 
     return (
         <div>
-        <Helmet>
-            <title>Upcoming MapleStory Cash Shop Sales</title>
-            <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />
-            <meta property="og:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
-            <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
-            <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
-          </Helmet>
+            <Helmet>
+                <title>Upcoming MapleStory Cash Shop Sales</title>
+                <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />
+                <meta property="og:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+                <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
+                <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
+            </Helmet>
             <h1>MapleStory Upcoming Cash Shop Sales</h1>
             <div className={styles.sortControls}>
                 <label htmlFor="sortKey">Sort by: </label>
@@ -159,20 +142,32 @@ function ItemList() {
                     <option value="desc">Descending</option>
                 </select>
             </div>
-            <label className={styles.checkboxLabel}>
-                <input 
-                    type="checkbox" 
-                    checked={hidePastItems} 
-                    onChange={toggleHidePastItems} 
-                    className={styles.checkboxInput}
+            <div>
+                <label className={styles.checkboxLabel}>
+                    <input
+                        type="checkbox"
+                        checked={hidePastItems}
+                        onChange={toggleHidePastItems}
+                        className={styles.checkboxInput}
+                    />
+                    Show Past Items
+                </label>
+            </div>
+            <div className={styles.searchBar}>
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search by name"
+                    onChange={handleSearchTermChange}
+                    value={searchTerm}
+                    className={styles.searchInput}
                 />
-                Show Past Items
-            </label>
+            </div>
             <ul className={styles.itemList}>
                 {sortedKeys.map((key) => (
                     <li key={key} className={styles.item}>
                         <div className={styles.itemFlexContainer}>
-                            <img 
+                            <img
                                 src={`./images/${items[key].itemID}.png`}
                                 className={styles.itemImage}
                                 alt={items[key].name}
@@ -189,9 +184,9 @@ function ItemList() {
                         {renderPackageContents(items[key].packageContents)}
                         {items[key].gameWorld.split('/').map((gameWorldId) => (
                             <img className={styles.gameWorld}
-                                key={gameWorldId} 
-                                src={`./gameWorlds/${gameWorldId}.png`} 
-                                alt={`Game World ${gameWorldId}`} 
+                                key={gameWorldId}
+                                src={`./gameWorlds/${gameWorldId}.png`}
+                                alt={`Game World ${gameWorldId}`}
                                 onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
                             />
                         ))}
