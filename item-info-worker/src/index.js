@@ -6,7 +6,6 @@ addEventListener('fetch', event => {
     const url = new URL(request.url);
   
     if (url.pathname === "/salesAPI/v1") {
-      // Get the data from KV
       const data = await ITEMS_DATA.get("item_data");
       if (data === null) {
         return new Response("Data not found", { status: 404 });
