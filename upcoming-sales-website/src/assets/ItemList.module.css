@@ -1,12 +1,160 @@
 /* ItemList.module.css */
+
 @font-face {
-    font-family: "maplestory";
-    src: url("../assets/maplestory_light.otf");
+    font-family: 'maplestory';
+    src: url('../assets/maplestory_light.otf');
 }
 
 body {
-    /* background-color: #FDFFB6; */
-    background-color: #FFF5E6;
+    background-color: #fff5e6;
+}
+
+div {
+    font-family: maplestory;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sortControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sortControls label,
+.sortControls select {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.dropdown {
+    margin-right: 12px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: auto;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    text-align: center;
+    color: #002b5c;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+hr {
+    height: 2px;
+    border: none;
+    background-color: #a0c4ff;
+}
+
+.controlsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filterButtons {
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.filterButton {
+    width: 33%;
+    font-family: inherit;
+    padding: 10px 20px;
+    border: 2px solid #d2b48c;
+    border-radius: 25px;
+    background-color: #8abf88;
+    color: #2e4d2e;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.filterButton:hover {
+    background-color: #6fa96d;
+    transform: scale(1.05);
+}
+
+.filterButton.active {
+    background-color: #679d66;
+    transform: scale(1.05);
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.searchInput {
+    width: 100%;
+    font-family: inherit;
+    padding: 6px 12px;
+    border: 2px solid #d2b48c;
+    border-radius: 25px;
+    background-color: #fff5e6;
+    color: #2e4d2e;
+    outline: none;
+}
+
+.checkboxContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkboxInput {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    cursor: pointer;
+    appearance: none;
+    background-color: #fff;
+    position: relative;
+}
+
+.checkboxInput:checked::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.checkboxInput:checked::after {
+    content: '✓';
+    position: absolute;
+    left: 2px;
+    top: -12px;
+    color: #333;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .itemFlexContainer {
@@ -17,15 +165,14 @@ body {
 .itemImage {
     width: 50px;
     height: 50px;
-    margin-right: 10px;
-    margin-left: 10px;
+    margin: 0 10px;
 }
 
 .item {
     margin: 5%;
     border-radius: 20px;
     border: 2px solid black;
-    background-color: #CAFFBF;
+    background-color: #caffbf;
     padding: 10px;
 }
 
@@ -35,76 +182,13 @@ body {
     width: auto;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 30px; /* add some space between the header and sort controls */
-}
-
-.sortControls {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Align items vertically */
-    margin-bottom: 20px; /* add some space between the sort controls and the list */
-}
-
-.sortControls label,
-.sortControls select,
-.sortControls input[type="checkbox"] {
-    font-size: 16px; /* Adjust font size if necessary */
-    vertical-align: middle; /* Ensure vertical alignment */
-}
-
-.dropdown {
-    margin-right: 12px;
-}
-
-ul {
-    list-style-type: none;
-    padding-left: 0px;
-}
-
-div {
-    font-family: maplestory;
-}
-
-select {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    width: auto;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: inherit;
-    line-height: inherit;
-    text-align: center;
-    text-align-last: center;
-    color: #002B5C;
-    display: grid;
-}
-
-select option {
-    text-align: center;
-    background-color: transparent;
-}
-
-select option:checked {
-    background-color: transparent;
-}
-
-hr {
-    height: 2px;
-    border: none;
-    background-color: #A0C4FF;
-}
-
 .packageContents li {
     padding: 4px 0;
 }
 
 .packageItems {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .packageItems li {
@@ -137,63 +221,4 @@ hr {
 
 .hidePastItemsButton:hover {
     background-color: #0056b3;
-}
-
-.checkboxLabel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-    margin: 0 5px;
-}
-
-.checkboxInput {
-    margin-right: 8px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #007bff;
-    cursor: pointer;
-    appearance: none;
-    background-color: #fff;
-    position: relative;
-}
-
-/* .checkboxInput:checked {
-    background-color: #007bff;
-    border-color: #007bff;
-} */
-
-.checkboxInput:checked::before {
-    content: '';
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-}
-
-.checkboxInput:checked::after {
-    content: '✓';
-    position: absolute;
-    left: 2px;
-    top: -12px;
-    color: #333;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.searchBar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1vh;
-}
-
-.searchBar input {
-    width: auto;
-    font-family: inherit;
 }

@@ -3,6 +3,9 @@ import axios from 'axios';
 import styles from '../assets/ItemList.module.css';
 import { Helmet } from 'react-helmet';
 
+const intWorlds = [0,1,17,18,30,48,49];
+const heroWorlds = [45,46,70];
+
 const formatNumber = (number) => {
     return new Intl.NumberFormat('en-US').format(number);
 };
@@ -61,6 +64,7 @@ function ItemList() {
     const [sortOrder, setSortOrder] = useState('asc');
     const [hidePastItems, setHidePastItems] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [worldFilter, setWorldFilter] = useState(''); // Added state for world filter
 
     const handleSortKeyChange = (event) => {
         setSortKey(event.target.value);
@@ -76,6 +80,10 @@ function ItemList() {
 
     const handleSearchTermChange = (event) => {
         setSearchTerm(event.target.value.toLowerCase());
+    };
+
+    const handleWorldFilterChange = (filter) => {
+        setWorldFilter(filter);
     };
 
     useEffect(() => {
@@ -110,13 +118,24 @@ function ItemList() {
 
             const filteredKeys = newSortedKeys
                 .filter(key => hidePastItems || new Date(items[key].termStart) > new Date())
-                .filter(key => items[key].name.toLowerCase().includes(searchTerm));
+                .filter(key => items[key].name.toLowerCase().includes(searchTerm))
+                .filter(key => {
+                    if (!worldFilter) return true;
+                    const worldIds = items[key].gameWorld.split('/').map(Number);
+                    if (worldFilter === 'intWorlds') {
+                        return worldIds.every(id => intWorlds.includes(id));
+                    }
+                    if (worldFilter === 'heroWorlds') {
+                        return worldIds.every(id => heroWorlds.includes(id));
+                    }
+                    return true;
+                });
 
             setSortedKeys(filteredKeys);
         };
 
         sortAndFilterItems();
-    }, [sortKey, sortOrder, items, hidePastItems, searchTerm]);
+    }, [sortKey, sortOrder, items, hidePastItems, searchTerm, worldFilter]);
 
     return (
         <div>
@@ -142,26 +161,45 @@ function ItemList() {
                     <option value="desc">Descending</option>
                 </select>
             </div>
-            <div>
-                <label className={styles.checkboxLabel}>
+            <div className={styles.controlsContainer}>
+                <div className={styles.filterButtons}>
+                    <button
+                        className={`${styles.filterButton} ${worldFilter === '' ? styles.active : ''}`}
+                        onClick={() => handleWorldFilterChange('')}>
+                        All Worlds
+                    </button>
+                    <button
+                        className={`${styles.filterButton} ${worldFilter === 'intWorlds' ? styles.active : ''}`}
+                        onClick={() => handleWorldFilterChange('intWorlds')}>
+                        Interactive Worlds
+                    </button>
+                    <button
+                        className={`${styles.filterButton} ${worldFilter === 'heroWorlds' ? styles.active : ''}`}
+                        onClick={() => handleWorldFilterChange('heroWorlds')}>
+                        Heroic Worlds
+                    </button>
+                </div>
+                <div className={styles.searchBar}>
                     <input
-                        type="checkbox"
-                        checked={hidePastItems}
-                        onChange={toggleHidePastItems}
-                        className={styles.checkboxInput}
+                        type="text"
+                        name="search"
+                        placeholder="Search by name"
+                        onChange={handleSearchTermChange}
+                        value={searchTerm}
+                        className={styles.searchInput}
                     />
-                    Show Past Items
-                </label>
-            </div>
-            <div className={styles.searchBar}>
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Search by name"
-                    onChange={handleSearchTermChange}
-                    value={searchTerm}
-                    className={styles.searchInput}
-                />
+                </div>
+                <div className={styles.checkboxContainer}>
+                    <label className={styles.checkboxLabel}>
+                        <input
+                            type="checkbox"
+                            checked={hidePastItems}
+                            onChange={toggleHidePastItems}
+                            className={styles.checkboxInput}
+                        />
+                        Show Past Items
+                    </label>
+                </div>
             </div>
             <ul className={styles.itemList}>
                 {sortedKeys.map((key) => (
