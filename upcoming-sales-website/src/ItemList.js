@@ -19,6 +19,8 @@ function ItemList() {
     const [hidePastItems, setHidePastItems] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [worldFilter, setWorldFilter] = useState('');
+    const [noItems, setNoItems] = useState(false); 
+
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
 
@@ -67,15 +69,16 @@ function ItemList() {
                     if (!worldFilter) return true;
                     const worldIds = items[key].gameWorld.split('/').map(Number);
                     if (worldFilter === 'intWorlds') {
-                        return worldIds.every(id => intWorlds.includes(id));
+                        return worldIds.some(id => intWorlds.includes(id));
                     }
                     if (worldFilter === 'heroWorlds') {
-                        return worldIds.every(id => heroWorlds.includes(id));
+                        return worldIds.some(id => heroWorlds.includes(id));
                     }
                     return true;
                 });
 
             setSortedKeys(filteredKeys);
+            setNoItems(filteredKeys.length === 0);
         };
 
         sortAndFilterItems();
@@ -91,6 +94,7 @@ function ItemList() {
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
             <h1>MapleStory Upcoming Cash Shop Sales</h1>
+            <h4> Last Updated for v.250.3.0 (May 30, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
@@ -105,11 +109,15 @@ function ItemList() {
                 onHidePastItemsChange={toggleHidePastItems}
                 onWorldFilterChange={handleWorldFilterChange}
             />
-            <ul className={styles.itemList}>
-                {sortedKeys.map((key) => (
-                    <ItemCard key={key} item={items[key]} />
-                ))}
-            </ul>
+            {noItems ? (
+                <p className={styles.noItemsMessage}>No items found</p>
+            ) : (
+                <ul className={styles.itemList}>
+                    {sortedKeys.map((key) => (
+                        <ItemCard key={key} item={items[key]} />
+                    ))}
+                </ul>
+            )}
         </div>
     );
 }
