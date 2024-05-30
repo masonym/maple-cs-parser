@@ -1,0 +1,29 @@
+/* Footer.module.css */
+.footer {
+    background-color: #f1f1f1; /* Light neutral background */
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between items */
+    color: #333; /* Darker text color */
+}
+
+.footerItem {
+    margin: 0;
+}
+
+.footerItem a {
+    color: #2c5f2d; /* Complementary green color for links */
+    text-decoration: none;
+}
+
+.footerItem a:hover {
+    text-decoration: underline; /* Underline on hover for better UX */
+}

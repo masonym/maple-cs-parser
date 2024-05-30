@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import SortControls from './components/SortControls';
 import FilterControls from './components/FilterControls';
 import ItemCard from './components/ItemCard';
+import Footer from './components/Footer'
 import { formatNumber } from './utils';
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
@@ -118,6 +119,7 @@ function ItemList() {
                     ))}
                 </ul>
             )}
+            <Footer /> 
         </div>
     );
 }
