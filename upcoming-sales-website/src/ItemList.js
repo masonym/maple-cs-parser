@@ -6,7 +6,7 @@ import SortControls from './components/SortControls';
 import FilterControls from './components/FilterControls';
 import ItemCard from './components/ItemCard';
 import Footer from './components/Footer';
-import { formatNumber } from './utils';
+import { formatDate } from './utils';
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
 const heroWorlds = [45, 46, 70];
@@ -139,7 +139,7 @@ function ItemList() {
                 <div>
                     {Object.keys(categorizedItems).map((dateKey) => (
                         <div key={dateKey}>
-                            <h2 className={styles.categoryHeader}>{dateKey}</h2>
+                            <h2 className={styles.categoryHeader}>{formatDate(dateKey)}</h2>
                             <ul className={styles.itemList}>
                                 {categorizedItems[dateKey].map(({ key, item }) => (
                                     <ItemCard key={key} item={item} />
