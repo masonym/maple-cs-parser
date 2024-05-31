@@ -238,3 +238,17 @@ h4 {
     font-style: italic; 
     margin-bottom: 30px;
 } 
+
+/* Add this to your existing CSS file */
+
+.categoryHeader {
+    margin: 2.5% 5%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: #ffe066;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #002b5c; /* Dark Blue */
+}
