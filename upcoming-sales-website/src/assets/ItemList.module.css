@@ -169,7 +169,10 @@ hr {
 }
 
 .item {
-    margin: 2.5% 5%;
+    /* margin: 10px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-radius: 20px;
     border: 2px solid black;
     background-color: #caffbf;
@@ -180,6 +183,12 @@ hr {
     max-height: 42px;
     height: auto;
     width: auto;
+}
+
+.gameWorldContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .packageContents li {
@@ -239,10 +248,8 @@ h4 {
     margin-bottom: 30px;
 } 
 
-/* Add this to your existing CSS file */
-
 .categoryHeader {
-    margin: 2.5% 5%;
+    margin: 2.5% 5% 0.5% 5%;
     padding: 10px;
     border-radius: 20px;
     border: 2px solid black;
@@ -251,4 +258,36 @@ h4 {
     font-weight: bold;
     text-align: center;
     color: #002b5c; /* Dark Blue */
+}
+
+/* Column layout */ 
+
+.itemList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0px 5%
+}
+
+.itemList li {
+    flex: 1 1 calc(25% - 16px); /* Four columns */
+    box-sizing: border-box;
+}
+
+@media (max-width: 1400px) {
+    .itemList li {
+        flex: 1 1 calc(33.333% - 16px); /* Three columns for large screens */
+    }
+}
+
+@media (max-width: 1024px) {
+    .itemList li {
+        flex: 1 1 calc(50% - 16px); /* Two columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .itemList li {
+        flex: 1 1 100%; /* Single column for small screens */
+    }
 }
