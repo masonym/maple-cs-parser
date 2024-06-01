@@ -109,7 +109,7 @@ function ItemList() {
     }, [sortKey, sortOrder, items, hidePastItems, searchTerm, worldFilter]);
 
     return (
-        <div>
+        <div className={styles.mainContent}>
             <Helmet>
                 <title>Upcoming MapleStory Cash Shop Sales</title>
                 <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />

@@ -291,3 +291,7 @@ h4 {
         flex: 1 1 100%; /* Single column for small screens */
     }
 }
+
+.mainContent {
+    padding-bottom: 80px;
+}
