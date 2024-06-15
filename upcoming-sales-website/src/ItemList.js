@@ -32,7 +32,7 @@ function ItemList() {
 
         Object.keys(items).forEach((key) => {
             const startDate = new Date(items[key].termStart);
-            const dateKey = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
+            const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
 
             if (!categorized[dateKey]) {
                 categorized[dateKey] = [];
@@ -95,7 +95,7 @@ function ItemList() {
             const sortedAndFilteredItems = {};
             filteredKeys.forEach(key => {
                 const startDate = new Date(items[key].termStart);
-                const dateKey = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
+                const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
                 if (!sortedAndFilteredItems[dateKey]) {
                     sortedAndFilteredItems[dateKey] = [];
                 }
