@@ -1,7 +1,9 @@
 import React from 'react';
 
+// Function to format numbers using the Internationalization API
 export const formatNumber = (number) => new Intl.NumberFormat('en-US').format(number);
 
+// Function to convert newlines to <br /> elements
 export const convertNewlinesToBreaks = (text) => {
     if (!text) return null;
     return text.split('\n').map((line, index) => (
@@ -12,22 +14,18 @@ export const convertNewlinesToBreaks = (text) => {
     ));
 };
 
+// Function to format dates in a more reliable way
 export const formatDate = (dateString) => {
-    if (!dateString) return 'Invalid Date';
-
-    // Manually parse the date string to avoid issues with Safari's date parsing
-    const [year, month, day] = dateString.split('-').map(Number);
-    if (isNaN(year) || isNaN(month) || isNaN(day)) return 'Invalid Date';
-    
-    const date = new Date(Date.UTC(year, month - 1, day));
+    // Use a more reliable way to parse the date string
+    const date = new Date(Date.parse(dateString));
 
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const dayOfWeek = daysOfWeek[date.getUTCDay()];
-    const monthName = monthsOfYear[date.getUTCMonth()];
+    const month = monthsOfYear[date.getUTCMonth()];
     const dayOfMonth = date.getUTCDate();
-    const yearNumber = date.getUTCFullYear();
+    const year = date.getUTCFullYear();
 
     const daySuffix = (day) => {
         if (day > 3 && day < 21) return 'th';  // Handle special case for 11-13th
@@ -39,5 +37,5 @@ export const formatDate = (dateString) => {
         }
     };
 
-    return `${dayOfWeek}, ${monthName} ${dayOfMonth}${daySuffix(dayOfMonth)}, ${yearNumber}`;
+    return `${dayOfWeek}, ${month} ${dayOfMonth}${daySuffix(dayOfMonth)}, ${year}`;
 }
