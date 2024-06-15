@@ -61,8 +61,8 @@ function ItemList() {
                 let valB = items[b][sortKey];
 
                 if (sortKey === 'termStart' || sortKey === 'termEnd') {
-                    valA = new Date(valA);
-                    valB = new Date(valB);
+                    valA = new Date(valA).getTime();
+                    valB = new Date(valB).getTime();
                 }
 
                 if (sortKey === 'price') {
@@ -76,7 +76,7 @@ function ItemList() {
             });
 
             const filteredKeys = newSortedKeys
-                .filter(key => hidePastItems || new Date(items[key].termStart) > new Date())
+                .filter(key => hidePastItems || new Date(items[key].termStart).getTime() > new Date().getTime())
                 .filter(key => items[key].name.toLowerCase().includes(searchTerm))
                 .filter(key => {
                     if (!worldFilter) return true;
