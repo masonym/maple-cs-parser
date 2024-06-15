@@ -13,8 +13,12 @@ export const convertNewlinesToBreaks = (text) => {
 };
 
 export const formatDate = (dateString) => {
+    if (!dateString) return 'Invalid Date';
+
     // Manually parse the date string to avoid issues with Safari's date parsing
     const [year, month, day] = dateString.split('-').map(Number);
+    if (isNaN(year) || isNaN(month) || isNaN(day)) return 'Invalid Date';
+    
     const date = new Date(Date.UTC(year, month - 1, day));
 
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
