@@ -31,8 +31,7 @@ function ItemList() {
         const categorized = {};
 
         Object.keys(items).forEach((key) => {
-            const [year, month, day] = items[key].termStart.split('-');
-            const startDate = new Date(Date.UTC(year, month - 1, day));
+            const startDate = new Date(items[key].termStart);
             const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
 
             if (!categorized[dateKey]) {
@@ -62,10 +61,8 @@ function ItemList() {
                 let valB = items[b][sortKey];
 
                 if (sortKey === 'termStart' || sortKey === 'termEnd') {
-                    const [yearA, monthA, dayA] = valA.split('-');
-                    const [yearB, monthB, dayB] = valB.split('-');
-                    valA = new Date(Date.UTC(yearA, monthA - 1, dayA)).getTime();
-                    valB = new Date(Date.UTC(yearB, monthB - 1, dayB)).getTime();
+                    valA = new Date(valA).getTime();
+                    valB = new Date(valB).getTime();
                 }
 
                 if (sortKey === 'price') {
@@ -97,8 +94,7 @@ function ItemList() {
 
             const sortedAndFilteredItems = {};
             filteredKeys.forEach(key => {
-                const [year, month, day] = items[key].termStart.split('-');
-                const startDate = new Date(Date.UTC(year, month - 1, day));
+                const startDate = new Date(items[key].termStart);
                 const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
                 if (!sortedAndFilteredItems[dateKey]) {
                     sortedAndFilteredItems[dateKey] = [];
