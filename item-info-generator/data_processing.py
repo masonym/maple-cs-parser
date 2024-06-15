@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from utils import format_description
+from utils import format_description, get_gender_from_id
 from image_handling import PATH_PREF_ITEM
 
 def upcoming_sales(root_commodity):
@@ -112,6 +112,12 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
                         name = name_element.get('value') if name_element is not None else "Name not found"
                         desc_element = corresponding_dir.find("string[@name='desc']")
                         description = format_description(desc_element.get('value')) if desc_element is not None else None
+
+                        gender = get_gender_from_id(sub_item_id)
+                        if gender == 0:
+                            name += " (Male)"
+                        elif gender == 1:
+                            name += " (Female)"
                         
                         package_contents[odx][idx] = {'itemID': sub_item_id, 'name': name, 'description': description, 'count': item_count, 'period': period}
                     
@@ -140,13 +146,18 @@ def process_qualifying_dirs(qualified_tree, package_dict, root_commodity, root_c
             desc_element = corresponding_dir.find("string[@name='desc']")
             description = format_description(desc_element.get('value')) if desc_element is not None else None
 
+            gender = get_gender_from_id(item_id)
+            if gender == 0:
+                name += " (Male)"
+            elif gender == 1:
+                name += " (Female)"
+            
             if item_id.startswith("500"):
                 pet_path = f"{PATH_PREF_ITEM}/Pet/{item_id}.img.xml"
                 pet_info_tree = ET.parse(pet_path)
                 pet_info_root = pet_info_tree.getroot()
                 life_val = pet_info_root.find(".//int[@name='life']").attrib['value']
                 period = life_val
-
             
             item_info[sn_id] = {
                 'itemID': item_id,
