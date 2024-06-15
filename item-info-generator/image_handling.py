@@ -4,13 +4,13 @@ import os
 import os.path
 
 DUMPED_WZ = '../dumped_wz'
-PATH_PREF_CHAR = f"{DUMPED_WZ}/Character"
+PATH_PREF_CHAR = f"{DUMPED_WZ}/Character.wz"
 PATH_PREF_ITEM = f"{DUMPED_WZ}/Item.wz"
 
 PREFIX_PATH_MAP = {
     range(2, 6): "Face",
     100: "Cap",
-    range(101, 103): "Accessory",
+    range(101, 104): "Accessory",
     range(112, 120): "Accessory",
     104: "Coat",
     105: "Longcoat",
@@ -37,7 +37,8 @@ def get_image_path(xml_path):
     root = tree.getroot()
     icon_canvas = root.find(".//canvas[@name='icon']")
     outlink_value = icon_canvas.find("string[@name='_outlink']").attrib['value']
-    return f"{DUMPED_WZ}/{outlink_value}.png"
+    modified_outlink_value = outlink_value.replace('Character/', 'Character.wz/')
+    return f"{DUMPED_WZ}/{modified_outlink_value}.png"
 
 def process_item(item_id, dest_file):
     xml_path = get_xml_path(item_id)

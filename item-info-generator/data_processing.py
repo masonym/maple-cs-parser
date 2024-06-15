@@ -9,10 +9,10 @@ def upcoming_sales(root_commodity):
     curr_day = now.strftime("%Y%m%d")
 
     for dir_elem in root_commodity.findall('.//imgdir'):
+        term_start_elem = dir_elem.find("./int[@name='termStart']")
         term_end_elem = dir_elem.find("./int[@name='termEnd']")
-        if term_end_elem is not None and term_end_elem.get('value') >= curr_day:
+        if None not in (term_start_elem, term_end_elem):
             qualifying_root.append(dir_elem)
-
 
     return ET.ElementTree(qualifying_root)
 
