@@ -16,16 +16,17 @@ export const convertNewlinesToBreaks = (text) => {
 
 // Function to format dates in a more reliable way
 export const formatDate = (dateString) => {
-    // Use a more reliable way to parse the date string
-    const date = new Date(Date.parse(dateString));
+    // Split the dateString to avoid timezone issues in Safari
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(Date.UTC(year, month - 1, day));
 
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     const dayOfWeek = daysOfWeek[date.getUTCDay()];
-    const month = monthsOfYear[date.getUTCMonth()];
+    const monthName = monthsOfYear[date.getUTCMonth()];
     const dayOfMonth = date.getUTCDate();
-    const year = date.getUTCFullYear();
+    const yearNumber = date.getUTCFullYear();
 
     const daySuffix = (day) => {
         if (day > 3 && day < 21) return 'th';  // Handle special case for 11-13th
@@ -37,5 +38,5 @@ export const formatDate = (dateString) => {
         }
     };
 
-    return `${dayOfWeek}, ${month} ${dayOfMonth}${daySuffix(dayOfMonth)}, ${year}`;
+    return `${dayOfWeek}, ${monthName} ${dayOfMonth}${daySuffix(dayOfMonth)}, ${yearNumber}`;
 }
