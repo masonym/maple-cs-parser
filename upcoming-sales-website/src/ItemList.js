@@ -118,7 +118,7 @@ function ItemList() {
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
             <h1>MapleStory Upcoming Cash Shop Sales</h1>
-            <h4> Last Updated for v.250.3.0 (May 30, 2024) </h4>
+            <h4> Last Updated for v.251 (June 12th, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
