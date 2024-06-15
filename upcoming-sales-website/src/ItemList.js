@@ -27,11 +27,18 @@ function ItemList() {
     const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
 
+    const parseDate = (dateString) => {
+        const [datePart, timePart] = dateString.split(' ');
+        const [month, day, year] = datePart.split('-');
+        const [hour, minute] = timePart.split(':');
+        return new Date(Date.UTC(year, month - 1, day, hour, minute));
+    };
+
     const categorizeItems = (items) => {
         const categorized = {};
 
         Object.keys(items).forEach((key) => {
-            const startDate = new Date(items[key].termStart);
+            const startDate = parseDate(items[key].termStart);
             const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
 
             if (!categorized[dateKey]) {
@@ -61,8 +68,8 @@ function ItemList() {
                 let valB = items[b][sortKey];
 
                 if (sortKey === 'termStart' || sortKey === 'termEnd') {
-                    valA = new Date(valA).getTime();
-                    valB = new Date(valB).getTime();
+                    valA = parseDate(valA).getTime();
+                    valB = parseDate(valB).getTime();
                 }
 
                 if (sortKey === 'price') {
@@ -76,7 +83,7 @@ function ItemList() {
             });
 
             const filteredKeys = newSortedKeys
-                .filter(key => hidePastItems || new Date(items[key].termStart).getTime() > new Date().getTime())
+                .filter(key => hidePastItems || parseDate(items[key].termStart).getTime() > new Date().getTime())
                 .filter(key => items[key].name.toLowerCase().includes(searchTerm))
                 .filter(key => {
                     if (!worldFilter) return true;
@@ -94,7 +101,7 @@ function ItemList() {
 
             const sortedAndFilteredItems = {};
             filteredKeys.forEach(key => {
-                const startDate = new Date(items[key].termStart);
+                const startDate = parseDate(items[key].termStart);
                 const dateKey = `${startDate.getUTCFullYear()}-${(startDate.getUTCMonth() + 1).toString().padStart(2, '0')}-${startDate.getUTCDate().toString().padStart(2, '0')}`;
                 if (!sortedAndFilteredItems[dateKey]) {
                     sortedAndFilteredItems[dateKey] = [];
