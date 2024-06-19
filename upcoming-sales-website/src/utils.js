@@ -57,24 +57,50 @@ export function formatSaleTimesDate(dateString) {
     return formattedDate;
   }
 
-export function calculateDateDifference(date1, date2) {
-  // Parse the date strings into Date objects
-  let dateObj1 = new Date(date1);
-  let dateObj2 = new Date(date2);
-
-  // Calculate the difference in milliseconds
-  let differenceInMillis = dateObj2 - dateObj1;
-
-  // Convert the difference from milliseconds to days
-  let differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
-
-  let daysText = ""
-  if (differenceInDays > 1) {
-    daysText = String(differenceInDays) + " days"
+  export function calculateDateDifference(date1, date2) {
+    // Convert date strings to ISO format if needed
+    function toISOFormat(dateString) {
+      let date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        // Handle invalid date format by converting to ISO
+        let parts = dateString.split(/[-\/]/); // Split by '-' or '/'
+        if (parts.length === 3) {
+          // Assuming the format is MM/DD/YYYY or DD-MM-YYYY
+          date = new Date(`${parts[2]}-${parts[0]}-${parts[1]}`);
+        }
+      }
+      return date;
+    }
+  
+    // Parse the date strings into Date objects
+    let dateObj1 = toISOFormat(date1);
+    let dateObj2 = toISOFormat(date2);
+  
+    // Validate dates
+    if (isNaN(dateObj1.getTime()) || isNaN(dateObj2.getTime())) {
+      throw new Error('Invalid date format. Please use a valid date format like YYYY-MM-DD.');
+    }
+  
+    // Calculate the difference in milliseconds
+    let differenceInMillis = dateObj2 - dateObj1;
+  
+    // Convert the difference from milliseconds to days
+    let differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
+  
+    // Rounding to nearest integer
+    differenceInDays = Math.round(differenceInDays);
+  
+    let daysText = "";
+    if (differenceInDays > 1) {
+      daysText = `${differenceInDays} days`;
+    } else if (differenceInDays === 1) {
+      daysText = "1 day";
+    } else if (differenceInDays === 0) {
+      daysText = "0 days";
+    } else {
+      daysText = `${differenceInDays} days`;
+    }
+  
+    return daysText;
   }
-  else if (differenceInDays == 1) {
-    daysText = String(differenceInDays) + " day"
-  }
-
-  return daysText;
-}  
+  
