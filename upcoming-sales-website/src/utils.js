@@ -40,3 +40,41 @@ export const formatDate = (dateString) => {
 
     return `${dayOfWeek}, ${monthName} ${dayOfMonth}${daySuffix(dayOfMonth)}, ${yearNumber}`;
 }
+
+export function formatSaleTimesDate(dateString) {
+    // Split the input date string by space to separate date and time
+    let [datePart, timePart] = dateString.split(' ');
+  
+    // Split the date part by '-' to get the components of the date
+    let [month, day, year] = datePart.split('-');
+  
+    // Format the year to be in two digits
+    year = year.slice(2);
+  
+    // Combine the parts into the desired format
+    let formattedDate = `${month}/${day}/${year} ${timePart}`;
+  
+    return formattedDate;
+  }
+
+export function calculateDateDifference(date1, date2) {
+  // Parse the date strings into Date objects
+  let dateObj1 = new Date(date1);
+  let dateObj2 = new Date(date2);
+
+  // Calculate the difference in milliseconds
+  let differenceInMillis = dateObj2 - dateObj1;
+
+  // Convert the difference from milliseconds to days
+  let differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
+
+  let daysText = ""
+  if (differenceInDays > 1) {
+    daysText = String(differenceInDays) + " days"
+  }
+  else if (differenceInDays == 1) {
+    daysText = String(differenceInDays) + " day"
+  }
+
+  return daysText;
+}  

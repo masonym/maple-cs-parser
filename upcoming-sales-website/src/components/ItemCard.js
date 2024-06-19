@@ -1,12 +1,26 @@
 import React from 'react';
 import styles from '../assets/ItemList.module.css';
-import { formatNumber, convertNewlinesToBreaks } from '../utils';
+import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference } from '../utils';
 import PackageContents from './PackageContents';
 
 const ItemCard = ({ item }) => {
     return (
         <li key={item.itemID} className={styles.item}>
+            <div className={styles.gameWorldContainer}>
+                {item.gameWorld.split('/').map((gameWorldId) => (
+                    <img className={styles.gameWorld}
+                        key={gameWorldId}
+                        src={`./gameWorlds/${gameWorldId}.png`}
+                        alt={`Game World ${gameWorldId}`}
+                        onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
+                    />
+                ))}
+            </div>
             <div className={styles.itemContent}>
+                <div className={styles.saleTimes}>
+                    <p>{formatSaleTimesDate(item.termStart)} ~ {formatSaleTimesDate(item.termEnd)} UTC</p>
+                    <p>({calculateDateDifference(item.termStart, item.termEnd)})</p>
+                </div>
                 <div className={styles.itemFlexContainer}>
                     <img
                         src={`./images/${item.itemID}.png`}
@@ -20,19 +34,7 @@ const ItemCard = ({ item }) => {
                 <hr />
                 <p>Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
                 <p>Price: {formatNumber(item.price)}{item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount == 1 ? `(was ${formatNumber(item.originalPrice)}${item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
-                <p>Start Date: {item.termStart}</p>
-                <p>End Date: {item.termEnd}</p>
                 <PackageContents contents={item.packageContents} />
-            </div>
-            <div className={styles.gameWorldContainer}>
-                {item.gameWorld.split('/').map((gameWorldId) => (
-                    <img className={styles.gameWorld}
-                        key={gameWorldId}
-                        src={`./gameWorlds/${gameWorldId}.png`}
-                        alt={`Game World ${gameWorldId}`}
-                        onError={(e) => { e.target.style.display = 'none'; }} // hide the image if it doesn't exist
-                    />
-                ))}
             </div>
         </li>
     );
