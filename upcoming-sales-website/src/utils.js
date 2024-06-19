@@ -57,50 +57,65 @@ export function formatSaleTimesDate(dateString) {
     return formattedDate;
   }
 
-  export function calculateDateDifference(date1, date2) {
-    // Convert date strings to ISO format if needed
-    function toISOFormat(dateString) {
-      let date = new Date(dateString);
-      if (isNaN(date.getTime())) {
-        // Handle invalid date format by converting to ISO
-        let parts = dateString.split(/[-\/]/); // Split by '-' or '/'
-        if (parts.length === 3) {
-          // Assuming the format is MM/DD/YYYY or DD-MM-YYYY
-          date = new Date(`${parts[2]}-${parts[0]}-${parts[1]}`);
+export function calculateDateDifference(date1, date2) {
+  // Function to parse date strings into Date objects
+  function parseDate(dateString) {
+    // Check if the date string is in ISO 8601 format
+    const isoFormat = /^\d{4}-\d{2}-\d{2}$/;
+    if (isoFormat.test(dateString)) {
+      return new Date(dateString);
+    }
+
+    // Try to parse other common date formats (e.g., MM/DD/YYYY or DD/MM/YYYY)
+    const parts = dateString.split(/[\/\-\s]/);
+    if (parts.length === 3) {
+      let year, month, day;
+      if (parts[0].length === 4) { // YYYY-MM-DD
+        year = parseInt(parts[0], 10);
+        month = parseInt(parts[1], 10) - 1;
+        day = parseInt(parts[2], 10);
+      } else if (parts[2].length === 4) { // MM/DD/YYYY or DD/MM/YYYY
+        year = parseInt(parts[2], 10);
+        if (parseInt(parts[0], 10) > 12) { // DD/MM/YYYY
+          day = parseInt(parts[0], 10);
+          month = parseInt(parts[1], 10) - 1;
+        } else { // MM/DD/YYYY
+          month = parseInt(parts[0], 10) - 1;
+          day = parseInt(parts[1], 10);
         }
       }
-      return date;
+      return new Date(year, month, day);
     }
-  
-    // Parse the date strings into Date objects
-    let dateObj1 = toISOFormat(date1);
-    let dateObj2 = toISOFormat(date2);
-  
-    // Validate dates
-    if (isNaN(dateObj1.getTime()) || isNaN(dateObj2.getTime())) {
-      throw new Error('Invalid date format. Please use a valid date format like YYYY-MM-DD.');
-    }
-  
-    // Calculate the difference in milliseconds
-    let differenceInMillis = dateObj2 - dateObj1;
-  
-    // Convert the difference from milliseconds to days
-    let differenceInDays = differenceInMillis / (1000 * 60 * 60 * 24);
-  
-    // Rounding to nearest integer
-    differenceInDays = Math.round(differenceInDays);
-  
-    let daysText = "";
-    if (differenceInDays > 1) {
-      daysText = `${differenceInDays} days`;
-    } else if (differenceInDays === 1) {
-      daysText = "1 day";
-    } else if (differenceInDays === 0) {
-      daysText = "0 days";
-    } else {
-      daysText = `${differenceInDays} days`;
-    }
-  
-    return daysText;
+
+    // Fallback to creating a new Date object directly
+    return new Date(dateString);
   }
+
+  // Parse the date strings into Date objects
+  let dateObj1 = parseDate(date1);
+  let dateObj2 = parseDate(date2);
+
+  // Check if the dates are valid
+  if (isNaN(dateObj1) || isNaN(dateObj2)) {
+    throw new Error("Invalid date format");
+  }
+
+  // Calculate the difference in milliseconds
+  let differenceInMillis = dateObj2 - dateObj1;
+
+  // Convert the difference from milliseconds to days
+  let differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 * 24));
+
+  let daysText = "";
+  if (differenceInDays > 1) {
+    daysText = `${differenceInDays} days`;
+  } else if (differenceInDays === 1) {
+    daysText = `${differenceInDays} day`;
+  } else {
+    daysText = `0 days`; // In case the difference is less than a day
+  }
+
+  return daysText;
+}
+
   
