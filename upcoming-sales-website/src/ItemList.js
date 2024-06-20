@@ -17,14 +17,29 @@ function ItemList() {
     const [sortKey, setSortKey] = useState('termStart');
     const [sortOrder, setSortOrder] = useState('asc');
     const [hidePastItems, setHidePastItems] = useState(false);
+    const [showCurrentItems, setShowCurrentItems] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [worldFilter, setWorldFilter] = useState('');
     const [noItems, setNoItems] = useState(false);
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
     const handleSortOrderChange = (event) => setSortOrder(event.target.value);
-    const toggleHidePastItems = (event) => setHidePastItems(event.target.checked);
-    const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
+
+    const toggleHidePastItems = (event) => {
+        setHidePastItems(event.target.checked);
+        if (event.target.checked) {
+            setShowCurrentItems(false);
+        }
+    };
+
+    const toggleShowCurrentItems = (event) => {
+        setShowCurrentItems(event.target.checked);
+        if (event.target.checked) {
+            setHidePastItems(false);
+        }
+    };
+
+   const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
 
     const parseDate = (dateString) => {
@@ -63,6 +78,8 @@ function ItemList() {
 
     useEffect(() => {
         const sortAndFilterItems = () => {
+            const now = new Date().getTime();
+
             const newSortedKeys = [...Object.keys(items)].sort((a, b) => {
                 let valA = items[a][sortKey];
                 let valB = items[b][sortKey];
@@ -83,7 +100,19 @@ function ItemList() {
             });
 
             const filteredKeys = newSortedKeys
-                .filter(key => hidePastItems || parseDate(items[key].termStart).getTime() > new Date().getTime())
+                .filter(key => {
+                    const termStart = parseDate(items[key].termStart).getTime();
+                    const termEnd = parseDate(items[key].termEnd).getTime();
+
+                    // Filter logic based on the checkboxes
+                    if (hidePastItems && termEnd >= now) return false; // Hide past items if checked
+                    if (showCurrentItems && !(termStart <= now && termEnd >= now)) return false; // Show only current items if checked
+
+                    // Show only upcoming items by default
+                    if (!hidePastItems && !showCurrentItems && termStart <= now) return false;
+
+                    return true;
+                })
                 .filter(key => items[key].name.toLowerCase().includes(searchTerm))
                 .filter(key => {
                     if (!worldFilter) return true;
@@ -113,7 +142,7 @@ function ItemList() {
         };
 
         sortAndFilterItems();
-    }, [sortKey, sortOrder, items, hidePastItems, searchTerm, worldFilter]);
+    }, [sortKey, sortOrder, items, hidePastItems, showCurrentItems, searchTerm, worldFilter]);
 
     return (
         <div className={styles.mainContent}>
@@ -135,9 +164,11 @@ function ItemList() {
             <FilterControls
                 searchTerm={searchTerm}
                 hidePastItems={hidePastItems}
+                showCurrentItems={showCurrentItems}
                 worldFilter={worldFilter}
                 onSearchTermChange={handleSearchTermChange}
                 onHidePastItemsChange={toggleHidePastItems}
+                onShowCurrentItemsChange={toggleShowCurrentItems}
                 onWorldFilterChange={handleWorldFilterChange}
             />
             {noItems ? (

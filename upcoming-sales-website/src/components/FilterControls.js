@@ -1,8 +1,7 @@
-// FilterControls.js
 import React from 'react';
 import styles from '../assets/ItemList.module.css';
 
-const FilterControls = ({ searchTerm, hidePastItems, worldFilter, onSearchTermChange, onHidePastItemsChange, onWorldFilterChange }) => (
+const FilterControls = ({ searchTerm, hidePastItems, showCurrentItems, worldFilter, onSearchTermChange, onHidePastItemsChange, onShowCurrentItemsChange, onWorldFilterChange }) => (
     <div className={styles.controlsContainer}>
         <div className={styles.filterButtons}>
             <button
@@ -40,6 +39,17 @@ const FilterControls = ({ searchTerm, hidePastItems, worldFilter, onSearchTermCh
                     className={styles.checkboxInput}
                 />
                 Show Past Items
+            </label>
+        </div>
+        <div className={styles.checkboxContainer}>
+            <label className={styles.checkboxLabel}>
+                <input
+                    type="checkbox"
+                    checked={showCurrentItems}
+                    onChange={onShowCurrentItemsChange}
+                    className={styles.checkboxInput}
+                />
+                Show Current Items
             </label>
         </div>
     </div>
