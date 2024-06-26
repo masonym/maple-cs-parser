@@ -1,3 +1,7 @@
+:root {
+    --base-size: calc(35px * (1vw / 19.2)); /* Assuming 1920px as the base width */
+  }
+
 .item {
     list-style: none;
     margin: 10px;
@@ -12,40 +16,50 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center items vertically */
-    text-align: center;
-    width: 18.308vw; /* Set a fixed width for consistency */
-    height: 24vw; /* Set a fixed height for consistency */
-    background-size: cover; /* Ensures the background scales */
+    justify-content: flex-start;
+    width: 18.308vw;
+    height: 24vw;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    /* padding-top: 22%; */
+    padding-top: 2vw; /* Add some top padding */
 }
 
 .itemImage {
-    width: 9.85vw;
-    height: 9.85vw;
-    margin-bottom: 1vw; /* Space between the image and the text */
+    width: 8vw;
+    height: 8vw;
+    object-fit: contain;
+    position: absolute; /* This is crucial for positioning */
+    top: 46%; /* Adjust this value to move the image up or down */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the image */
+    z-index: 1; /* Ensure it's above the background */
 }
 
 .itemDetails {
+    position: absolute;
+    bottom: 1vw; /* Adjust as needed */
+    left: 0;
+    right: 0;
     text-align: center;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
-    color: white;
-    padding: 5px 0;
-    width: 100%;
 }
 
 .itemName {
     font-size: 1em;
     font-weight: bold;
     margin: 0;
+    padding: 0 5%;
+    line-height: 1.2em;
+    max-height: 2.4em; /* Limit to two lines */
+    overflow: hidden;
 }
 
 .itemPrice {
     font-size: 14px;
+    color: #8e8e8e;
     margin: 0;
+    padding-top: 5px; /* Add some space above the price */
 }
 
 .itemContainer {
