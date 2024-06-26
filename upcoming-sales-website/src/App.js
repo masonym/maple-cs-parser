@@ -3,6 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './Home'
 import ItemList from './ItemList';
+import AdvancedItemList from './AdvancedItemList';
 
 
 function App() {
@@ -21,6 +22,14 @@ function App() {
       element={
         <>
           <ItemList />
+        </>
+      }
+    />
+    <Route
+      path="/advanced-ms-upcoming-sales"
+      element={
+        <>
+          <AdvancedItemList />
         </>
       }
     />

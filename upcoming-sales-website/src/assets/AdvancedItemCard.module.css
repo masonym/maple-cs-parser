@@ -1,0 +1,70 @@
+.item {
+    list-style: none;
+    margin: 10px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.itemFlexContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center items vertically */
+    text-align: center;
+    width: 18.308vw; /* Set a fixed width for consistency */
+    height: 24vw; /* Set a fixed height for consistency */
+    background-size: cover; /* Ensures the background scales */
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    /* padding-top: 22%; */
+}
+
+.itemImage {
+    width: 9.85vw;
+    height: 9.85vw;
+    margin-bottom: 1vw; /* Space between the image and the text */
+}
+
+.itemDetails {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+    color: white;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.itemName {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.itemPrice {
+    font-size: 14px;
+    margin: 0;
+}
+
+.itemContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .itemFlexContainer {
+        width: 238px; /* Set a fixed width for consistency */
+        height: 312px; /* Set a fixed height for consistency */
+        padding-top: 22%; /* Create space at the top for the image */
+    }
+    
+    .itemImage {
+        width: 128px;
+        height: 128px;
+        margin-bottom: 1vw; /* Space between the image and the text */
+    }
+}
