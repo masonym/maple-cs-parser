@@ -8,6 +8,7 @@ import ItemCard from './components/ItemCard';
 import Footer from './components/Footer';
 import { formatDate } from './utils';
 import AdvancedItemCard from './components/AdvancedItemCard';
+import background from './assets/backgrnd_cr.png'
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
 const heroWorlds = [45, 46, 70];
@@ -40,7 +41,7 @@ function AdvancedItemList() {
         }
     };
 
-   const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
+    const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
 
     const parseDate = (dateString) => {
@@ -146,7 +147,10 @@ function AdvancedItemList() {
     }, [sortKey, sortOrder, items, hidePastItems, showCurrentItems, searchTerm, worldFilter]);
 
     return (
-        <div className={styles.mainContent}>
+        <div className={styles.mainContent} style={{
+            backgroundImage: `url(${background})`,
+            backgroundAttachment: 'fixed',
+        }}>
             <Helmet>
                 <title>Upcoming MapleStory Cash Shop Sales</title>
                 <meta property="og:title" content="Upcoming MapleStory Cash Shop Sales" />

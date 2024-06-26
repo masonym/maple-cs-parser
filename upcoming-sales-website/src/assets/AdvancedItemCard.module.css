@@ -39,7 +39,7 @@
 
 .itemDetails {
     position: absolute;
-    bottom: 1vw; /* Adjust as needed */
+    bottom: 25%; 
     left: 0;
     right: 0;
     text-align: center;
