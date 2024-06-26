@@ -38,28 +38,30 @@
 }
 
 .itemDetails {
-    position: absolute;
-    bottom: 25%; 
+    position: relative;
+    /* bottom: 25%;  */
+    top: 65%;
     left: 0;
     right: 0;
+    width: 95%;
     text-align: center;
 }
 
 .itemName {
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 1.25cqw;
     margin: 0;
     padding: 0 5%;
     line-height: 1.2em;
-    max-height: 2.4em; /* Limit to two lines */
+    max-height: 2.4em;
     overflow: hidden;
+    height: 2.4em;
 }
 
 .itemPrice {
-    font-size: 14px;
+    font-size: 1.15cqw;
     color: #8e8e8e;
     margin: 0;
-    padding-top: 5px; /* Add some space above the price */
+    padding-top: 1cqi; /* Add some space above the price */
 }
 
 .itemContainer {
@@ -69,16 +71,19 @@
 }
 
 /* mobile */
+
+/* 
 @media (max-width: 768px) {
     .itemFlexContainer {
-        width: 238px; /* Set a fixed width for consistency */
-        height: 312px; /* Set a fixed height for consistency */
-        padding-top: 22%; /* Create space at the top for the image */
+        width: 238px;
+        height: 312px;
+        padding-top: 22%;
     }
     
     .itemImage {
         width: 128px;
         height: 128px;
-        margin-bottom: 1vw; /* Space between the image and the text */
+        margin-bottom: 1vw;
     }
 }
+ */
