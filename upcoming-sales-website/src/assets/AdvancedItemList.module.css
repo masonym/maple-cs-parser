@@ -204,7 +204,7 @@ hr {
 .packageItems li {
     padding-bottom: 4px;
     border-radius: 20px;
-    border: 2px solid black;
+    border: 1px solid #eeeeee;
     padding: 10px;
     margin: 5px;
 }
@@ -266,7 +266,7 @@ h4 {
 .itemList {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    /* gap: 16px; */
     margin: 0px 5%;
     align-items: center;
     justify-content: center;

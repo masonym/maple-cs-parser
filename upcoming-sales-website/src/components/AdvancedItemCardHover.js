@@ -1,15 +1,21 @@
 import React from 'react';
 import styles from '../assets/AdvancedItemCardHover.module.css';
-import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference } from '../utils';
-import PackageContents from './PackageContents';
+import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText } from '../utils';
+import AdvancedPackageContents from './AdvancedPackageContents';
 
-const AdvancedItemCardHover = ({ item, position }) => {
+const AdvancedItemCardHover = ({ item, position, hoverCardRef }) => {
     return (
-        <div className={styles.hoverCard} style={{ left: position.x, top: position.y }}>
+        <div
+            ref={hoverCardRef}
+            className={styles.hoverCard}
+            style={{ left: `${position.x}px`, top: `${position.y}px` }}
+        >
+            <p>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
             <div className={styles.saleTimes}>
                 <p>{formatSaleTimesDate(item.termStart)} ~ {formatSaleTimesDate(item.termEnd)} UTC</p>
                 <p>({calculateDateDifference(item.termStart, item.termEnd)})</p>
             </div>
+            <p>{magicText(item.itemID)}Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
             <div className={styles.itemFlexContainer}>
                 <img
                     src={`./images/${item.itemID}.png`}
@@ -17,13 +23,11 @@ const AdvancedItemCardHover = ({ item, position }) => {
                     alt={item.name}
                     onError={(e) => { e.target.style.display = 'none'; }}
                 />
-                <h3>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</h3>
+                <p>{convertNewlinesToBreaks(item.description)}</p>
             </div>
-            <p>{convertNewlinesToBreaks(item.description)}</p>
+            <AdvancedPackageContents contents={item.packageContents} />
             <hr />
-            <p>Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
-            <p>Price: {formatNumber(item.price)}{item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount == 1 ? `(was ${formatNumber(item.originalPrice)}${item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
-            <PackageContents contents={item.packageContents} />
+            <p>Price: {formatNumber(item.price)}{item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount === 1 ? `(was ${formatNumber(item.originalPrice)}${item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
         </div>
     );
 };

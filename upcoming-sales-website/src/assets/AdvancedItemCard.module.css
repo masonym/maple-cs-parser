@@ -4,7 +4,7 @@
 
 .item {
     list-style: none;
-    margin: 10px;
+    margin: 0.5%;
     padding: 0;
     display: flex;
     align-items: center;
@@ -17,8 +17,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 18.308vw;
-    height: 24vw;
+    width: calc(18.308vw / 2);
+    height: calc(24vw / 2);
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -27,8 +27,8 @@
 }
 
 .itemImage {
-    width: 8vw;
-    height: 8vw;
+    width: 40%;
+    height: 40%;
     object-fit: contain;
     position: absolute; /* This is crucial for positioning */
     top: 46%; /* Adjust this value to move the image up or down */
@@ -48,7 +48,7 @@
 }
 
 .itemName {
-    font-size: 1.25cqw;
+    font-size: 1.25cap;
     margin: 0;
     padding: 0 5%;
     line-height: 1.2em;
@@ -58,10 +58,10 @@
 }
 
 .itemPrice {
-    font-size: 1.15cqw;
+    font-size: 1.15cap;
     color: #8e8e8e;
     margin: 0;
-    padding-top: 1cqi; /* Add some space above the price */
+    padding-top: 1cap; /* Add some space above the price */
 }
 
 .itemContainer {

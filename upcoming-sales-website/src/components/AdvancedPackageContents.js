@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from '../assets/ItemList.module.css';
+import styles from '../assets/AdvancedItemList.module.css';
 import { convertNewlinesToBreaks, magicText } from '../utils';
 
-const PackageContents = ({ contents }) => {
+const AdvancedPackageContents = ({ contents }) => {
     if (!contents) return null;
 
     return (
@@ -38,4 +38,4 @@ const PackageContents = ({ contents }) => {
     );
 };
 
-export default PackageContents;
+export default AdvancedPackageContents;
