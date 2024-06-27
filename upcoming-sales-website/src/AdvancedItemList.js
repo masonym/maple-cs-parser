@@ -199,6 +199,7 @@ function AdvancedItemList() {
                                 {categorizedItems[dateKey].map(({ key, item }) => (
                                     <AdvancedItemCard
                                         key={key}
+                                        itemKey={key}
                                         item={item}
                                         isOpen={openItemId === item}
                                         onItemClick={() => handleItemClick(item)}

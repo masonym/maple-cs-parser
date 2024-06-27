@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from '../assets/AdvancedItemCardHover.module.css';
-import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText } from '../utils';
+import { formatPriceDisplay, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText } from '../utils';
 import AdvancedPackageContents from './AdvancedPackageContents';
+import itemBase from '../assets/itemBase.png'
 
-const AdvancedItemCardHover = ({ item, position, isTouchDevice, hoverCardRef, onClose }) => {
+const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCardRef, onClose }) => {
     const hoverCardStyle = isTouchDevice ? styles.mobileHoverCard : styles.desktopHoverCard;
     const hoverCardPosition = isTouchDevice ? {} : { left: `${position.x}px`, top: `${position.y}px` };
 
@@ -24,17 +25,25 @@ const AdvancedItemCardHover = ({ item, position, isTouchDevice, hoverCardRef, on
             </div>
             <p>{magicText(item.itemID)}Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
             <div className={styles.itemFlexContainer}>
-                <img
-                    src={`./images/${item.itemID}.png`}
-                    className={styles.itemImage}
-                    alt={item.name}
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                />
+                <div className={styles.itemImageContainer}>
+                    <img
+                        src={`./images/${item.itemID}.png`}
+                        className={styles.itemImage}
+                        alt={item.name}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                    <img
+                        src={itemBase}
+                        className={styles.itemImageBase}
+                    />
+                </div>
                 <p>{convertNewlinesToBreaks(item.description)}</p>
             </div>
             <AdvancedPackageContents contents={item.packageContents} />
-            <hr />
-            <p>Price: {formatNumber(item.price)}{item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount === 1 ? `(was ${formatNumber(item.originalPrice)}${item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
+            <hr className={styles.hr} />
+            <p className={styles.itemPrice}>
+                {formatPriceDisplay(item.originalPrice, item.price, itemKey, item.discount)}
+            </p>
         </div>
     );
 };

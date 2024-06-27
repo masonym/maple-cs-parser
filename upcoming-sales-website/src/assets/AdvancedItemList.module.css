@@ -203,6 +203,18 @@ hr {
     padding-left: 0;
 }
 
+.itemImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.itemImageBase {
+    width: 4cqb;
+    height: 4cqb;
+}
+
 .packageItems li {
     padding-bottom: 4px;
     border-radius: 20px;
@@ -217,9 +229,14 @@ hr {
 }
 
 .packageItemImage {
-    object-fit: cover;
-    margin-right: 8px;
+    position: absolute;
+    max-width: 4cqb;
+    max-height: 4cqb;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
+
 
 .hidePastItemsButton {
     margin-left: 16px;

@@ -4,7 +4,7 @@ import { formatNumber } from '../utils';
 import background from '../assets/productBg.png';
 import AdvancedItemCardHover from './AdvancedItemCardHover';
 
-const AdvancedItemCard = ({ item, isOpen, onItemClick, isTouchDevice }) => {
+const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice }) => {
     const [isHovering, setIsHovering] = useState(false);
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
     const hoverCardRef = useRef(null);
@@ -40,7 +40,7 @@ const AdvancedItemCard = ({ item, isOpen, onItemClick, isTouchDevice }) => {
         const hoverCardHeight = hoverCardRef.current ? hoverCardRef.current.offsetHeight : 0;
         const offsetX = 10;
         const offsetY = 10;
-        
+
         let newX = pageX + offsetX;
         const newY = Math.min(pageY + offsetY, window.innerHeight + window.scrollY - hoverCardHeight - offsetY);
 
@@ -68,15 +68,21 @@ const AdvancedItemCard = ({ item, isOpen, onItemClick, isTouchDevice }) => {
                 />
                 <div className={styles.itemDetails}>
                     <p className={styles.itemName}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
-                    <p className={styles.itemPrice}>{formatNumber(item.price)} NX</p>
+                    <p className={styles.itemPrice}>
+                        {formatNumber(item.price)}
+                        {itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}
+                        {item.discount == 1 ? <><br /><s>{formatNumber(item.originalPrice)}{itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}</s></> : ''}
+                    </p>
+
                 </div>
             </div>
             {(isHovering || (isTouchDevice && isOpen)) && (
-                <AdvancedItemCardHover 
-                    item={item} 
-                    position={hoverPosition} 
-                    isTouchDevice={isTouchDevice} 
-                    hoverCardRef={hoverCardRef} 
+                <AdvancedItemCardHover
+                    itemKey={itemKey}
+                    item={item}
+                    position={hoverPosition}
+                    isTouchDevice={isTouchDevice}
+                    hoverCardRef={hoverCardRef}
                     onClose={onItemClick}
                 />
             )}

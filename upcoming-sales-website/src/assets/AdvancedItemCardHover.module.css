@@ -55,11 +55,20 @@
     margin-bottom: 10px;
 }
 
-.itemImage {
-    width: 4cqb;
-    height: 4cqb;
+.itemImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 10px;
 }
+
+.itemImage {
+    position: absolute;
+    width: 4.5cqb;
+    height: 4.5cqb;
+    object-fit: contain;
+}
+
 
 .hoverCard h3 {
     margin: 0;
@@ -72,10 +81,12 @@
 }
 
 .hoverCard hr {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 10px 0;
-}
+    height: 0; 
+    border: 0;
+    margin: 2.5% 0;
+    border-top: 2px dotted #eee;
+    background-color: transparent;
+  }
 
 @media (max-width: 768px) {
     .mobileHoverCard {

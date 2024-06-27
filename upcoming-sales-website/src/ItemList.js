@@ -39,7 +39,7 @@ function ItemList() {
         }
     };
 
-   const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
+    const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
 
     const parseDate = (dateString) => {
@@ -180,7 +180,7 @@ function ItemList() {
                             <h2 className={styles.categoryHeader}>{formatDate(dateKey)}</h2>
                             <ul className={styles.itemList}>
                                 {categorizedItems[dateKey].map(({ key, item }) => (
-                                    <ItemCard key={key} item={item} />
+                                    <ItemCard key={key} itemKey={key} item={item} />
                                 ))}
                             </ul>
                         </div>

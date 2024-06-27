@@ -87,3 +87,29 @@ export const magicText = (itemID) => {
   }
   return magicText
 }
+
+export const formatPriceDisplay = (originalPrice, price, itemKey, discount) => {
+  const formatNumber = (number) => number.toLocaleString(); // Add your number formatting logic here if needed
+  const originalPriceNum = Number(originalPrice);
+  const priceNum = Number(price);
+  const currency = itemKey.startsWith('870') ? ' Mesos' : ' NX';
+
+  if (discount == 1) {
+    const discountPercentage = Math.round(((originalPriceNum - priceNum) / originalPriceNum) * 100);
+    return (
+      <span>
+        <span style={{ color: 'red' }}>{formatNumber(originalPriceNum)}{currency}</span>
+        {' ➔ '}
+        {formatNumber(priceNum)}{currency}
+        {' ('}{discountPercentage}% off{')'}
+      </span>
+    );
+  } else {
+    return (
+      <span>
+        {formatNumber(priceNum)}{currency}
+      </span>
+    );
+  }
+};
+
