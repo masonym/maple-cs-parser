@@ -18,7 +18,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
                     &times;
                 </button>
             )}
-            <p>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
+            <p style={{fontSize: '1.15em'}}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
             <div className={styles.saleTimes}>
                 <p>{formatSaleTimesDate(item.termStart)} ~ {formatSaleTimesDate(item.termEnd)} UTC</p>
                 <p>({calculateDateDifference(item.termStart, item.termEnd)})</p>
@@ -41,7 +41,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             </div>
             <AdvancedPackageContents contents={item.packageContents} />
             <hr className={styles.hr} />
-            <p className={styles.itemPrice}>
+            <p>
                 {formatPriceDisplay(item.originalPrice, item.price, itemKey, item.discount)}
             </p>
         </div>
