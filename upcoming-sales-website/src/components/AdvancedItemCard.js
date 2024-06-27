@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from '../assets/AdvancedItemCard.module.css';
 import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference } from '../utils';
 import background from '../assets/productBg.png';
@@ -8,6 +8,7 @@ const AdvancedItemCard = ({ item }) => {
     const [isHovering, setIsHovering] = useState(false);
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
     const hoverCardRef = useRef(null);
+    const positionRef = useRef({ x: 0, y: 0 });
 
     const handleMouseEnter = () => {
         setIsHovering(true);
@@ -18,20 +19,32 @@ const AdvancedItemCard = ({ item }) => {
     };
 
     const handleMouseMove = (e) => {
-        const hoverCardWidth = hoverCardRef.current ? hoverCardRef.current.offsetWidth : 0;
-        const hoverCardHeight = hoverCardRef.current ? hoverCardRef.current.offsetHeight : 0;
         const offsetX = 10;
-        const offsetY = 70;
+        const offsetY = 10;
         
-        let newX = e.pageX + offsetX;
-        const newY = Math.min(e.pageY + offsetY, window.innerHeight + window.scrollY - hoverCardHeight - offsetY);
-
-        if (newX + hoverCardWidth > window.innerWidth + window.scrollX) {
-            newX = e.pageX - hoverCardWidth - offsetX;
-        }
-
-        setHoverPosition({ x: newX, y: newY });
+        positionRef.current = {
+            x: e.pageX + offsetX,
+            y: Math.min(e.pageY + offsetY, window.innerHeight + window.scrollY - offsetY)
+        };
+        
+        setHoverPosition(positionRef.current);
     };
+
+    useEffect(() => {
+        if (isHovering && hoverCardRef.current) {
+            const hoverCardWidth = hoverCardRef.current.offsetWidth;
+            const hoverCardHeight = hoverCardRef.current.offsetHeight;
+
+            let newX = positionRef.current.x;
+            let newY = Math.min(positionRef.current.y, window.innerHeight + window.scrollY - hoverCardHeight - 10);
+
+            if (newX + hoverCardWidth > window.innerWidth + window.scrollX) {
+                newX = positionRef.current.x - hoverCardWidth - 20; // OffsetX * 2
+            }
+
+            setHoverPosition({ x: newX, y: newY });
+        }
+    }, [isHovering]);
 
     return (
         <li
