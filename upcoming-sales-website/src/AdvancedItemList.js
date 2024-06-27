@@ -23,6 +23,8 @@ function AdvancedItemList() {
     const [searchTerm, setSearchTerm] = useState('');
     const [worldFilter, setWorldFilter] = useState('');
     const [noItems, setNoItems] = useState(false);
+    const [openItemId, setOpenItemId] = useState(null);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
     const handleSortOrderChange = (event) => setSortOrder(event.target.value);
@@ -146,6 +148,16 @@ function AdvancedItemList() {
         sortAndFilterItems();
     }, [sortKey, sortOrder, items, hidePastItems, showCurrentItems, searchTerm, worldFilter]);
 
+    useEffect(() => {
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    }, []);
+
+    const handleItemClick = (itemId) => {
+        if (isTouchDevice) {
+            setOpenItemId(prevId => prevId === itemId ? null : itemId);
+        }
+    };
+
     return (
         <div className={styles.mainContent} style={{
             backgroundImage: `url(${background})`,
@@ -158,8 +170,8 @@ function AdvancedItemList() {
                 <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
-            <h1>MapleStory Upcoming Cash Shop Sales</h1>
-            <h4> Last Updated for v.251 (June 12th, 2024) </h4>
+            <h1 className={styles.h1}>MapleStory Upcoming Cash Shop Sales</h1>
+            <h4 className={styles.h4}> Last Updated for v.251 (June 12th, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
@@ -185,7 +197,13 @@ function AdvancedItemList() {
                             <h2 className={styles.categoryHeader}>{formatDate(dateKey)}</h2>
                             <ul className={styles.itemList}>
                                 {categorizedItems[dateKey].map(({ key, item }) => (
-                                    <AdvancedItemCard key={key} item={item} />
+                                    <AdvancedItemCard
+                                        key={key}
+                                        item={item}
+                                        isOpen={openItemId === item}
+                                        onItemClick={() => handleItemClick(item)}
+                                        isTouchDevice={isTouchDevice}
+                                    />
                                 ))}
                             </ul>
                         </div>

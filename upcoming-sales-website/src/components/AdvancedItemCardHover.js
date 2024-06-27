@@ -3,13 +3,20 @@ import styles from '../assets/AdvancedItemCardHover.module.css';
 import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText } from '../utils';
 import AdvancedPackageContents from './AdvancedPackageContents';
 
-const AdvancedItemCardHover = ({ item, position, hoverCardRef }) => {
+const AdvancedItemCardHover = ({ item, position, isTouchDevice, hoverCardRef, onClose }) => {
+    const hoverCardStyle = isTouchDevice ? styles.mobileHoverCard : styles.desktopHoverCard;
+    const hoverCardPosition = isTouchDevice ? {} : { left: `${position.x}px`, top: `${position.y}px` };
+
     return (
-        <div
-            ref={hoverCardRef}
-            className={styles.hoverCard}
-            style={{ left: `${position.x}px`, top: `${position.y}px` }}
-        >
+        <div ref={hoverCardRef} className={`${styles.hoverCard} ${hoverCardStyle}`} style={hoverCardPosition}>
+            {isTouchDevice && (
+                <button className={styles.closeButton} onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                }}>
+                    &times;
+                </button>
+            )}
             <p>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
             <div className={styles.saleTimes}>
                 <p>{formatSaleTimesDate(item.termStart)} ~ {formatSaleTimesDate(item.termEnd)} UTC</p>

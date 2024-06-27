@@ -1,18 +1,42 @@
 .hoverCard {
-    position: absolute;
-    z-index: 1000;
     background-color: rgba(0, 0, 0, 0.75);
     border: 1px solid #eeeeee;
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    pointer-events: none;
-    max-width: 25%;
-    min-width: 25%;
     font-family: 'maplestory', sans-serif;
     font-weight: lighter;
     color: #eee;
     overflow-y: auto;
+}
+
+.desktopHoverCard {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    max-width: 25%;
+    min-width: 25%;
+}
+
+.mobileHoverCard {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-height: 90vh;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .saleTimes {
@@ -54,19 +78,7 @@
 }
 
 @media (max-width: 768px) {
-    .hoverCard {
-        position: absolute;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.75);
-        border: 1px solid #eeeeee;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        pointer-events: none;
-        max-width: 45%;
-        font-family: 'maplestory', sans-serif;
-        font-weight: lighter;
-        color: #eee;
-        overflow-y: auto;
+    .mobileHoverCard {
+        font-size: 16px;
     }
 }

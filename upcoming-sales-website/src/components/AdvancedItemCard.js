@@ -1,50 +1,55 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from '../assets/AdvancedItemCard.module.css';
-import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference } from '../utils';
+import { formatNumber } from '../utils';
 import background from '../assets/productBg.png';
 import AdvancedItemCardHover from './AdvancedItemCardHover';
 
-const AdvancedItemCard = ({ item }) => {
+const AdvancedItemCard = ({ item, isOpen, onItemClick, isTouchDevice }) => {
     const [isHovering, setIsHovering] = useState(false);
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
     const hoverCardRef = useRef(null);
-    const positionRef = useRef({ x: 0, y: 0 });
 
     const handleMouseEnter = () => {
-        setIsHovering(true);
+        if (!isTouchDevice) {
+            setIsHovering(true);
+        }
     };
 
     const handleMouseLeave = () => {
-        setIsHovering(false);
+        if (!isTouchDevice) {
+            setIsHovering(false);
+        }
     };
 
     const handleMouseMove = (e) => {
+        if (!isTouchDevice) {
+            updateHoverPosition(e.pageX, e.pageY);
+        }
+    };
+
+    const handleClick = (e) => {
+        if (isTouchDevice) {
+            e.preventDefault();
+            e.stopPropagation();  // Stop the event from bubbling up to the parent elements
+            onItemClick();
+        }
+    };
+
+    const updateHoverPosition = (pageX, pageY) => {
+        const hoverCardWidth = hoverCardRef.current ? hoverCardRef.current.offsetWidth : 0;
+        const hoverCardHeight = hoverCardRef.current ? hoverCardRef.current.offsetHeight : 0;
         const offsetX = 10;
         const offsetY = 10;
         
-        positionRef.current = {
-            x: e.pageX + offsetX,
-            y: Math.min(e.pageY + offsetY, window.innerHeight + window.scrollY - offsetY)
-        };
-        
-        setHoverPosition(positionRef.current);
-    };
+        let newX = pageX + offsetX;
+        const newY = Math.min(pageY + offsetY, window.innerHeight + window.scrollY - hoverCardHeight - offsetY);
 
-    useEffect(() => {
-        if (isHovering && hoverCardRef.current) {
-            const hoverCardWidth = hoverCardRef.current.offsetWidth;
-            const hoverCardHeight = hoverCardRef.current.offsetHeight;
-
-            let newX = positionRef.current.x;
-            let newY = Math.min(positionRef.current.y, window.innerHeight + window.scrollY - hoverCardHeight - 10);
-
-            if (newX + hoverCardWidth > window.innerWidth + window.scrollX) {
-                newX = positionRef.current.x - hoverCardWidth - 20; // OffsetX * 2
-            }
-
-            setHoverPosition({ x: newX, y: newY });
+        if (newX + hoverCardWidth > window.innerWidth + window.scrollX) {
+            newX = pageX - hoverCardWidth - offsetX;
         }
-    }, [isHovering]);
+
+        setHoverPosition({ x: newX, y: newY });
+    };
 
     return (
         <li
@@ -52,23 +57,28 @@ const AdvancedItemCard = ({ item }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
+            onClick={handleClick}
         >
-            <li key={item.itemID} className={styles.item}>
-                <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background})` }}>
-                    <img
-                        src={`./images/${item.itemID}.png`}
-                        className={styles.itemImage}
-                        alt={item.name}
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                    />
-                    <div className={styles.itemDetails}>
-                        <p className={styles.itemName}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
-                        <p className={styles.itemPrice}>{formatNumber(item.price)} NX</p>
-                    </div>
+            <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background})` }}>
+                <img
+                    src={`./images/${item.itemID}.png`}
+                    className={styles.itemImage}
+                    alt={item.name}
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                />
+                <div className={styles.itemDetails}>
+                    <p className={styles.itemName}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
+                    <p className={styles.itemPrice}>{formatNumber(item.price)} NX</p>
                 </div>
-            </li>
-            {isHovering && (
-                <AdvancedItemCardHover item={item} position={hoverPosition} hoverCardRef={hoverCardRef} />
+            </div>
+            {(isHovering || (isTouchDevice && isOpen)) && (
+                <AdvancedItemCardHover 
+                    item={item} 
+                    position={hoverPosition} 
+                    isTouchDevice={isTouchDevice} 
+                    hoverCardRef={hoverCardRef} 
+                    onClose={onItemClick}
+                />
             )}
         </li>
     );
