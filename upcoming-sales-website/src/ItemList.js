@@ -161,6 +161,7 @@ function ItemList() {
                 sortOrder={sortOrder}
                 onSortKeyChange={handleSortKeyChange}
                 onSortOrderChange={handleSortOrderChange}
+                className={styles}
             />
             <FilterControls
                 searchTerm={searchTerm}
@@ -171,6 +172,7 @@ function ItemList() {
                 onHidePastItemsChange={toggleHidePastItems}
                 onShowCurrentItemsChange={toggleShowCurrentItems}
                 onWorldFilterChange={handleWorldFilterChange}
+                className={styles}
             />
             {noItems ? (
                 <p className={styles.noItemsMessage}>No items found</p>

@@ -41,7 +41,7 @@
     background-color: #ccc;
     border-radius: 15px;
     position: relative;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
   }
   
   .slider {

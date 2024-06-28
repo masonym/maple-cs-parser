@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './assets/AdvancedItemList.module.css';
+import advancedStyles from './assets/AdvancedItemList.module.css';
 import { Helmet } from 'react-helmet';
 import SortControls from './components/SortControls';
 import FilterControls from './components/FilterControls';
@@ -8,7 +8,8 @@ import ItemCard from './components/ItemCard';
 import Footer from './components/Footer';
 import { formatDate } from './utils';
 import AdvancedItemCard from './components/AdvancedItemCard';
-import background from './assets/backgrnd_cr.png'
+import background from './assets/backgrnd_cr.png';
+import noItemsImage from './assets/noItem_mini.png';
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
 const heroWorlds = [45, 46, 70];
@@ -167,7 +168,7 @@ function AdvancedItemList() {
     };
 
     return (
-        <div className={styles.mainContent} style={{
+        <div className={advancedStyles.mainContent} style={{
             backgroundImage: `url(${background})`,
             backgroundAttachment: 'fixed',
         }}>
@@ -178,13 +179,14 @@ function AdvancedItemList() {
                 <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
-            <h1 className={styles.h1}>MapleStory Upcoming Cash Shop Sales</h1>
-            <h4 className={styles.h4}> Last Updated for v.251 (June 12th, 2024) </h4>
+            <h1 className={advancedStyles.h1}>MapleStory Upcoming Cash Shop Sales</h1>
+            <h4 className={advancedStyles.h4}> Last Updated for v.251 (June 12th, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
                 onSortKeyChange={handleSortKeyChange}
                 onSortOrderChange={handleSortOrderChange}
+                className={advancedStyles}
             />
             <FilterControls
                 searchTerm={searchTerm}
@@ -195,26 +197,33 @@ function AdvancedItemList() {
                 onHidePastItemsChange={toggleHidePastItems}
                 onShowCurrentItemsChange={toggleShowCurrentItems}
                 onWorldFilterChange={handleWorldFilterChange}
+                className={advancedStyles}
             />
             {noItems ? (
-                <p className={styles.noItemsMessage}>No items found</p>
+                <div className={advancedStyles.noItemsContainer}>
+                    <img 
+                        src={noItemsImage} 
+                        alt="No items found" 
+                        className={advancedStyles.noItemsImage}
+                    />
+                </div>
             ) : (
                 <div>
                     {Object.keys(categorizedItems).map((dateKey) => (
                         <div key={dateKey}>
                             <h2 
-                                className={styles.categoryHeader}
+                                className={advancedStyles.categoryHeader}
                                 onClick={() => toggleCategory(dateKey)}
                             >
-                                <span className={styles.categoryDate}>
+                                <span className={advancedStyles.categoryDate}>
                                     {formatDate(dateKey)}
                                 </span>
-                                <span className={styles.categoryToggle}>
+                                <span className={advancedStyles.categoryToggle}>
                                     {collapsedCategories[dateKey] ? '▶' : '▼'}
                                 </span>
                             </h2>
                             {!collapsedCategories[dateKey] && (
-                                <ul className={styles.itemList}>
+                                <ul className={advancedStyles.itemList}>
                                     {categorizedItems[dateKey].map(({ key, item }) => (
                                         <AdvancedItemCard
                                             key={key}
