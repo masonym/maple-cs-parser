@@ -230,10 +230,8 @@ hr {
 
 .packageItemImage {
     position: absolute;
-    max-width: 4cqb;
-    max-height: 4cqb;
-    width: auto;
-    height: auto;
+    width: 3cqb;
+    height: 3cqb;
     object-fit: contain;
 }
 
@@ -279,6 +277,16 @@ hr {
     font-weight: bold;
     text-align: center;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.categoryToggle {
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 0.8em;
 }
 
 /* Column layout */ 
@@ -334,3 +342,4 @@ hr {
     margin: 0.25em;
     text-align: center;
 }
+

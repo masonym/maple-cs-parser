@@ -25,6 +25,7 @@ function AdvancedItemList() {
     const [noItems, setNoItems] = useState(false);
     const [openItemId, setOpenItemId] = useState(null);
     const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const [collapsedCategories, setCollapsedCategories] = useState({});
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
     const handleSortOrderChange = (event) => setSortOrder(event.target.value);
@@ -42,6 +43,13 @@ function AdvancedItemList() {
             setHidePastItems(false);
         }
     };
+
+    const toggleCategory = (dateKey) => {
+        setCollapsedCategories(prev => ({
+            ...prev,
+            [dateKey]: !prev[dateKey]
+        }));
+    }
 
     const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
@@ -194,19 +202,31 @@ function AdvancedItemList() {
                 <div>
                     {Object.keys(categorizedItems).map((dateKey) => (
                         <div key={dateKey}>
-                            <h2 className={styles.categoryHeader}>{formatDate(dateKey)}</h2>
-                            <ul className={styles.itemList}>
-                                {categorizedItems[dateKey].map(({ key, item }) => (
-                                    <AdvancedItemCard
-                                        key={key}
-                                        itemKey={key}
-                                        item={item}
-                                        isOpen={openItemId === item}
-                                        onItemClick={() => handleItemClick(item)}
-                                        isTouchDevice={isTouchDevice}
-                                    />
-                                ))}
-                            </ul>
+                            <h2 
+                                className={styles.categoryHeader}
+                                onClick={() => toggleCategory(dateKey)}
+                            >
+                                <span className={styles.categoryDate}>
+                                    {formatDate(dateKey)}
+                                </span>
+                                <span className={styles.categoryToggle}>
+                                    {collapsedCategories[dateKey] ? '▶' : '▼'}
+                                </span>
+                            </h2>
+                            {!collapsedCategories[dateKey] && (
+                                <ul className={styles.itemList}>
+                                    {categorizedItems[dateKey].map(({ key, item }) => (
+                                        <AdvancedItemCard
+                                            key={key}
+                                            itemKey={key}
+                                            item={item}
+                                            isOpen={openItemId === item}
+                                            onItemClick={() => handleItemClick(item)}
+                                            isTouchDevice={isTouchDevice}
+                                        />
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     ))}
                 </div>
