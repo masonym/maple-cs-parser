@@ -19,7 +19,17 @@ div {
 .h1 {
     text-align: center;
     margin-bottom: 15px;
-    color: whitesmoke
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.h4 {
+    font-size: 1.25rem;
+    text-align: center;
+    margin: 20px 0;
+    font-style: italic;
+    margin-bottom: 30px;
+    color: whitesmoke;
 }
 
 
@@ -72,7 +82,8 @@ hr {
 .filterButtons {
     display: inline-flex;
     justify-content: center;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin: 0 10px 10px 10px
 }
 
 .filterButton {
@@ -86,7 +97,6 @@ hr {
     cursor: url('../assets/cursorClick.png'), auto;
     transition: background-color 0.3s, transform 0.3s;
     text-align: center;
-    margin-right: 10px;
 }
 
 .filterButton:hover {
@@ -129,6 +139,7 @@ hr {
     align-items: center;
     cursor: url('../assets/cursorClick.png'), auto;
     user-select: none;
+    color: whitesmoke;
 }
 
 .checkboxInput {
@@ -261,15 +272,6 @@ hr {
     font-weight: bold;
 }
 
-.h4 {
-    font-size: 1.25rem;
-    text-align: center;
-    margin: 20px 0;
-    font-style: italic;
-    margin-bottom: 30px;
-    color: whitesmoke;
-}
-
 .categoryHeader {
     display: flex;
     align-items: center;
@@ -280,6 +282,7 @@ hr {
     border-radius: 5px;
     color: white;
     justify-content: center;
+    text-align: center;
 }
 
 .categoryHeader:hover {
