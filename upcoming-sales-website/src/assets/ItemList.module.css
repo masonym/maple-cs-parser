@@ -13,9 +13,10 @@ div {
     font-family: maplestory;
 }
 
-h1 {
+.h1 {
     text-align: center;
     margin-bottom: 15px;
+    color: black
 }
 
 .sortControls {
@@ -39,7 +40,7 @@ h1 {
     width: auto;
     font-family: inherit;
     font-size: inherit;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
     text-align: center;
     color: #002b5c;
 }
@@ -76,7 +77,7 @@ hr {
     border-radius: 25px;
     background-color: #8abf88;
     color: #2e4d2e;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
     transition: background-color 0.3s, transform 0.3s;
     text-align: center;
     margin-right: 10px;
@@ -120,7 +121,7 @@ hr {
 .checkboxLabel {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
     user-select: none;
 }
 
@@ -130,7 +131,7 @@ hr {
     height: 18px;
     border-radius: 50%;
     border: 2px solid #007bff;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
     appearance: none;
     background-color: #fff;
     position: relative;
@@ -224,7 +225,7 @@ hr {
     color: white;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
+    cursor: url('../assets/cursorClick.png'), auto;
 }
 
 .hidePastItemsButton:hover {
@@ -239,7 +240,7 @@ hr {
     font-weight: bold;
 }
 
-h4 {
+.h4 {
     font-size: 1.25rem;
     text-align: center;
     margin: 20px 0;

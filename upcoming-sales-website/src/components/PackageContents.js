@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../assets/ItemList.module.css';
-import { convertNewlinesToBreaks } from '../utils';
+import { convertNewlinesToBreaks, magicText } from '../utils';
 
 const PackageContents = ({ contents }) => {
     if (!contents) return null;
@@ -25,7 +25,7 @@ const PackageContents = ({ contents }) => {
                                         <div>
                                             <p>{itemDetails.name}{countText}</p>
                                             {itemDetails.description && <p><i>{convertNewlinesToBreaks(itemDetails.description)}</i></p>}
-                                            <p>Duration: {itemDetails.period === '0' ? 'Permanent' : `${itemDetails.period} days`}</p>
+                                            <p>{magicText(itemDetails.itemID)}Duration: {itemDetails.period === '0' ? 'Permanent' : `${itemDetails.period} days`}</p>
                                         </div>
                                     </div>
                                 </li>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './Home'
-import ItemList from './ItemList';
+import ItemListMain from './ItemListMain';
 
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
       path="/ms-upcoming-sales"
       element={
         <>
-          <ItemList />
+          <ItemListMain />
         </>
       }
     />

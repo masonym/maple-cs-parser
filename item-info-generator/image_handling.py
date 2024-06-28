@@ -35,8 +35,22 @@ def get_xml_path(item_id):
 def get_image_path(xml_path):
     tree = ET.parse(xml_path)
     root = tree.getroot()
-    icon_canvas = root.find(".//canvas[@name='icon']")
-    outlink_value = icon_canvas.find("string[@name='_outlink']").attrib['value']
+    
+    # Try to find iconRaw first, then fall back to icon
+    icon_canvas = root.find(".//canvas[@name='iconRaw']")
+    if icon_canvas is None:
+        icon_canvas = root.find(".//canvas[@name='icon']")
+    
+    if icon_canvas is None:
+        print(f"No icon or iconRaw found in {xml_path}")
+        return None
+    
+    outlink_element = icon_canvas.find("string[@name='_outlink']")
+    if outlink_element is None:
+        print(f"No _outlink found in {xml_path}")
+        return None
+    
+    outlink_value = outlink_element.attrib['value']
     modified_outlink_value = outlink_value.replace('Character/', 'Character.wz/')
     return f"{DUMPED_WZ}/{modified_outlink_value}.png"
 
@@ -48,14 +62,22 @@ def process_item(item_id, dest_file):
         # Pets, Cash Items, and Packages
         prefix = int(str(item_id)[:3])
         if prefix == 500:
-            img_path = f"{PATH_PREF_ITEM}/Pet/{item_id}.img/info/icon.png"
+            base_path = f"{PATH_PREF_ITEM}/Pet/{item_id}.img/info"
         elif 500 <= prefix < 600:
-            img_path = f"{PATH_PREF_ITEM}/Cash/0{prefix}.img/0{item_id}/info/icon.png"
+            base_path = f"{PATH_PREF_ITEM}/Cash/0{prefix}.img/0{item_id}/info"
         elif prefix >= 900:
-            img_path = f"{PATH_PREF_ITEM}/Special/0{prefix}.img/{item_id}/icon.png"
+            base_path = f"{PATH_PREF_ITEM}/Special/0{prefix}.img/{item_id}"
         else:
             print(f"Unknown file path for item ID: {item_id}")
             return
+
+        # Try iconRaw.png first, then fallback to icon.png
+        img_path = f"{base_path}/iconRaw.png"
+        if not os.path.isfile(img_path):
+            img_path = f"{base_path}/icon.png"
+            if not os.path.isfile(img_path):
+                print(f"No icon found for item ID: {item_id}")
+                return
 
     if not os.path.isfile(dest_file):
         shutil.copy(img_path, dest_file)

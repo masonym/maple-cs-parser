@@ -1,0 +1,89 @@
+:root {
+    --base-size: calc(35px * (1vw / 19.2)); /* Assuming 1920px as the base width */
+  }
+
+.item {
+    list-style: none;
+    margin: 0.5%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.itemFlexContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: calc(238px * .75);
+    height: calc(312px * .75);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding-top: 2vw; /* Add some top padding */
+}
+
+.itemImage {
+    width: 40%;
+    height: 40%;
+    object-fit: contain;
+    position: absolute; /* This is crucial for positioning */
+    top: 46%; /* Adjust this value to move the image up or down */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the image */
+    z-index: 1; /* Ensure it's above the background */
+}
+
+.itemDetails {
+    position: relative;
+    /* bottom: 25%;  */
+    top: 65%;
+    left: 0;
+    right: 0;
+    width: 95%;
+    text-align: center;
+}
+
+.itemName {
+    font-size: 1.25cap;
+    margin: 0;
+    padding: 0 5%;
+    line-height: 1.2em;
+    max-height: 2.4em;
+    overflow: hidden;
+    height: 2.4em;
+}
+
+.itemPrice {
+    font-size: 1.15cap;
+    color: #8e8e8e;
+    margin: 0;
+    padding-top: 1cap; /* Add some space above the price */
+}
+
+.itemContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* mobile */
+
+/* 
+@media (max-width: 768px) {
+    .itemFlexContainer {
+        width: 238px;
+        height: 312px;
+        padding-top: 22%;
+    }
+    
+    .itemImage {
+        width: 128px;
+        height: 128px;
+        margin-bottom: 1vw;
+    }
+}
+ */

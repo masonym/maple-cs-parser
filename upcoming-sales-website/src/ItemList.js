@@ -39,7 +39,7 @@ function ItemList() {
         }
     };
 
-   const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
+    const handleSearchTermChange = (event) => setSearchTerm(event.target.value.toLowerCase());
     const handleWorldFilterChange = (filter) => setWorldFilter(filter);
 
     const parseDate = (dateString) => {
@@ -69,6 +69,7 @@ function ItemList() {
         axios.get('https://masonym.dev/salesAPI/v1')
             .then(response => {
                 const allItems = response.data;
+                console.log(allItems)
                 setItems(allItems);
                 const categorized = categorizeItems(allItems);
                 setCategorizedItems(categorized);
@@ -153,13 +154,14 @@ function ItemList() {
                 <meta property="twitter:title" content="Upcoming MapleStory Cash Shop Sales" />
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
-            <h1>MapleStory Upcoming Cash Shop Sales</h1>
-            <h4> Last Updated for v.251 (June 12th, 2024) </h4>
+            <h1 className={styles.h1}>MapleStory Upcoming Cash Shop Sales</h1>
+            <h4 className={styles.h4}> Last Updated for v.251 (June 12th, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
                 onSortKeyChange={handleSortKeyChange}
                 onSortOrderChange={handleSortOrderChange}
+                className={styles}
             />
             <FilterControls
                 searchTerm={searchTerm}
@@ -170,6 +172,7 @@ function ItemList() {
                 onHidePastItemsChange={toggleHidePastItems}
                 onShowCurrentItemsChange={toggleShowCurrentItems}
                 onWorldFilterChange={handleWorldFilterChange}
+                className={styles}
             />
             {noItems ? (
                 <p className={styles.noItemsMessage}>No items found</p>
@@ -180,7 +183,7 @@ function ItemList() {
                             <h2 className={styles.categoryHeader}>{formatDate(dateKey)}</h2>
                             <ul className={styles.itemList}>
                                 {categorizedItems[dateKey].map(({ key, item }) => (
-                                    <ItemCard key={key} item={item} />
+                                    <ItemCard key={key} itemKey={key} item={item} />
                                 ))}
                             </ul>
                         </div>

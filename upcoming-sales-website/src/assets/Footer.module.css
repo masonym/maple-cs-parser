@@ -14,6 +14,7 @@
     gap: 20px; /* Space between items */
     color: #333; /* Darker text color */
     margin-top: 5px;
+    z-index: 2;
 }
 
 .footerItem {

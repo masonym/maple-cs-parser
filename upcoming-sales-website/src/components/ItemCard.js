@@ -3,7 +3,7 @@ import styles from '../assets/ItemList.module.css';
 import { formatNumber, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference } from '../utils';
 import PackageContents from './PackageContents';
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ itemKey, item }) => {
     return (
         <li key={item.itemID} className={styles.item}>
             <div className={styles.gameWorldContainer}>
@@ -33,7 +33,7 @@ const ItemCard = ({ item }) => {
                 <p>{convertNewlinesToBreaks(item.description)}</p>
                 <hr />
                 <p>Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
-                <p>Price: {formatNumber(item.price)}{item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount == 1 ? `(was ${formatNumber(item.originalPrice)}${item.itemID.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
+                <p>Price: {formatNumber(item.price)}{itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'} {item.discount == 1 ? `(was ${formatNumber(item.originalPrice)}${itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'})` : ''}</p>
                 <PackageContents contents={item.packageContents} />
             </div>
         </li>
