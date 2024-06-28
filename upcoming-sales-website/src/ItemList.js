@@ -69,6 +69,7 @@ function ItemList() {
         axios.get('https://masonym.dev/salesAPI/v1')
             .then(response => {
                 const allItems = response.data;
+                console.log(allItems)
                 setItems(allItems);
                 const categorized = categorizeItems(allItems);
                 setCategorizedItems(categorized);

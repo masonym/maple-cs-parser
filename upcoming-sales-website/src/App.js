@@ -2,8 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './Home'
-import ItemList from './ItemList';
-import AdvancedItemList from './AdvancedItemList';
+import ItemListMain from './ItemListMain';
 
 
 function App() {
@@ -21,15 +20,7 @@ function App() {
       path="/ms-upcoming-sales"
       element={
         <>
-          <ItemList />
-        </>
-      }
-    />
-    <Route
-      path="/advanced-ms-upcoming-sales"
-      element={
-        <>
-          <AdvancedItemList />
+          <ItemListMain />
         </>
       }
     />
