@@ -48,6 +48,10 @@ div {
     vertical-align: middle;
 }
 
+.sortControls option {
+    color: #333;
+}
+
 .dropdown {
     margin-right: 12px;
     background-color: transparent;
@@ -60,6 +64,7 @@ div {
     text-align: center;
     color: whitesmoke;
 }
+
 
 ul {
     list-style-type: none;

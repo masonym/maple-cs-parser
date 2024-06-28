@@ -11,8 +11,6 @@ const SortControls = ({ sortKey, sortOrder, onSortKeyChange, onSortOrderChange, 
             <select id="sortKey" value={sortKey} onChange={onSortKeyChange} className={styles.dropdown}>
                 <option value="name">Name</option>
                 <option value="price">Price</option>
-                <option value="termStart">Start Date</option>
-                <option value="termEnd">End Date</option>
             </select>
             <label htmlFor="sortOrder">Order: </label>
             <select id="sortOrder" value={sortOrder} onChange={onSortOrderChange} className={styles.dropdown}>
