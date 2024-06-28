@@ -113,3 +113,20 @@ export const formatPriceDisplay = (originalPrice, price, itemKey, discount) => {
   }
 };
 
+export const worldNumbersToString = (worldNumbers) => {
+  let worldText = "Sold in "
+
+  if (worldNumbers == "0/1/17/18/30/45/46/70/48/49") {
+    worldText += "Interactive and Heroic worlds"
+  }
+  
+  else if (worldNumbers == "45/46/70") {
+    worldText += "Heroic worlds only"
+  }
+  
+  else {
+    worldText += "Interactive worlds only"
+  }
+
+  return worldText;
+};

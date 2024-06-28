@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../assets/AdvancedItemCardHover.module.css';
-import { formatPriceDisplay, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText } from '../utils';
+import { formatPriceDisplay, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText, worldNumbersToString } from '../utils';
 import AdvancedPackageContents from './AdvancedPackageContents';
 import itemBase from '../assets/itemBase.png'
 
@@ -43,6 +43,9 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             <hr className={styles.hr} />
             <p>
                 {formatPriceDisplay(item.originalPrice, item.price, itemKey, item.discount)}
+            </p>
+            <p style={{marginTop: '10px'}}>
+                {worldNumbersToString(item.gameWorld)}
             </p>
         </div>
     );
