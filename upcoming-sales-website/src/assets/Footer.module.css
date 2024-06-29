@@ -1,6 +1,5 @@
-/* Footer.module.css */
 .footer {
-    background-color: #f1f1f1; /* Light neutral background */
+    background-color: #f1f1f1;
     text-align: center;
     padding: 20px;
     position: fixed;
@@ -11,8 +10,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Space between items */
-    color: #333; /* Darker text color */
+    gap: 20px;
+    color: #333;
     margin-top: 5px;
     z-index: 2;
 }
@@ -22,10 +21,10 @@
 }
 
 .footerItem a {
-    color: #2c5f2d; /* Complementary green color for links */
+    color: #2c5f2d;
     text-decoration: none;
 }
 
 .footerItem a:hover {
-    text-decoration: underline; /* Underline on hover for better UX */
+    text-decoration: underline;
 }

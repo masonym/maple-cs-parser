@@ -1,6 +1,6 @@
 :root {
-    --base-size: calc(35px * (1vw / 19.2)); /* Assuming 1920px as the base width */
-  }
+    --base-size: calc(35px * (1vw / 19.2));
+}
 
 .item {
     list-style: none;
@@ -23,18 +23,18 @@
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    padding-top: 2vw; /* Add some top padding */
+    padding-top: 2vw;
 }
 
 .itemImage {
     width: 40%;
     height: 40%;
     object-fit: contain;
-    position: absolute; /* This is crucial for positioning */
-    top: 46%; /* Adjust this value to move the image up or down */
+    position: absolute;
+    top: 46%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the image */
-    z-index: 1; /* Ensure it's above the background */
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .itemDetails {
@@ -61,7 +61,7 @@
     font-size: 1.15cap;
     color: #8e8e8e;
     margin: 0;
-    padding-top: 1cap; /* Add some space above the price */
+    padding-top: 1cap;
 }
 
 .itemContainer {
@@ -69,21 +69,3 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-
-/* mobile */
-
-/* 
-@media (max-width: 768px) {
-    .itemFlexContainer {
-        width: 238px;
-        height: 312px;
-        padding-top: 22%;
-    }
-    
-    .itemImage {
-        width: 128px;
-        height: 128px;
-        margin-bottom: 1vw;
-    }
-}
- */

@@ -4,7 +4,6 @@ import advancedStyles from './assets/AdvancedItemList.module.css';
 import { Helmet } from 'react-helmet';
 import SortControls from './components/SortControls';
 import FilterControls from './components/FilterControls';
-import ItemCard from './components/ItemCard';
 import Footer from './components/Footer';
 import { formatDate } from './utils';
 import AdvancedItemCard from './components/AdvancedItemCard';

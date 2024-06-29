@@ -13,9 +13,8 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 150px; /* Adjust this value to match your desired background height */
+    height: 150px;
     background-image: url('./backgrnd_cr.png');
-    /* background-size: cover; */
     background-position: center;
     z-index: -1;
   }
@@ -23,7 +22,7 @@
   .title {
     margin: 0;
     font-size: 24px;
-    color: white; /* Ensure the title is visible on the background */
+    color: white;
   }
   
   .toggleContainer {

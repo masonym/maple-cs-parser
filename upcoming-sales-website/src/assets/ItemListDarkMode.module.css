@@ -1,59 +1,42 @@
+/* ItemList.module.css */
+
 @font-face {
     font-family: 'maplestory';
     src: url('../assets/maplestory_light.otf');
 }
 
-body,
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    cursor: url('../assets/defaultCursor.png'), auto;
+body {
+    background-color: #121212;
+    color: #E0E0E0;
 }
 
 div {
     font-family: maplestory;
-    color: black;
 }
 
 .h1 {
     text-align: center;
     margin-bottom: 15px;
-    color: whitesmoke;
-    font-weight: bold;
+    color: #FFFFFF;
 }
-
-.h4 {
-    font-size: 1.25rem;
-    text-align: center;
-    margin: 20px 0;
-    font-style: italic;
-    margin-bottom: 30px;
-    color: whitesmoke;
-}
-
 
 .sortControls {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    color: #4a90e2;
 }
 
 .sortControls label,
 .sortControls select {
     font-size: 16px;
     vertical-align: middle;
-}
-
-.sortControls option {
-    color: #333;
+    color: #E0E0E0;
 }
 
 .dropdown {
     margin-right: 12px;
-    background-color: transparent;
+    background-color: #333333;
     border: none;
     padding: 0;
     width: auto;
@@ -61,9 +44,8 @@ div {
     font-size: inherit;
     cursor: url('../assets/cursorClick.png'), auto;
     text-align: center;
-    color: whitesmoke;
+    color: #80CBC4;
 }
-
 
 ul {
     list-style-type: none;
@@ -73,7 +55,7 @@ ul {
 hr {
     height: 2px;
     border: none;
-    background-color: #a0c4ff;
+    background-color: #80CBC4;
 }
 
 .controlsContainer {
@@ -86,30 +68,30 @@ hr {
 .filterButtons {
     display: inline-flex;
     justify-content: center;
-    gap: 10px;
-    margin: 0 10px 10px 10px
+    margin-bottom: 10px;
 }
 
 .filterButton {
     width: 33%;
     font-family: inherit;
     padding: 10px 20px;
-    border: 2px solid #d2b48c;
+    border: 2px solid #616161;
     border-radius: 25px;
-    background-color: #8abf88;
-    color: #2e4d2e;
+    background-color: #4CAF50;
+    color: #212121;
     cursor: url('../assets/cursorClick.png'), auto;
     transition: background-color 0.3s, transform 0.3s;
     text-align: center;
+    margin-right: 10px;
 }
 
 .filterButton:hover {
-    background-color: #6fa96d;
+    background-color: #388E3C;
     transform: scale(1.05);
 }
 
 .filterButton.active {
-    background-color: #679d66;
+    background-color: #2E7D32;
     transform: scale(1.05);
 }
 
@@ -124,10 +106,10 @@ hr {
     width: 100%;
     font-family: inherit;
     padding: 6px 12px;
-    border: 2px solid #d2b48c;
+    border: 2px solid #616161;
     border-radius: 25px;
-    background-color: #fff5e6;
-    color: #2e4d2e;
+    background-color: #333333;
+    color: #E0E0E0;
     outline: none;
 }
 
@@ -143,7 +125,6 @@ hr {
     align-items: center;
     cursor: url('../assets/cursorClick.png'), auto;
     user-select: none;
-    color: whitesmoke;
 }
 
 .checkboxInput {
@@ -151,15 +132,15 @@ hr {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    border: 2px solid #007bff;
+    border: 2px solid #80CBC4;
     cursor: url('../assets/cursorClick.png'), auto;
     appearance: none;
-    background-color: #fff;
+    background-color: #333333;
     position: relative;
 }
 
 .checkboxInput:checked {
-    border: 2px solid #007bff;
+    border: 2px solid #80CBC4;
 }
 
 .checkboxInput:checked::before {
@@ -168,11 +149,10 @@ hr {
     left: 50%;
     top: 50%;
     transform: translate(-40%, -65%);
-    color: #000;
+    color: #80CBC4;
     font-size: 1.5em;
     font-weight: bold;
     line-height: 1;
-    /* Prevents font rendering issues */
     -webkit-font-smoothing: antialiased;
 }
 
@@ -191,9 +171,10 @@ hr {
     display: flex;
     flex-direction: column;
     border-radius: 20px;
-    border: 2px solid black;
-    background-color: #caffbf;
+    border: 2px solid #333333;
+    background-color: #2E7D32;
     padding: 10px;
+    color: #E0E0E0;
 }
 
 .gameWorldContainer {
@@ -221,24 +202,14 @@ hr {
     padding-left: 0;
 }
 
-.itemImageContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-.itemImageBase {
-    width: 4cqb;
-    height: 4cqb;
-}
-
 .packageItems li {
     padding-bottom: 4px;
     border-radius: 20px;
-    border: 1px solid #eeeeee;
+    border: 2px solid #616161;
     padding: 10px;
     margin: 5px;
+    background-color: #2E7D32;
+    color: #E0E0E0;
 }
 
 .packageItemFlexContainer {
@@ -247,75 +218,87 @@ hr {
 }
 
 .packageItemImage {
-    position: absolute;
-    width: 3cqb;
-    height: 3cqb;
-    object-fit: contain;
+    object-fit: cover;
+    margin-right: 8px;
 }
-
 
 .hidePastItemsButton {
     margin-left: 16px;
     padding: 6px 12px;
-    background-color: #007bff;
-    color: white;
+    background-color: #388E3C;
+    color: #FFFFFF;
     border: none;
     border-radius: 4px;
     cursor: url('../assets/cursorClick.png'), auto;
 }
 
 .hidePastItemsButton:hover {
-    background-color: #0056b3;
+    background-color: #2E7D32;
 }
 
 .noItemsMessage {
-    color: #ff0000;
+    color: #FF5252;
     font-size: 1.5rem;
     text-align: center;
     margin: 20px 0;
     font-weight: bold;
 }
 
-.categoryHeader {
-    display: flex;
-    align-items: center;
-    cursor: url('../assets/cursorClick.png'), auto;
-    user-select: none;
-    transition: background-color 0.2s;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
-    justify-content: center;
+.h4 {
+    font-size: 1.25rem;
     text-align: center;
+    margin: 20px 0;
+    font-style: italic;
+    margin-bottom: 30px;
+    color: #E0E0E0;
 }
 
-.categoryHeader:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+.categoryHeader {
+    margin: 2.5% 5% 0.5% 5%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid #616161;
+    background-color: #FFB300;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #212121;
 }
 
-.categoryToggle {
-    margin-right: 10px;
-    margin-left: 10px;
-    font-size: 0.8em;
-}
-
-.categoryDate {
-    flex-grow: 0;
-}
+/* Column layout */ 
 
 .itemList {
     display: flex;
     flex-wrap: wrap;
+    gap: 16px;
     margin: 0px 5%;
-    align-items: center;
-    justify-content: center;
+}
+
+.itemList li {
+    flex: 1 1 calc(25% - 16px);
+    box-sizing: border-box;
+}
+
+@media (max-width: 1400px) {
+    .itemList li {
+        flex: 1 1 calc(33.333% - 16px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .itemList li {
+        flex: 1 1 calc(50% - 16px);
+    }
+}
+
+@media (max-width: 768px) {
+    .itemList li {
+        flex: 1 1 100%;
+    }
 }
 
 .mainContent {
     padding-bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 .saleTimes {
@@ -323,23 +306,11 @@ hr {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #e67f13;
+    color: #FFA726;
     margin-top: 10px;
 }
 
 .saleTimes p {
     margin: 0.25em;
     text-align: center;
-}
-
-.noItemsContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-}
-
-.noItemsImage {
-    width: 202px;
-    height: 118px;
 }
