@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 import shutil
 import os
 import os.path
+import re
 
 DUMPED_WZ = '../dumped_wz'
 PATH_PREF_CHAR = f"{DUMPED_WZ}/Character.wz"
@@ -29,7 +30,15 @@ def get_xml_path(item_id):
     prefix = int(str(item_id)[:3])
     for key, path in PREFIX_PATH_MAP.items():
         if isinstance(key, range) and prefix in key or prefix == key:
-            return f"{PATH_PREF_CHAR}/{path}/0{item_id}.img.xml"
+            # Create a regex pattern for the folder name
+            folder_pattern = re.compile(f"^{path}(?:\.wz)?(?:-\d+)?$")
+            
+            # Iterate over immediate subdirectories of PATH_PREF_CHAR
+            for folder in os.listdir(PATH_PREF_CHAR):
+                if folder_pattern.match(folder):
+                    full_path = os.path.join(PATH_PREF_CHAR, folder, f"0{item_id}.img.xml").replace("\\","/")
+                    if os.path.exists(full_path):
+                        return full_path
     return None
 
 def get_image_path(xml_path):
@@ -51,13 +60,31 @@ def get_image_path(xml_path):
         return None
     
     outlink_value = outlink_element.attrib['value']
-    modified_outlink_value = outlink_value.replace('Character/', 'Character.wz/')
-    return f"{DUMPED_WZ}/{modified_outlink_value}.png"
+    
+    # Split the path into components
+    path_components = outlink_value.split('/')
+    
+    # The first component is usually './SomeFolder'
+    first_folder = path_components[1]
+    # Create a regex pattern for the first folder
+    folder_pattern = re.compile(f"^{first_folder}(?:\.wz)?(?:-\d+)?$")
+    
+    # Search for matching folder in DUMPED_WZ
+    for folder in os.listdir(PATH_PREF_CHAR):
+        if folder_pattern.match(folder):
+            # Reconstruct the path with the matched folder
+            reconstructed_path = os.path.join(PATH_PREF_CHAR, folder, *path_components[2:]).replace("\\","/")
+            reconstructed_path += ".png"
+            if os.path.exists(reconstructed_path):
+                return reconstructed_path
+    # print("None? ", outlink_value)
+    return None
 
 def process_item(item_id, dest_file):
     xml_path = get_xml_path(item_id)
     if xml_path and os.path.isfile(xml_path):
         img_path = get_image_path(xml_path)
+        print(img_path)
     else:
         # Pets, Cash Items, and Packages
         prefix = int(str(item_id)[:3])
@@ -80,7 +107,11 @@ def process_item(item_id, dest_file):
                 return
 
     if not os.path.isfile(dest_file):
-        shutil.copy(img_path, dest_file)
+        # print(img_path, "imgpath")
+        if img_path is not None:
+            shutil.copy(img_path, dest_file)
+        else:
+            print("Path not found:", img_path)
 
 def get_images(item_dict):
     for sn_id, info in item_dict.items():
