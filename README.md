@@ -1,6 +1,8 @@
 # maple-cs-parser
 Simple tool to scrape upcoming cash shop sales in MapleStory
 
+## [View the live site here!](https://masonym.dev/ms-upcoming-sales)
+
 This project involves datamining files for the MMORPG MapleStory developed by Nexon. The purpose of the project is to extract upcoming sales data for the in-game store, and display it on a reactive website for members of the community to be able to view before they are officially available. 
 
 # Usage
