@@ -12,7 +12,7 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 ### To Update Cloudflare KV:
 
 1. Dump updated WZ via method of choice, as seen above.
-2. Run `python item_matcher.py` in `/item-info-generator` (this generates `item_data.json`)
+2. Run `python main.py` in `/item-info-generator` (this generates `item_data.json`)
 3. Run `node src/update_kv.js` in `/item-info-worker`
 4. Deploy worker with `wrangler deploy` in `/item-info-worker`
 
