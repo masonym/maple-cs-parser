@@ -40,5 +40,6 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 # Eventual Features:
 
 * I would like to figure out how to read WZ files in order to make this more efficient - dumping the entire game into XML files is quite time consuming, though for now I'm not worried about it because updates come seldomly anyways.
+   * One of the issues with this is that MapleLib is written in C#; so I need to learn some level C# before this is possible. :)
 * Search function for front end
 * World filtering for front end 
