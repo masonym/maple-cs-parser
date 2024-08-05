@@ -1,6 +1,8 @@
 # maple-cs-parser
 Simple tool to scrape upcoming cash shop sales in MapleStory
 
+## [View the live site here!](https://masonym.dev/ms-upcoming-sales)
+
 This project involves datamining files for the MMORPG MapleStory developed by Nexon. The purpose of the project is to extract upcoming sales data for the in-game store, and display it on a reactive website for members of the community to be able to view before they are officially available. 
 
 # Usage
@@ -10,7 +12,7 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 ### To Update Cloudflare KV:
 
 1. Dump updated WZ via method of choice, as seen above.
-2. Run `python item_matcher.py` in `/item-info-generator` (this generates `item_data.json`)
+2. Run `python main.py` in `/item-info-generator` (this generates `item_data.json`)
 3. Run `node src/update_kv.js` in `/item-info-worker`
 4. Deploy worker with `wrangler deploy` in `/item-info-worker`
 
@@ -38,5 +40,6 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 # Eventual Features:
 
 * I would like to figure out how to read WZ files in order to make this more efficient - dumping the entire game into XML files is quite time consuming, though for now I'm not worried about it because updates come seldomly anyways.
+   * One of the issues with this is that MapleLib is written in C#; so I need to learn some level C# before this is possible. :)
 * Search function for front end
 * World filtering for front end 
