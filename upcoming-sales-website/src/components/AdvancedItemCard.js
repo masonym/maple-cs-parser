@@ -3,6 +3,7 @@ import styles from '../assets/AdvancedItemCard.module.css';
 import { formatNumber } from '../utils';
 import background from '../assets/productBg.png';
 import AdvancedItemCardHover from './AdvancedItemCardHover';
+import Image from 'next/image';
 
 const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice }) => {
     const [isHovering, setIsHovering] = useState(false);
@@ -59,11 +60,13 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
             onMouseMove={handleMouseMove}
             onClick={handleClick}
         >
-            <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background})` }}>
-                <img
-                    src={`./images/${item.itemID}.png`}
+            <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background.src})` }}>
+                <Image
+                    src={`/images/${item.itemID}.png`}
                     className={styles.itemImage}
                     alt={item.name}
+                    width="0"
+                    height="0"
                     onError={(e) => { e.target.style.display = 'none'; }}
                 />
                 <div className={styles.itemDetails}>

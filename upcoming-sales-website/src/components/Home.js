@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './assets/HomePage.module.css';
+import styles from '../assets/HomePage.module.css';
+import SalesPic from '../assets/upcoming-sales.png'
 import { Helmet } from 'react-helmet';
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
           <h2>Tools</h2>
           <h4>Upcoming Cash Shop Sales</h4>
           <a href="/ms-upcoming-sales">
-          <img src={require("./assets/upcoming-sales.png")} alt="Upcoming sales site">
+          <img src={SalesPic.src} alt="Upcoming sales site">
           </img>
           </a>
           <p><i>A handy tool for checking the upcoming Cash Shop sales for MapleStory</i></p>

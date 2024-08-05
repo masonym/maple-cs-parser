@@ -1,17 +1,5 @@
 /* ItemList.module.css */
 
-@font-face {
-    font-family: 'maplestory';
-    src: url('../assets/maplestory_light.otf');
-}
-
-body {
-    background-color: #fff5e6;
-}
-
-div {
-    font-family: maplestory;
-}
 
 .h1 {
     text-align: center;
@@ -43,17 +31,6 @@ div {
     cursor: url('../assets/cursorClick.png'), auto;
     text-align: center;
     color: #002b5c;
-}
-
-ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-hr {
-    height: 2px;
-    border: none;
-    background-color: #a0c4ff;
 }
 
 .controlsContainer {

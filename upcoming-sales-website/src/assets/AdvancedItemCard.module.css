@@ -1,7 +1,3 @@
-:root {
-    --base-size: calc(35px * (1vw / 19.2));
-}
-
 .item {
     list-style: none;
     margin: 0.5%;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './assets/ItemList.module.css';
+import styles from '../assets/ItemList.module.css';
 import { Helmet } from 'react-helmet';
-import SortControls from './components/SortControls';
-import FilterControls from './components/FilterControls';
-import ItemCard from './components/ItemCard';
-import Footer from './components/Footer';
-import { formatDate } from './utils';
+import SortControls from './SortControls';
+import FilterControls from './FilterControls';
+import ItemCard from './ItemCard';
+import Footer from './Footer';
+import { formatDate } from '../utils';
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
 const heroWorlds = [45, 46, 70];

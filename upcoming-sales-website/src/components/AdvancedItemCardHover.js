@@ -3,6 +3,7 @@ import styles from '../assets/AdvancedItemCardHover.module.css';
 import { formatPriceDisplay, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText, worldNumbersToString } from '../utils';
 import AdvancedPackageContents from './AdvancedPackageContents';
 import itemBase from '../assets/itemBase.png'
+import Image from 'next/image';
 
 const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCardRef, onClose }) => {
     const hoverCardStyle = isTouchDevice ? styles.mobileHoverCard : styles.desktopHoverCard;
@@ -18,7 +19,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
                     &times;
                 </button>
             )}
-            <p style={{fontSize: '1.15em'}}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
+            <p style={{ fontSize: '1.15em' }}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
             <div className={styles.saleTimes}>
                 <p>{formatSaleTimesDate(item.termStart)} ~ {formatSaleTimesDate(item.termEnd)} UTC</p>
                 <p>({calculateDateDifference(item.termStart, item.termEnd)})</p>
@@ -26,14 +27,16 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             <p>{magicText(item.itemID)}Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
             <div className={styles.itemFlexContainer}>
                 <div className={styles.itemImageContainer}>
-                    <img
+                    <Image
+                        width="0"
+                        height="0"
                         src={`./images/${item.itemID}.png`}
                         className={styles.itemImage}
                         alt={item.name}
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <img
-                        src={itemBase}
+                        src={itemBase.src}
                         className={styles.itemImageBase}
                     />
                 </div>
@@ -44,7 +47,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             <p>
                 {formatPriceDisplay(item.originalPrice, item.price, itemKey, item.discount)}
             </p>
-            <p style={{marginTop: '10px'}}>
+            <p style={{ marginTop: '10px' }}>
                 {worldNumbersToString(item.gameWorld)}
             </p>
         </div>

@@ -25,7 +25,7 @@ const AdvancedPackageContents = ({ contents }) => {
                                                 onError={(e) => { e.target.style.display = 'none'; }}
                                             />
                                             <img
-                                                src={itemBase}
+                                                src={itemBase.src}
                                                 className={styles.itemImageBase}
                                             />
                                         </div>

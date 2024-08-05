@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ItemList from './ItemList';
 import AdvancedItemList from './AdvancedItemList';
-import styles from './assets/ItemListMain.module.css';
+import styles from '../assets/ItemListMain.module.css';
 
 function ItemListMain() {
   const [isAdvanced, setIsAdvanced] = useState(true);

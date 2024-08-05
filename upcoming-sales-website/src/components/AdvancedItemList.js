@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import advancedStyles from './assets/AdvancedItemList.module.css';
+import advancedStyles from '../assets/AdvancedItemList.module.css';
 import { Helmet } from 'react-helmet';
-import SortControls from './components/SortControls';
-import FilterControls from './components/FilterControls';
-import Footer from './components/Footer';
-import { formatDate } from './utils';
-import AdvancedItemCard from './components/AdvancedItemCard';
-import background from './assets/backgrnd_cr.png';
-import noItemsImage from './assets/noItem_mini.png';
+import SortControls from './SortControls';
+import FilterControls from './FilterControls';
+import Footer from './Footer';
+import { formatDate } from '../utils';
+import AdvancedItemCard from './AdvancedItemCard';
+import background from '../assets/backgrnd_cr.png';
+import noItemsImage from '../assets/noItem_mini.png';
 
 const intWorlds = [0, 1, 17, 18, 30, 48, 49];
 const heroWorlds = [45, 46, 70];
@@ -168,7 +168,7 @@ function AdvancedItemList() {
 
     return (
         <div className={advancedStyles.mainContent} style={{
-            backgroundImage: `url(${background})`,
+            backgroundImage: `url(${background.src})`,
             backgroundAttachment: 'fixed',
         }}>
             <Helmet>
@@ -201,7 +201,7 @@ function AdvancedItemList() {
             {noItems ? (
                 <div className={advancedStyles.noItemsContainer}>
                     <img 
-                        src={noItemsImage} 
+                        src={noItemsImage.src} 
                         alt="No items found" 
                         className={advancedStyles.noItemsImage}
                     />
