@@ -18,7 +18,7 @@ const AdvancedPackageContents = ({ contents }) => {
                                 <div className={styles.packageItemFlexContainer}>
                                     <div className={styles.itemImageContainer}>
                                         <img
-                                            src={`./images/${itemDetails.itemID}.png`}
+                                            src={itemDetails.s3PresignedUrl}
                                             alt={itemDetails.name}
                                             className={styles.packageItemImage}
                                             onError={(e) => { e.target.style.display = 'none'; }}
