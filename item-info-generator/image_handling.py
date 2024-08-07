@@ -3,6 +3,7 @@ import shutil
 import os
 import os.path
 import re
+import boto3
 
 DUMPED_WZ = '../dumped_wz'
 PATH_PREF_CHAR = f"{DUMPED_WZ}/Character.wz"
@@ -25,6 +26,9 @@ PREFIX_PATH_MAP = {
     180: "PetEquip",
     range(121, 172): "Weapon",
 }
+
+s3 = boto3.client('s3')
+BUCKET_NAME = "maplestory-items"
 
 def get_xml_path(item_id):
     prefix = int(str(item_id)[:3])
@@ -80,13 +84,24 @@ def get_image_path(xml_path):
     # print("None? ", outlink_value)
     return None
 
-def process_item(item_id, dest_file):
+def upload_to_s3(local_file, s3_file):
+    try:
+        s3.upload_file(local_file, BUCKET_NAME, s3_file)
+        print(f"Upload successful: {s3_file} to {BUCKET_NAME}")
+        return True
+    except FileNotFoundError:
+        print(f"File not found: {local_file}")
+        return False
+    except Exception as e:
+        print(f"Error uploading to S3: {e}")
+        return False
+
+def process_item(item_id, s3_file):
     xml_path = get_xml_path(item_id)
     if xml_path and os.path.isfile(xml_path):
         img_path = get_image_path(xml_path)
         print(img_path)
     else:
-        # Pets, Cash Items, and Packages
         prefix = int(str(item_id)[:3])
         if prefix == 500:
             base_path = f"{PATH_PREF_ITEM}/Pet/{item_id}.img/info"
@@ -98,7 +113,6 @@ def process_item(item_id, dest_file):
             print(f"Unknown file path for item ID: {item_id}")
             return
 
-        # Try iconRaw.png first, then fallback to icon.png
         img_path = f"{base_path}/iconRaw.png"
         if not os.path.isfile(img_path):
             img_path = f"{base_path}/icon.png"
@@ -106,18 +120,16 @@ def process_item(item_id, dest_file):
                 print(f"No icon found for item ID: {item_id}")
                 return
 
-    if not os.path.isfile(dest_file):
-        # print(img_path, "imgpath")
-        if img_path is not None:
-            shutil.copy(img_path, dest_file)
-        else:
-            print("Path not found:", img_path)
+    if img_path is not None:
+        upload_to_s3(img_path, s3_file)
+    else:
+        print("Path not found:", img_path)
 
 def get_images(item_dict):
     for sn_id, info in item_dict.items():
         item_id = info.get('itemID')
-        dest_file = f'../upcoming-sales-website/public/images/{item_id}.png'
-        process_item(item_id, dest_file)
+        s3_file = f'images/{item_id}.png'
+        process_item(item_id, s3_file)
         
         # Packages are nested so we need to call get_images again
         if int(str(item_id)[:3]) >= 900:
