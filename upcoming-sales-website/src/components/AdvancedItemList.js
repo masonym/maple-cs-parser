@@ -26,8 +26,6 @@ function AdvancedItemList() {
     const [openItemId, setOpenItemId] = useState(null);
     const [isTouchDevice, setIsTouchDevice] = useState(false);
     const [collapsedCategories, setCollapsedCategories] = useState({});
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
     const [apiParams, setApiParams] = useState({});
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
@@ -183,6 +181,16 @@ function AdvancedItemList() {
         };
         sortAndFilterItems();
     }, [sortKey, sortOrder, items, hidePastItems, showCurrentItems, searchTerm, worldFilter]);
+
+    useEffect(() => {
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    }, []);
+
+    const handleItemClick = (itemId) => {
+        if (isTouchDevice) {
+            setOpenItemId(prevId => prevId === itemId ? null : itemId);
+        }
+    };
     
 
     return (
