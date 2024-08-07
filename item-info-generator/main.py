@@ -3,6 +3,8 @@ from data_parsing import parse_xml_files, search_nested_xml_for_dir_by_name
 from data_processing import upcoming_sales, sort_xml, package_dict_creator, process_qualifying_dirs
 from image_handling import get_images
 from utils import format_description
+from insert_to_dynamodb import write_to_dynamodb
+from create_table import setup_dynamodb_table
 
 def main():
     root_commodity, root_cash, root_eqp, root_pet, root_package_names, root_package_contents = parse_xml_files()
@@ -16,8 +18,14 @@ def main():
     
     get_images(item_info)
 
-    with open('item_data.json', 'w') as f:
-        json.dump(item_info, f, indent=4)
+    # Set up DynamoDB table
+    table = setup_dynamodb_table()
+    if table is None:
+        print("Failed to set up DynamoDB table. Exiting.")
+        return
+
+    # Write data to DynamoDB
+    write_to_dynamodb(table, item_info)
 
     return item_info
 
