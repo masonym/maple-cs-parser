@@ -85,7 +85,7 @@ export const magicText = (itemID) => {
   // if (itemID.startsWith("500")) {
   //   magicText = "Magic "
   // }
-  console.log(itemID)
+  // console.log(itemID)
   return magicText
 }
 

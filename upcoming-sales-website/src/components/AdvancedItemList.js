@@ -89,6 +89,7 @@ function AdvancedItemList() {
             const allItems = response.data;
             setItems(allItems);
             const categorized = categorizeItems(allItems);
+            console.log(allItems)
             setCategorizedItems(categorized);
         } catch (error) {
             console.error(error);
@@ -178,9 +179,9 @@ function AdvancedItemList() {
 
             setCategorizedItems(sortedAndFilteredItems);
         };
-
         sortAndFilterItems();
     }, [sortKey, sortOrder, items, hidePastItems, showCurrentItems, searchTerm, worldFilter]);
+    
 
     return (
         <div className={advancedStyles.mainContent} style={{
