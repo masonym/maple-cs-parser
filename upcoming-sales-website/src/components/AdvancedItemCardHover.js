@@ -5,6 +5,8 @@ import AdvancedPackageContents from './AdvancedPackageContents';
 import itemBase from '../assets/itemBase.png';
 import Image from 'next/image';
 
+const CLOUDFRONT_URL = "https://dkxt2zgwekugu.cloudfront.net/images"
+
 const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCardRef, onClose }) => {
     const hoverCardStyle = isTouchDevice ? styles.mobileHoverCard : styles.desktopHoverCard;
     const hoverCardPosition = isTouchDevice ? {} : { left: `${position.x}px`, top: `${position.y}px` };
@@ -30,7 +32,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
                     <Image
                         width={80} // Set appropriate dimensions
                         height={80} // Set appropriate dimensions
-                        src={item.s3PresignedUrl}
+                        src={`${CLOUDFRONT_URL}/${item.itemID}.png`}
                         className={styles.itemImage}
                         alt={item.name}
                         onError={(e) => { e.target.style.display = 'none'; }}
