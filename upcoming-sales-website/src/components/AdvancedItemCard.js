@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import styles from '../assets/AdvancedItemCard.module.css';
 import { formatNumber } from '../utils';
 import background from '../assets/productBg.png';
@@ -35,7 +36,7 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
         }
     };
 
-    const updateHoverPosition = (pageX, pageY) => {
+    const updateHoverPosition = useCallback((pageX, pageY) => {
         const hoverCardWidth = hoverCardRef.current ? hoverCardRef.current.offsetWidth : 0;
         const hoverCardHeight = hoverCardRef.current ? hoverCardRef.current.offsetHeight : 0;
         const offsetX = 10;
@@ -49,7 +50,7 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
         }
 
         setHoverPosition({ x: newX, y: newY });
-    };
+    }, []);
 
     return (
         <li
@@ -60,13 +61,14 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
             onClick={handleClick}
         >
             <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background.src})` }}>
-                <img
+                <Image
                     src={`/images/${item.itemID}.png`}
                     className={styles.itemImage}
                     alt={item.name}
-                    width="0"
-                    height="0"
+                    width={50}
+                    height={50}
                     onError={(e) => { e.target.style.display = 'none'; }}
+                    priority
                 />
                 <div className={styles.itemDetails}>
                     <p className={styles.itemName}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
@@ -75,7 +77,6 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
                         {itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}
                         {item.discount == 1 ? <><br /><s>{formatNumber(item.originalPrice)}{itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}</s></> : ''}
                     </p>
-
                 </div>
             </div>
             {(isHovering || (isTouchDevice && isOpen)) && (

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from '../assets/AdvancedItemCardHover.module.css';
 import { formatPriceDisplay, convertNewlinesToBreaks, formatSaleTimesDate, calculateDateDifference, magicText, worldNumbersToString } from '../utils';
 import AdvancedPackageContents from './AdvancedPackageContents';
-import itemBase from '../assets/itemBase.png'
+import itemBase from '../assets/itemBase.png';
+import Image from 'next/image';
 
 const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCardRef, onClose }) => {
     const hoverCardStyle = isTouchDevice ? styles.mobileHoverCard : styles.desktopHoverCard;
@@ -26,17 +27,20 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             <p>{magicText(item.itemID)}Duration: {item.period === '0' ? 'Permanent' : `${item.period} days`}</p>
             <div className={styles.itemFlexContainer}>
                 <div className={styles.itemImageContainer}>
-                    <img
-                        width="0"
-                        height="0"
+                    <Image
+                        width={80} // Set appropriate dimensions
+                        height={80} // Set appropriate dimensions
                         src={`/images/${item.itemID}.png`}
                         className={styles.itemImage}
                         alt={item.name}
                         onError={(e) => { e.target.style.display = 'none'; }}
                     />
-                    <img
+                    <Image
+                        width={80} // Set appropriate dimensions
+                        height={80} // Set appropriate dimensions
                         src={itemBase.src}
                         className={styles.itemImageBase}
+                        alt="Item Base"
                     />
                 </div>
                 <p>{convertNewlinesToBreaks(item.description)}</p>
@@ -53,4 +57,4 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
     );
 };
 
-export default AdvancedItemCardHover;
+export default memo(AdvancedItemCardHover);
