@@ -25,7 +25,7 @@ def main():
         return
 
     # Write data to DynamoDB
-    write_to_dynamodb(table, item_info)
+    write_to_dynamodb(item_info)
 
     return item_info
 

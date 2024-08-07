@@ -6,7 +6,7 @@ def setup_dynamodb_table():
     table_name = 'MapleStoryItems'
 
     try:
-        # Check if table already exists
+        # Check if the new table already exists
         table = dynamodb.Table(table_name)
         table.load()
         print(f"Table {table_name} already exists.")
@@ -17,12 +17,12 @@ def setup_dynamodb_table():
                 table = dynamodb.create_table(
                     TableName=table_name,
                     KeySchema=[
-                        {'AttributeName': 'itemID', 'KeyType': 'HASH'},
-                        {'AttributeName': 'sn_id', 'KeyType': 'RANGE'}
+                        {'AttributeName': 'sn_id', 'KeyType': 'HASH'},  # Partition key
+                        {'AttributeName': 'itemID_termStart', 'KeyType': 'RANGE'}  # Sort key
                     ],
                     AttributeDefinitions=[
-                        {'AttributeName': 'itemID', 'AttributeType': 'S'},
                         {'AttributeName': 'sn_id', 'AttributeType': 'S'},
+                        {'AttributeName': 'itemID_termStart', 'AttributeType': 'S'}
                     ],
                     ProvisionedThroughput={
                         'ReadCapacityUnits': 5,
@@ -39,3 +39,5 @@ def setup_dynamodb_table():
             return None
 
     return table
+
+table = setup_dynamodb_table()
