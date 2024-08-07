@@ -28,6 +28,7 @@ function AdvancedItemList() {
     const [collapsedCategories, setCollapsedCategories] = useState({});
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [apiParams, setApiParams] = useState({});
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
     const handleSortOrderChange = (event) => setSortOrder(event.target.value);
@@ -85,38 +86,39 @@ function AdvancedItemList() {
 
     const fetchItems = useCallback(async () => {
         try {
-            const response = await axios.get(`https://yaiphhwge8.execute-api.us-west-2.amazonaws.com/prod/query-items-by-date?startDate=${startDate}&endDate=${endDate}`);
+            const response = await axios.get('https://yaiphhwge8.execute-api.us-west-2.amazonaws.com/prod/query-items-by-date', {
+                params: apiParams
+            });
             const allItems = response.data;
             setItems(allItems);
             const categorized = categorizeItems(allItems);
-            console.log(allItems)
             setCategorizedItems(categorized);
         } catch (error) {
             console.error(error);
         }
-    }, [startDate, endDate]);
+    }, [apiParams]);
 
     useEffect(() => {
         const now = new Date();
         const oneMonthLater = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
         const oneMonthEarlier = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
 
+        let params = {};
+
         if (hidePastItems) {
-            setStartDate(formatDateForAPI(now));
-            setEndDate(formatDateForAPI(oneMonthLater));
+            params.endDate = formatDateForAPI(now);
         } else if (showCurrentItems) {
-            setStartDate(formatDateForAPI(oneMonthEarlier));
-            setEndDate(formatDateForAPI(oneMonthLater));
+            params.currentItems = 'true';
         } else {
-            setStartDate(formatDateForAPI(now));
-            setEndDate(formatDateForAPI(oneMonthLater));
+            params.startDate = formatDateForAPI(now);
         }
+
+        setApiParams(params);
     }, [hidePastItems, showCurrentItems]);
 
     useEffect(() => {
         fetchItems();
     }, [fetchItems]);
-
     useEffect(() => {
         const sortAndFilterItems = () => {
             const now = new Date();
@@ -126,7 +128,7 @@ function AdvancedItemList() {
                 const termEnd = parseDate(items[key].termEnd);
 
                 if (hidePastItems) {
-                    return termEnd > now;
+                    return termEnd < now;
                 } else if (showCurrentItems) {
                     return termStart <= now && termEnd >= now;
                 } else {
