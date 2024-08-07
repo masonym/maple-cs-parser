@@ -1,5 +1,6 @@
 # maple-cs-parser
-Simple tool to scrape upcoming cash shop sales in MapleStory
+
+A tool to parse and display upcoming MapleStory cash shop sales using Python and React/Next.js
 
 ## [View the live site here!](https://masonym.dev/ms-upcoming-sales)
 
