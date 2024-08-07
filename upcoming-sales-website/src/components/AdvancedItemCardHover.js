@@ -30,7 +30,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
                     <Image
                         width={80} // Set appropriate dimensions
                         height={80} // Set appropriate dimensions
-                        src={`/images/${item.itemID}.png`}
+                        src={item.s3PresignedUrl}
                         className={styles.itemImage}
                         alt={item.name}
                         onError={(e) => { e.target.style.display = 'none'; }}

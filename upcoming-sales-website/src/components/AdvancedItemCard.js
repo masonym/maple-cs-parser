@@ -5,6 +5,8 @@ import { formatNumber } from '../utils';
 import background from '../assets/productBg.png';
 import AdvancedItemCardHover from './AdvancedItemCardHover';
 
+let S3_URL = "https://maplestory-items.s3.us-west-2.amazonaws.com"
+
 const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice }) => {
     const [isHovering, setIsHovering] = useState(false);
     const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
@@ -62,7 +64,7 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
         >
             <div className={styles.itemFlexContainer} style={{ backgroundImage: `url(${background.src})` }}>
                 <Image
-                    src={`/images/${item.itemID}.png`}
+                    src={item.s3PresignedUrl}
                     className={styles.itemImage}
                     alt={item.name}
                     width={50}

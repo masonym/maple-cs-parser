@@ -27,6 +27,7 @@ function AdvancedItemList() {
     const [isTouchDevice, setIsTouchDevice] = useState(false);
     const [collapsedCategories, setCollapsedCategories] = useState({});
     const [apiParams, setApiParams] = useState({});
+    const [loading, setLoading] = useState(true);  // Add loading state
 
     const handleSortKeyChange = (event) => setSortKey(event.target.value);
     const handleSortOrderChange = (event) => setSortOrder(event.target.value);
@@ -83,6 +84,7 @@ function AdvancedItemList() {
     };
 
     const fetchItems = useCallback(async () => {
+        setLoading(true);  // Set loading to true before the API call
         try {
             const response = await axios.get('https://yaiphhwge8.execute-api.us-west-2.amazonaws.com/prod/query-items-by-date', {
                 params: apiParams
@@ -93,6 +95,8 @@ function AdvancedItemList() {
             setCategorizedItems(categorized);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);  // Set loading to false after the API call
         }
     }, [apiParams]);
 
@@ -117,6 +121,7 @@ function AdvancedItemList() {
     useEffect(() => {
         fetchItems();
     }, [fetchItems]);
+
     useEffect(() => {
         const sortAndFilterItems = () => {
             const now = new Date();
@@ -133,18 +138,18 @@ function AdvancedItemList() {
                     return termStart > now;
                 }
             })
-            .filter(key => items[key].name.toLowerCase().includes(searchTerm))
-            .filter(key => {
-                if (!worldFilter) return true;
-                const worldIds = items[key].gameWorld.split('/').map(Number);
-                if (worldFilter === 'intWorlds') {
-                    return worldIds.some(id => intWorlds.includes(id));
-                }
-                if (worldFilter === 'heroWorlds') {
-                    return worldIds.some(id => heroWorlds.includes(id));
-                }
-                return true;
-            });
+                .filter(key => items[key].name.toLowerCase().includes(searchTerm))
+                .filter(key => {
+                    if (!worldFilter) return true;
+                    const worldIds = items[key].gameWorld.split('/').map(Number);
+                    if (worldFilter === 'intWorlds') {
+                        return worldIds.some(id => intWorlds.includes(id));
+                    }
+                    if (worldFilter === 'heroWorlds') {
+                        return worldIds.some(id => heroWorlds.includes(id));
+                    }
+                    return true;
+                });
 
             filteredKeys.sort((a, b) => {
                 let valA = items[a][sortKey];
@@ -191,7 +196,6 @@ function AdvancedItemList() {
             setOpenItemId(prevId => prevId === itemId ? null : itemId);
         }
     };
-    
 
     return (
         <div className={advancedStyles.mainContent} style={{
@@ -225,11 +229,15 @@ function AdvancedItemList() {
                 onWorldFilterChange={handleWorldFilterChange}
                 className={advancedStyles}
             />
-            {noItems ? (
+            {loading ? (
+                <div className={advancedStyles.loadingContainer}>
+                    <p>Loading items...</p>
+                </div>
+            ) : noItems ? (
                 <div className={advancedStyles.noItemsContainer}>
-                    <img 
-                        src={noItemsImage.src} 
-                        alt="No items found" 
+                    <img
+                        src={noItemsImage.src}
+                        alt="No items found"
                         className={advancedStyles.noItemsImage}
                     />
                 </div>
@@ -237,7 +245,7 @@ function AdvancedItemList() {
                 <div>
                     {Object.keys(categorizedItems).map((dateKey) => (
                         <div key={dateKey}>
-                            <h2 
+                            <h2
                                 className={advancedStyles.categoryHeader}
                                 onClick={() => toggleCategory(dateKey)}
                             >
