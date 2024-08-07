@@ -82,9 +82,10 @@ export function calculateDateDifference(date1, date2) {
 
 export const magicText = (itemID) => {
   let magicText = ""
-  if (itemID.startsWith("500")) {
-    magicText = "Magic "
-  }
+  // if (itemID.startsWith("500")) {
+  //   magicText = "Magic "
+  // }
+  console.log(itemID)
   return magicText
 }
 
