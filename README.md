@@ -15,6 +15,8 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 1. Dump updated WZ via method of choice, as seen above.
 2. Run `python main.py` in `/item-info-generator`
 
+If you want to use your own database or simply dump the results to the json, you can modify the image_processing.py for the S3 images, and main.py for the DynamoDB..
+
 ### To view site locally:
 
 1. Run `npm run dev` in `/upcoming-sales-website`
