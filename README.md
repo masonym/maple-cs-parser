@@ -10,16 +10,16 @@ This project involves datamining files for the MMORPG MapleStory developed by Ne
 
 This tool relies on some method of dumping WZ files, such as [HaRepacker](https://github.com/lastbattle/Harepacker-resurrected), [WzComparerR2](https://github.com/Kagamia/WzComparerR2), or [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper). Depending on the method used, you will likely need to modify the global variables in `item_matcher.py` to fit your file structure. 
 
-### To Update Cloudflare KV:
+### AWS DynamoDB Update:
 
 1. Dump updated WZ via method of choice, as seen above.
-2. Run `python main.py` in `/item-info-generator` (this generates `item_data.json`)
-3. Run `node src/update_kv.js` in `/item-info-worker`
-4. Deploy worker with `wrangler deploy` in `/item-info-worker`
+2. Run `python main.py` in `/item-info-generator`
+
+If you want to use your own database or simply dump the results to the json, you can modify the image_processing.py for the S3 images, and main.py for the DynamoDB..
 
 ### To view site locally:
 
-1. Run `npm start` in `/upcoming-sales-website`
+1. Run `npm run dev` in `/upcoming-sales-website`
 
 
 ---
@@ -27,8 +27,11 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 # Technology used
 
 * [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper) for extracting wz files
-* Python for XML parsing
-* Wrangler for generating an API via Cloudflare worker
+* Python for XML parsing, S3 image uploading, DynamoDB record updating
+* AWS DynamoDB for serverless NoSQL database
+* AWS S3 for static image hosting
+* AWS CloudFront for content delivery network
+* AWS Lambda & AWS API Gateway to deploy REST API
 * React for displaying data from api to static site
     * Axios for HTTP requests
 
@@ -38,9 +41,14 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 * Sales data and cash shop package contents are contained in `Etc.wz`. Sales data is stored in `Commodity.img`, and cash packages are stored in `CashPackage.img`
 * Names and descriptions of cash packages are stored in `Item.wz`, specifically in `Special/0910.img`
 
+# Features:
+
+* View upcoming, current, or past sales from the cash shop
+* Hover over items to see details such as cost, worlds available, package contents.
+* Check when an item was last seen on sale
+
 # Eventual Features:
 
 * I would like to figure out how to read WZ files in order to make this more efficient - dumping the entire game into XML files is quite time consuming, though for now I'm not worried about it because updates come seldomly anyways.
    * One of the issues with this is that MapleLib is written in C#; so I need to learn some level C# before this is possible. :)
-* Search function for front end
-* World filtering for front end 
+* Item preview on a character
