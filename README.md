@@ -25,7 +25,7 @@ This tool relies on some method of dumping WZ files, such as [HaRepacker](https:
 # Technology used
 
 * [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper) for extracting wz files
-* Python for XML parsing
+* Python for XML parsing, S3 image uploading, DynamoDB record updating
 * AWS DynamoDB for serverless NoSQL database
 * AWS S3 for static image hosting
 * AWS CloudFront for content delivery network
