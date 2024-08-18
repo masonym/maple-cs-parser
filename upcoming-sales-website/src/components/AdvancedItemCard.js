@@ -76,8 +76,8 @@ const AdvancedItemCard = ({ itemKey, item, isOpen, onItemClick, isTouchDevice })
                     <p className={styles.itemName}>{item.name}{item.count > 1 ? ` (x${item.count})` : ''}</p>
                     <p className={styles.itemPrice}>
                         {formatNumber(item.price)}
-                        {itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}
-                        {item.discount == 1 ? <><br /><s>{formatNumber(item.originalPrice)}{itemKey.toString().startsWith('870') ? ' Mesos' : ' NX'}</s></> : ''}
+                        {item.sn_id.toString().startsWith('870') ? ' Mesos' : ' NX'}
+                        {item.discount == 1 ? <><br /><s>{formatNumber(item.originalPrice)}{item.sn_id.toString().startsWith('870') ? ' Mesos' : ' NX'}</s></> : ''}
                     </p>
                 </div>
             </div>

@@ -50,7 +50,7 @@ const AdvancedItemCardHover = ({ itemKey, item, position, isTouchDevice, hoverCa
             <AdvancedPackageContents contents={item.packageContents} />
             <hr className={styles.hr} />
             <p>
-                {formatPriceDisplay(item.originalPrice, item.price, itemKey, item.discount)}
+                {formatPriceDisplay(item.originalPrice, item.price, item.sn_id, item.discount)}
             </p>
             <p style={{ marginTop: '10px' }}>
                 {worldNumbersToString(item.gameWorld)}
