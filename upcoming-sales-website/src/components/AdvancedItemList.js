@@ -210,7 +210,7 @@ function AdvancedItemList() {
                 <meta property="twitter:description" content="A tool to see upcoming items going on sale in MapleStory's cash shop!" />
             </Helmet>
             <h1 className={advancedStyles.h1}>MapleStory Upcoming Cash Shop Sales</h1>
-            <h4 className={advancedStyles.h4}> Last Updated for v.252 (July 17th, 2024) </h4>
+            <h4 className={advancedStyles.h4}> Last Updated for v.253 (August 28th, 2024) </h4>
             <SortControls
                 sortKey={sortKey}
                 sortOrder={sortOrder}
