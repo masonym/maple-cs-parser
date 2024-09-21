@@ -6,7 +6,7 @@ import re
 import boto3
 
 DUMPED_WZ = '../dumped_wz'
-PATH_PREF_CHAR = f"{DUMPED_WZ}/Character.wz"
+PATH_PREF_CHAR = f"../CharacterItems/"
 PATH_PREF_ITEM = f"{DUMPED_WZ}/Item.wz"
 
 PREFIX_PATH_MAP = {
@@ -100,7 +100,7 @@ def process_item(item_id, s3_file):
     xml_path = get_xml_path(item_id)
     if xml_path and os.path.isfile(xml_path):
         img_path = get_image_path(xml_path)
-        print(img_path)
+        print(f"Item ID: {item_id} and Image Path: { img_path}")
     else:
         prefix = int(str(item_id)[:3])
         if prefix == 500:
@@ -121,6 +121,7 @@ def process_item(item_id, s3_file):
                 return
 
     if img_path is not None:
+        print(img_path)
         upload_to_s3(img_path, s3_file)
     else:
         print("Path not found:", img_path)
