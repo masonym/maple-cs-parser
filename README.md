@@ -27,6 +27,7 @@ If you want to use your own database or simply dump the results to the json, you
 # Technology used
 
 * [WZ-Dumper](https://github.com/Xterminatorz/WZ-Dumper) for extracting wz files
+* [Cash Shop Wz Extractor](https://github.com/masonym/cash-shop-wz-extractor) - a tool written by me to cut down on WZ parsing costs
 * Python for XML parsing, S3 image uploading, DynamoDB record updating
 * AWS DynamoDB for serverless NoSQL database
 * AWS S3 for static image hosting
