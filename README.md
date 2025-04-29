@@ -50,6 +50,4 @@ If you want to use your own database or simply dump the results to the json, you
 
 # Eventual Features:
 
-* I would like to figure out how to read WZ files in order to make this more efficient - dumping the entire game into XML files is quite time consuming, though for now I'm not worried about it because updates come seldomly anyways.
-   * One of the issues with this is that MapleLib is written in C#; so I need to learn some level C# before this is possible. :)
 * Item preview on a character
