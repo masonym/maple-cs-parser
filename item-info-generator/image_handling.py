@@ -3,7 +3,18 @@ import shutil
 import os
 import os.path
 import re
-import boto3
+from utils import get_boto3_session
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
+
+# Toggle to save images locally instead of uploading to S3
+SAVE_IMAGES_LOCALLY = os.environ.get('SAVE_IMAGES_LOCALLY', '').lower() in ('1', 'true', 'yes', 'y')
+# Base directory for local image saves
+LOCAL_IMAGE_DIR = os.environ.get('LOCAL_IMAGE_DIR', 'local_images')
 
 DUMPED_WZ = '../dumped_wz'
 PATH_PREF_CHAR = f"../CharacterItems/"
@@ -27,8 +38,11 @@ PREFIX_PATH_MAP = {
     range(121, 172): "Weapon",
 }
 
-s3 = boto3.client('s3')
-BUCKET_NAME = "maplestory-items"
+s3 = None
+BUCKET_NAME = os.environ.get('S3_BUCKET_NAME', "maplestory-items")
+if not SAVE_IMAGES_LOCALLY:
+    session = get_boto3_session()
+    s3 = session.client('s3')
 
 def get_xml_path(item_id):
     prefix = int(str(item_id)[:3])
@@ -85,16 +99,30 @@ def get_image_path(xml_path):
     return None
 
 def upload_to_s3(local_file, s3_file):
-    try:
-        s3.upload_file(local_file, BUCKET_NAME, s3_file)
-        print(f"Upload successful: {s3_file} to {BUCKET_NAME}")
-        return True
-    except FileNotFoundError:
-        print(f"File not found: {local_file}")
-        return False
-    except Exception as e:
-        print(f"Error uploading to S3: {e}")
-        return False
+    if SAVE_IMAGES_LOCALLY:
+        dest_path = os.path.join(LOCAL_IMAGE_DIR, s3_file).replace("\\","/")
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        try:
+            shutil.copyfile(local_file, dest_path)
+            print(f"Saved locally: {dest_path}")
+            return True
+        except FileNotFoundError:
+            print(f"File not found: {local_file}")
+            return False
+        except Exception as e:
+            print(f"Error saving locally: {e}")
+            return False
+    else:
+        try:
+            s3.upload_file(local_file, BUCKET_NAME, s3_file)
+            print(f"Upload successful: {s3_file} to {BUCKET_NAME}")
+            return True
+        except FileNotFoundError:
+            print(f"File not found: {local_file}")
+            return False
+        except Exception as e:
+            print(f"Error uploading to S3: {e}")
+            return False
 
 def process_item(item_id, s3_file):
     xml_path = get_xml_path(item_id)
