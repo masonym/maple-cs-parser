@@ -1,8 +1,9 @@
 import boto3
 from botocore.exceptions import ClientError
 from datetime import datetime, timedelta
+from utils import get_dynamodb_resource
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = get_dynamodb_resource()
 table = dynamodb.Table('MapleStoryItems')
 
 def parse_date(date_str):

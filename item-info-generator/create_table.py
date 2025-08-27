@@ -1,8 +1,8 @@
-import boto3
 from botocore.exceptions import ClientError
+from utils import get_dynamodb_resource
 
 def setup_dynamodb_table():
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table_name = 'MapleStoryItems'
 
     try:

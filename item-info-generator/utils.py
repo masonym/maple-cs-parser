@@ -1,3 +1,22 @@
+import boto3
+import os
+
+def get_boto3_session():
+    """
+    Get a boto3 session using the masonym-dev profile.
+    This ensures all AWS calls use the correct credentials.
+    """
+    # Try to use AWS_PROFILE environment variable if set
+    profile_name = os.environ.get('AWS_PROFILE', 'masonym-dev')
+    return boto3.Session(profile_name=profile_name)
+
+def get_dynamodb_resource():
+    """
+    Get a DynamoDB resource using the masonym-dev profile.
+    """
+    session = get_boto3_session()
+    return session.resource('dynamodb')
+
 def format_description(description):
     """
     Format a description string to make it more readable.
